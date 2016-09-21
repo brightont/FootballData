@@ -33,7 +33,7 @@ public class WebsiteStream {
         }
     }
     
-    public void getTeamStats() {
+	public void getTeamStats() {
 		Elements teamStats = document.getElementsByClass("team-stats");
 		Elements teamStatsRow = teamStats.select("td");
 		for (int i = 0; i < teamStatsRow.size(); i++) {
@@ -48,7 +48,7 @@ public class WebsiteStream {
 			homeStatistics.put(keyHash, valueHash);
 			opponentStatistics.put(keyHash, oppValueHash);
 		}
-    }
+	}
     
     
     
