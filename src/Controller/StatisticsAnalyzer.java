@@ -1,3 +1,5 @@
+package Controller;
+
 public class StatisticsAnalyzer {
 
 	public static void main(String[] args) {
