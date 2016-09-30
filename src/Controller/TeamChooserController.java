@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import MainApplication.MainApplication;
@@ -12,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
@@ -29,7 +31,7 @@ public class TeamChooserController {
 	private ComboBox<Teams> opponent;
 	
 	@FXML
-	private Button submit;
+	private Button submitButton;
 	
 	private final ObjectProperty<Teams> teams = new SimpleObjectProperty<>();
 	
@@ -72,13 +74,18 @@ public class TeamChooserController {
 
 	@FXML
 	public void pressSubmit() {
-		Stage stage;
-		Parent root;
-		
-		stage = (Stage) submit.getScene().getWindow();
-		try {
-			root = FXMLLoader.load(getClass().getResource("../view/StatView.fxml"));
+        try {
+        	Stage stage;
+            Parent root;
+
+            stage = (Stage) submitButton.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../view/StatView.fxml"));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
 		} catch (IOException e) {
+			logger.log(Level.FINE, "Submit button failed to submit");
 			e.printStackTrace();
 		}
 	}
