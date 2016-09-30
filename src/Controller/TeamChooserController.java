@@ -8,15 +8,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 public class TeamChooserController {
 
-	private Stage dialogStage;
-	
-	private Teams chosenTeam;
-	
 	private MainApplication mainApplication;
 	
 	@FXML
@@ -24,8 +18,6 @@ public class TeamChooserController {
 	
 	@FXML
 	private ComboBox<Teams> opponent;
-	
-	private AnchorPane rootLayout;
 	
 	private final ObjectProperty<Teams> teams = new SimpleObjectProperty<>();
 	
