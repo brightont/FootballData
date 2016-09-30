@@ -19,12 +19,12 @@
 				<Font name="Cooper Black" size="18.0" />
 			</font>
 		</Label>
-		<ComboBox id="opponent" fx:id="opponent" layoutX="237.0" layoutY="169.0" prefWidth="150.0" />
+		<ComboBox id="opponent" fx:id="opponent" layoutX="237.0" layoutY="169.0" onAction="#pickTeam" prefWidth="150.0" />
 		<Label layoutX="45.0" layoutY="23.0" text="Football Statistics Analyzer">
 			<font>
 				<Font name="Cooper Black" size="36.0" />
 			</font>
 		</Label>
-		<Button alignment="CENTER" layoutX="276.0" layoutY="248.0" mnemonicParsing="false" text="Submit" textAlignment="CENTER" />
+		<Button fx:id="submitButton" alignment="CENTER" layoutX="276.0" layoutY="248.0" mnemonicParsing="false" onAction="#pressSubmit" text="Submit" textAlignment="CENTER" />
 	</children>
 </AnchorPane>
