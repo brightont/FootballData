@@ -15,19 +15,21 @@ public class TeamChooserController {
 
 	private Stage dialogStage;
 	
+	private Teams chosenTeam;
+	
 	private MainApplication mainApplication;
 	
 	@FXML
 	private ComboBox<Teams> teamOfChoice;
 	
 	@FXML
-	private ComboBox opponent;
+	private ComboBox<Teams> opponent;
 	
 	private AnchorPane rootLayout;
 	
 	private final ObjectProperty<Teams> teams = new SimpleObjectProperty<>();
 	
-	public Teams getTeams(Teams team) {
+	public Teams getTeams() {
 		return teams.get();
 	}
 	
@@ -35,21 +37,25 @@ public class TeamChooserController {
 		teams.set(team);
 	}
 	
-	private final ObservableList<Teams> teamList = FXCollections.observableArrayList();
+	private ObservableList<Teams> teamList = FXCollections.observableArrayList(Teams.values());
 	
-	
-	/*@FXML
+	@FXML
     public void initialize() {
 		teamOfChoice.setItems(teamList);
+		opponent.setItems(teamList);
+		
+		teamOfChoice.getSelectionModel().selectFirst();
+		opponent.getSelectionModel().selectFirst();
     }
-	*/
+	
+	@FXML
+	public void pickTeam() {
+		
+	}
+	
 	public void setMainApp(MainApplication main) {
-
         mainApplication = main;
         //teamOfChoice.setItems(teamList);
-        //set the table view to contain the list of courses from the model
-
-        //automatically select the first table item and display the students
     }
 
 }

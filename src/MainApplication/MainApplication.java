@@ -4,14 +4,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import Controller.MainScreenController;
 import Controller.TeamChooserController;
 
 
@@ -51,7 +49,7 @@ public class MainApplication extends Application{
 
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to find the fxml file for MainScreen!");
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
