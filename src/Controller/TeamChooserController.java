@@ -5,7 +5,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import MainApplication.MainApplication;
-import Model.Teams;
+import Model.Team;
+import Model.TeamName; 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -25,25 +26,25 @@ public class TeamChooserController {
 	private MainApplication mainApplication;
 	
 	@FXML
-	private ComboBox<Teams> teamOfChoice;
+	private ComboBox<TeamName> teamOfChoice;
 	
 	@FXML
-	private ComboBox<Teams> opponent;
+	private ComboBox<TeamName> opponent;
 	
 	@FXML
 	private Button submitButton;
 	
-	private final ObjectProperty<Teams> teams = new SimpleObjectProperty<>();
+	private final ObjectProperty<TeamName> teams = new SimpleObjectProperty<>();
 	
 	private String stringTeam;
 	
 	private String stringOpponent;
 	
-	public Teams getTeams() {
+	public TeamName getTeams() {
 		return teams.get();
 	}
 	
-	public void setTeams(Teams team) {
+	public void setTeams(TeamName team) {
 		teams.set(team);
 	}
 	
@@ -55,20 +56,28 @@ public class TeamChooserController {
 		return stringOpponent; 
 	}
 	
-	private ObservableList<Teams> teamList = FXCollections.observableArrayList(Teams.values());
+	private ObservableList<TeamName> teamList = FXCollections.observableArrayList(TeamName.values());
 	
+	/**
+	 * Sets up the team chooer
+	 */
 	@FXML
     public void initialize() {
 		teamOfChoice.setItems(teamList);
 		opponent.setItems(teamList);
-		
 		teamOfChoice.getSelectionModel().selectFirst();
 		opponent.getSelectionModel().selectFirst();
     }
 	
+	/**
+	 *  Allows the user to pick the team by loading website and getting stats
+	 */
 	@FXML
 	public void pickTeam() {
+		Team team = new Team();
+		
 		stringTeam = teamOfChoice.getSelectionModel().getSelectedItem().toString();
+		team.getTeamStats(stringTeam);
 		stringOpponent = opponent.getSelectionModel().getSelectedItem().toString();
 	}
 

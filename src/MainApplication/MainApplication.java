@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import Controller.TeamChooserController;
+import Model.Model;
 
 
 public class MainApplication extends Application{
@@ -54,6 +55,7 @@ public class MainApplication extends Application{
     }
 	
 	public static void main(String[] args) {
+		
         launch(args);
     }
 }

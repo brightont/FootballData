@@ -1,6 +1,6 @@
 package Model;
 
-public enum Teams {
+public enum TeamName {
 	ARI("Cardinals", "Arizona"),
 	ATL("Falcons", "Atlanta"),
 	BAL("Ravens", "Baltimore"),
@@ -38,7 +38,7 @@ public enum Teams {
 	private final String team;
 	private final String city;
 	
-	Teams(String steam, String scity) {
+	TeamName(String steam, String scity) {
 		team = steam;
 		city = scity;
 	}
