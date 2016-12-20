@@ -59,7 +59,7 @@ public class TeamChooserController {
 	private ObservableList<TeamName> teamList = FXCollections.observableArrayList(TeamName.values());
 	
 	/**
-	 * Sets up the team chooer
+	 * Sets up the team chooser
 	 */
 	@FXML
     public void initialize() {

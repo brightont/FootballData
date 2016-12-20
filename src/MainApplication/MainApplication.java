@@ -55,6 +55,8 @@ public class MainApplication extends Application{
     }
 	
 	public static void main(String[] args) {
+		Model database = new Model();
+		database.readDatabase();
 		
         launch(args);
     }
