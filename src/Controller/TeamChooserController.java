@@ -5,7 +5,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import MainApplication.MainApplication;
-import Model.Team;
 import Model.TeamName; 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -36,9 +35,9 @@ public class TeamChooserController {
 	
 	private final ObjectProperty<TeamName> teams = new SimpleObjectProperty<>();
 	
-	private String stringTeam;
+	private static String stringTeam;
 	
-	private String stringOpponent;
+	private static String stringOpponent;
 	
 	public TeamName getTeams() {
 		return teams.get();
@@ -74,10 +73,7 @@ public class TeamChooserController {
 	 */
 	@FXML
 	public void pickTeam() {
-		Team team = new Team();
-		
 		stringTeam = teamOfChoice.getSelectionModel().getSelectedItem().toString();
-		team.getTeamStats(stringTeam);
 		stringOpponent = opponent.getSelectionModel().getSelectedItem().toString();
 	}
 
@@ -88,7 +84,7 @@ public class TeamChooserController {
             Parent root;
 
             stage = (Stage) submitButton.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("../view/StatView.fxml"));
+            root = FXMLLoader.load(getClass().getResource("../view/OptionsView.fxml"));
 
             Scene scene = new Scene(root);
             stage.setScene(scene);

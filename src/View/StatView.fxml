@@ -10,24 +10,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-	prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.StatViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TeamStatViewController">
 	<children>
-		<SplitPane dividerPositions="0.6270903010033445" layoutY="14.0"
-			prefHeight="381.0" prefWidth="600.0" style="-fx-background-color: black;">
+		<SplitPane dividerPositions="0.6270903010033445" layoutY="14.0" prefHeight="381.0" prefWidth="600.0" style="-fx-background-color: black;">
 			<items>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0"
-					prefWidth="100.0" style="-fx-background-color: red;">
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: red;">
 					<children>
-						<TableView layoutX="14.0" layoutY="20.0" prefHeight="345.0"
-							prefWidth="331.0">
+						<TableView fx:id="statTable" layoutX="14.0" layoutY="20.0" prefHeight="345.0" prefWidth="331.0">
 							<columns>
-								<TableColumn prefWidth="106.0" text="Stat" />
-								<TableColumn prefWidth="93.0" text="Home" />
-								<TableColumn prefWidth="131.0" text="Opponent" />
+								<TableColumn fx:id="statName" prefWidth="106.0" text="Stat" />
+								<TableColumn fx:id="homeStat" prefWidth="93.0" text="Home" />
+								<TableColumn fx:id="oppStat" prefWidth="131.0" text="Opponent" />
 							</columns>
 						</TableView>
 					</children>

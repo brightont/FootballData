@@ -31,7 +31,7 @@ public enum TeamName {
 	SDO("Chargers", "San Diego"),
 	SEA("Seattle", "Seahawks"),
 	SFO("49ers", "San Francisco"),
-	TBY("Buccaneers", "Tampa Bay"),
+	TB("Buccaneers", "Tampa Bay"),
 	TEN("Titans", "Tennessee"),
 	WAS("Redskins", "Washington");
 	
@@ -45,5 +45,9 @@ public enum TeamName {
 	
 	public String getTeam() {
 		return team;
+	}
+	
+	public String getCity() {
+		return city;
 	}
 }
