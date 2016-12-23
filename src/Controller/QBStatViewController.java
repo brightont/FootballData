@@ -3,8 +3,8 @@ package Controller;
 import java.util.ArrayList;
 
 import Model.Model;
+import Model.QBStat;
 import Model.Team;
-import Model.Stat;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,22 +17,22 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class TeamStatViewController {
+public class QBStatViewController {
 	
 	@FXML
-	private TableView<Stat> statTable;
+	private TableView<QBStat> qbStatTable;
 
 	@FXML
-	private TableColumn statName;
+	private TableColumn qbStatName;
 	
 	@FXML
-	private TableColumn homeStat;
+	private TableColumn qbHomeStat;
 	
 	@FXML
-	private TableColumn oppStat;
+	private TableColumn qbOppStat;
 	
 	@FXML
-	private Button returnButton;
+	private Button qbReturnButton;
 	
 	private String stringTeamName = "";
 	
@@ -47,33 +47,32 @@ public class TeamStatViewController {
         Team team = new Team();
         stringTeamName = team.getTeamName(stringTeam);
         stringOppName = team.getTeamName(stringOpponent);
-		
-		statName.setCellValueFactory(new PropertyValueFactory<Stat, String>("statName"));
-		homeStat.setCellValueFactory(new PropertyValueFactory<Stat, String>("homeStat"));
-		oppStat.setCellValueFactory(new PropertyValueFactory<Stat, String>("oppStat"));
-		ObservableList<Stat> teamStatList = FXCollections.observableArrayList(populateTeamStatList());
-		statTable.setItems(teamStatList);
-		
-	}
-
+        
+        qbStatName.setCellValueFactory(new PropertyValueFactory<QBStat, String>("qbStatName"));
+		qbHomeStat.setCellValueFactory(new PropertyValueFactory<QBStat, String>("qbHomeStat"));
+		qbOppStat.setCellValueFactory(new PropertyValueFactory<QBStat, String>("qbOppStat"));
+		ObservableList<QBStat> qbStatList = FXCollections.observableArrayList(populateQBStatList());
+		qbStatTable.setItems(qbStatList); 
+	} 
+	
 	/**
 	 * Populates an arrayList for the table view
 	 * @return
 	 */
-	private ArrayList<Stat> populateTeamStatList() {
-		ArrayList<Stat> returnList = new ArrayList<Stat>();
+	private ArrayList<QBStat> populateQBStatList() {
+		ArrayList<QBStat> returnList = new ArrayList<QBStat>();
 		
 		Model model = new Model();
-		ArrayList<String> statNames = model.getStatsName(stringTeamName);
-		ArrayList<String> homeStats = model.getTeamStats(stringTeamName);
+		ArrayList<String> statNames = model.getQBStatsName(stringTeamName);
+		ArrayList<String> homeStats = model.getQBStats(stringTeamName);
 		
 		//prevents pointing to the same thing
 		Model model2 = new Model();
-		ArrayList<String> oppStats = model2.getTeamStats(stringOppName);
+		ArrayList<String> oppStats = model2.getQBStats(stringOppName);
 		
 		int index = 0;
 		for (String name: statNames) {
-			returnList.add(new Stat(name, homeStats.get(index), oppStats.get(index)));
+			returnList.add(new QBStat(name, homeStats.get(index), oppStats.get(index)));
 			index++;	
 		}
 		
@@ -85,7 +84,7 @@ public class TeamStatViewController {
 		Stage stage;
 		Parent root;
 		
-		stage = (Stage) returnButton.getScene().getWindow();
+		stage = (Stage) qbReturnButton.getScene().getWindow();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/OptionsView.fxml"));
 		root = loader.load();
 		
@@ -94,5 +93,5 @@ public class TeamStatViewController {
         stage.setScene(scene);
         stage.show();
 	}
-	
+
 }
