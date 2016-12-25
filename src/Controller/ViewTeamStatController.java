@@ -2,9 +2,10 @@ package Controller;
 
 import java.util.ArrayList;
 
+import MainApplication.MainApplication;
 import Model.Model;
-import Model.Team;
-import Model.Stat;
+import Model.TeamStat;
+import Model.TeamStatTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,10 +18,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class TeamStatViewController {
+public class ViewTeamStatController {
+	
+	private MainApplication mainApplication;
 	
 	@FXML
-	private TableView<Stat> statTable;
+	private TableView<TeamStatTable> statTable;
 
 	@FXML
 	private TableColumn statName;
@@ -38,20 +41,24 @@ public class TeamStatViewController {
 	
 	private String stringOppName = "";
 	
+	public void setMainApp(MainApplication main) {
+        mainApplication = main;
+    }
+	
 	@FXML
 	private void initialize() {
-		TeamChooserController tcc = new TeamChooserController();
+		TeamSelectorController tcc = new TeamSelectorController();
         String stringTeam = tcc.getStringTeam();
         String stringOpponent = tcc.getStringOpponent();
         
-        Team team = new Team();
+        TeamStat team = new TeamStat();
         stringTeamName = team.getTeamName(stringTeam);
         stringOppName = team.getTeamName(stringOpponent);
 		
-		statName.setCellValueFactory(new PropertyValueFactory<Stat, String>("statName"));
-		homeStat.setCellValueFactory(new PropertyValueFactory<Stat, String>("homeStat"));
-		oppStat.setCellValueFactory(new PropertyValueFactory<Stat, String>("oppStat"));
-		ObservableList<Stat> teamStatList = FXCollections.observableArrayList(populateTeamStatList());
+		statName.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("statName"));
+		homeStat.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("homeStat"));
+		oppStat.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("oppStat"));
+		ObservableList<TeamStatTable> teamStatList = FXCollections.observableArrayList(populateTeamStatList());
 		statTable.setItems(teamStatList);
 		
 	}
@@ -60,11 +67,11 @@ public class TeamStatViewController {
 	 * Populates an arrayList for the table view
 	 * @return
 	 */
-	private ArrayList<Stat> populateTeamStatList() {
-		ArrayList<Stat> returnList = new ArrayList<Stat>();
+	private ArrayList<TeamStatTable> populateTeamStatList() {
+		ArrayList<TeamStatTable> returnList = new ArrayList<TeamStatTable>();
 		
 		Model model = new Model();
-		ArrayList<String> statNames = model.getStatsName(stringTeamName);
+		ArrayList<String> statNames = model.getStatsName();
 		ArrayList<String> homeStats = model.getTeamStats(stringTeamName);
 		
 		//prevents pointing to the same thing
@@ -72,8 +79,9 @@ public class TeamStatViewController {
 		ArrayList<String> oppStats = model2.getTeamStats(stringOppName);
 		
 		int index = 0;
+		
 		for (String name: statNames) {
-			returnList.add(new Stat(name, homeStats.get(index), oppStats.get(index)));
+			returnList.add(new TeamStatTable(name, homeStats.get(index), oppStats.get(index)));
 			index++;	
 		}
 		
@@ -86,7 +94,7 @@ public class TeamStatViewController {
 		Parent root;
 		
 		stage = (Stage) returnButton.getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/OptionsView.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/TeamSelector.fxml"));
 		root = loader.load();
 		
 		Scene scene = new Scene(root);

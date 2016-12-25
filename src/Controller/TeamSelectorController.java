@@ -18,12 +18,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
-public class TeamChooserController {
+public class TeamSelectorController {
 
-	private static final Logger logger = Logger.getLogger("TeamChooserController");
-	
+	private static final Logger logger = Logger.getLogger("TeamSelectorController");
 	private MainApplication mainApplication;
-	
+	private ObservableList<TeamName> teamList = FXCollections.observableArrayList(TeamName.values());
+	private final ObjectProperty<TeamName> teams = new SimpleObjectProperty<>();
+	private static String stringTeam;
+	private static String stringOpponent;
+
 	@FXML
 	private ComboBox<TeamName> teamOfChoice;
 	
@@ -33,11 +36,6 @@ public class TeamChooserController {
 	@FXML
 	private Button submitButton;
 	
-	private final ObjectProperty<TeamName> teams = new SimpleObjectProperty<>();
-	
-	private static String stringTeam;
-	
-	private static String stringOpponent;
 	
 	public TeamName getTeams() {
 		return teams.get();
@@ -55,10 +53,12 @@ public class TeamChooserController {
 		return stringOpponent; 
 	}
 	
-	private ObservableList<TeamName> teamList = FXCollections.observableArrayList(TeamName.values());
+	public void setMainApp(MainApplication main) {
+        mainApplication = main;
+    }
 	
 	/**
-	 * Sets up the team chooser
+	 * Initializes the lists for the selector
 	 */
 	@FXML
     public void initialize() {
@@ -77,6 +77,9 @@ public class TeamChooserController {
 		stringOpponent = opponent.getSelectionModel().getSelectedItem().toString();
 	}
 
+	/**
+	 * Sets up the options screen when the submit button is pressed
+	 */
 	@FXML
 	public void pressSubmit() {
         try {
@@ -89,14 +92,11 @@ public class TeamChooserController {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+            
 		} catch (IOException e) {
-			logger.log(Level.FINE, "Submit button failed to submit");
+			logger.log(Level.FINE, "Could not properly submit.");
 			e.printStackTrace();
 		}
 	}
-	
-	public void setMainApp(MainApplication main) {
-        mainApplication = main;
-    }
 
 }

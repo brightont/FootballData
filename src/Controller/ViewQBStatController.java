@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import Model.Model;
 import Model.QBStat;
-import Model.Team;
+import Model.TeamStat;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,7 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class QBStatViewController {
+public class ViewQBStatController {
 	
 	@FXML
 	private TableView<QBStat> qbStatTable;
@@ -40,11 +40,11 @@ public class QBStatViewController {
 	
 	@FXML
 	private void initialize() {
-		TeamChooserController tcc = new TeamChooserController();
+		TeamSelectorController tcc = new TeamSelectorController();
         String stringTeam = tcc.getStringTeam();
         String stringOpponent = tcc.getStringOpponent();
         
-        Team team = new Team();
+        /*TeamStat team = new TeamStat();
         stringTeamName = team.getTeamName(stringTeam);
         stringOppName = team.getTeamName(stringOpponent);
         
@@ -52,7 +52,7 @@ public class QBStatViewController {
 		qbHomeStat.setCellValueFactory(new PropertyValueFactory<QBStat, String>("qbHomeStat"));
 		qbOppStat.setCellValueFactory(new PropertyValueFactory<QBStat, String>("qbOppStat"));
 		ObservableList<QBStat> qbStatList = FXCollections.observableArrayList(populateQBStatList());
-		qbStatTable.setItems(qbStatList); 
+		qbStatTable.setItems(qbStatList);*/ 
 	} 
 	
 	/**
@@ -79,6 +79,10 @@ public class QBStatViewController {
 		return returnList;
 	}
 	
+	/**
+	 * Returns to the main screen
+	 * @throws Exception
+	 */
 	@FXML
 	private void handleBack() throws Exception {
 		Stage stage;

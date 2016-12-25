@@ -30,7 +30,7 @@ public class QuarterBack {
 		try {
 			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team).get();
 		} catch (IOException e) {
-			logger.info("Failed to get information.");
+			logger.info("Failed to get quarter back information.");
 		}
 		Elements qbStats = document.getElementsByClass("data-table1 ");
 		Elements qbStatsRow = qbStats.select("td");
@@ -97,8 +97,7 @@ public class QuarterBack {
 	private void updateQuery(String key, double value, String team) {
 		String update = "UPDATE footballstats.qbstats SET " + key + " = " + value + " WHERE team = '" + team + "';";
 		try {
-            PreparedStatement prepStatement =
-                    connection.prepareStatement(update);
+			PreparedStatement prepStatement = connection.prepareStatement(update);
             prepStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,6 +112,8 @@ public class QuarterBack {
 		String team = "";
 		if (teamName.equals("ATL")) {
 			team = TeamName.ATL.getTeam();
+		} else if (teamName.equals("BAL")) {
+			team = TeamName.BAL.getTeam();
 		} else if (teamName.equals("TB")) {
 			team = TeamName.TB.getTeam();
 		}

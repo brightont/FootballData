@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import Controller.TeamChooserController;
+import Controller.TeamSelectorController;
 import Model.Model;
 
 
@@ -36,10 +36,10 @@ public class MainApplication extends Application{
 	private void initRootLayout(Stage mainScreen) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("../view/FootballTeamChooser.fxml"));
+            loader.setLocation(MainApplication.class.getResource("../view/TeamSelector.fxml"));
             rootLayout = loader.load();
 
-            TeamChooserController controller = loader.getController();
+            TeamSelectorController controller = loader.getController();
             controller.setMainApp(this);
 
             mainScreen.setTitle("Football Data Analyzer");

@@ -26,5 +26,12 @@
          </image>
       </ImageView>
       <Button fx:id="qbStats" layoutX="73.0" layoutY="208.0" mnemonicParsing="false" onAction="#selectQBStats" prefHeight="25.0" prefWidth="74.0" text="QB Stats" />
+      <ImageView fitHeight="49.0" fitWidth="62.0" layoutX="79.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Pictures/qbIcon.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="rushStats" layoutX="75.0" layoutY="294.0" mnemonicParsing="false" onAction="#selectRushStats" text="Rush Stats" />
+      <Button fx:id="mainScreenButton" layoutX="492.0" layoutY="352.0" mnemonicParsing="false" onAction="#handleBack" text="Main Screen" />
    </children>
 </AnchorPane>

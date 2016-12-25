@@ -3,7 +3,7 @@ package Model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Stat {
+public class TeamStatTable {
 	
 	private SimpleStringProperty statName;
 
@@ -18,7 +18,7 @@ public class Stat {
 	 * @param homeStat
 	 * @param oppStat
 	 */
-	public Stat(String statName, String homeStat, String oppStat) {
+	public TeamStatTable(String statName, String homeStat, String oppStat) {
 		this.statName = new SimpleStringProperty(statName);
 		this.homeStat = new SimpleStringProperty(homeStat);
 		this.oppStat = new SimpleStringProperty(oppStat);

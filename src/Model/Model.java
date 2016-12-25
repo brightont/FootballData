@@ -44,6 +44,7 @@ public class Model {
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/footballstats", "root", "root");
 		} catch (SQLException e) {
+			System.out.println("The error is here");
 			e.printStackTrace();
 		}
 		return connection;
@@ -73,7 +74,7 @@ public class Model {
      * @param team
      * @return
      */
-    public ArrayList<String> getStatsName(String team) {
+    public ArrayList<String> getStatsName() {
     	String newName = "";
     	try {
     		establishConnection();
@@ -112,7 +113,7 @@ public class Model {
 			int columnCount = rsmd.getColumnCount();
 			for (int i = 2; i <= columnCount; i++) {
 				String name = rsmd.getColumnName(i);
-				String query2 = "SELECT * FROM footballstats.teamstats WHERE team = '" + team + "';";
+				String query2 = "SELECT * FROM footballstats.teamstats WHERE Team = '" + team + "';";
 				ResultSet result = statement.executeQuery(query2);
 				while (result.next()) {
 					double data = result.getDouble(name);
@@ -190,5 +191,16 @@ public class Model {
 		}
     	return qbStats;
     }
+    
+    public void removeTeamStat(String team) {
+    	String query = "DELETE FROM footballstats.teamstats WHERE team = '" + team + "';";
+    	try {
+            Statement userStatement = connection.createStatement();
+            userStatement.execute(query);
+        } catch (SQLException e) {
+            logger.log(Level.FINE, "Could not delete team stat.");
+        }
+    }
+    
     
 }

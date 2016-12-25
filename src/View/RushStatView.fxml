@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ViewRushStatController">
+	<children>
+		<SplitPane dividerPositions="0.6923076923076923" layoutY="14.0" prefHeight="381.0" prefWidth="600.0" style="-fx-background-color: black;">
+			<items>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: red;">
+					<children>
+						<TableView fx:id="rushStatTable" layoutX="11.0" layoutY="40.0" prefHeight="125.0" prefWidth="390.0">
+							<columns>
+								<TableColumn fx:id="homePlayer" prefWidth="77.0" text="Player" />
+								<TableColumn fx:id="homeAtt" prefWidth="56.33331298828125" text="Att" />
+								<TableColumn fx:id="homeYds" prefWidth="56.3333740234375" text="Yds" />
+                        <TableColumn fx:id="homeYA" prefWidth="71.6666259765625" text="Yds/Att" />
+                        <TableColumn fx:id="homeLong" prefWidth="57.0" text="Long" />
+                        <TableColumn fx:id="homeTD" prefWidth="75.0" text="TD" />
+							</columns>
+						</TableView>
+                  <TableView fx:id="oppRushStatTable" layoutX="11.0" layoutY="221.0" prefHeight="125.0" prefWidth="390.0">
+                     <columns>
+                        <TableColumn fx:id="oppPlayer" prefWidth="77.0" text="Player" />
+                        <TableColumn fx:id="oppAtt" prefWidth="56.33331298828125" text="Att" />
+                        <TableColumn fx:id="oppYds" prefWidth="56.3333740234375" text="Yds" />
+                        <TableColumn fx:id="oppYA" prefWidth="71.6666259765625" text="Yds/Att" />
+                        <TableColumn fx:id="oppLong" prefWidth="57.0" text="Long" />
+                        <TableColumn fx:id="oppTD" prefWidth="75.0" text="TD" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="153.0" layoutY="14.0" text="Home Team">
+                     <font>
+                        <Font name="Cooper Black" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="139.0" layoutY="190.0" prefHeight="21.0" prefWidth="153.0" text="Opponent Team">
+                     <font>
+                        <Font name="Cooper Black" size="18.0" />
+                     </font>
+                  </Label>
+					</children>
+				</AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: red;">
+               <children>
+                  <Label layoutX="38.0" layoutY="30.0" text="Probability">
+                     <font>
+                        <Font name="Cooper Black" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="returnButton" layoutX="67.0" layoutY="304.0" mnemonicParsing="false" text="return" />
+                  <ListView layoutX="22.0" layoutY="73.0" prefHeight="200.0" prefWidth="138.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
