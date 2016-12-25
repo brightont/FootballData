@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import MainApplication.MainApplication;
-import Model.QuarterBack;
+import Model.QBStat;
 import Model.TeamStat;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -75,7 +75,7 @@ public class OptionsController {
             	team.updateDatabase(hashOpponent, team.getTeamName(stringOpponent));
             }
 		} catch (IOException e) {
-			logger.log(Level.FINE, "Team Stats button couldn't be clicked.");
+			logger.log(Level.FINE, "Team Stats could not be loaded.");
 		}
 	}
 	
@@ -99,18 +99,21 @@ public class OptionsController {
             String stringTeam = tcc.getStringTeam();
             String stringOpponent = tcc.getStringOpponent();
                         
-            QuarterBack qb = new QuarterBack();
+            QBStat qb = new QBStat();
             HashMap<String, String> hashQB = qb.getQBStats(stringTeam);
             HashMap<String, String> hashOppQB = qb.getQBStats(stringOpponent);
             
-            if (qb.checkDatabase(hashQB) == false) {
+            String value = "Att";
+            
+            if (qb.checkDatabase(hashQB, value, "qb") == false) {
             	qb.updateDatabase(hashQB, qb.getTeamName(stringTeam));
             }
-            if (qb.checkDatabase(hashOppQB) == false) {
-            	qb.updateDatabase(hashQB, qb.getTeamName(stringOpponent));
+            if (qb.checkDatabase(hashOppQB, value, "qb") == false) {
+            	qb.updateDatabase(hashOppQB, qb.getTeamName(stringOpponent));
             }
+            
 		} catch (IOException e) {
-			logger.log(Level.FINE, "QB Stats button couldn't be clicked.");
+			logger.log(Level.FINE, "QB Stats could not be loaded.");
 		}
 		
 	}

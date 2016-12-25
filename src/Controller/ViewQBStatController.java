@@ -3,7 +3,7 @@ package Controller;
 import java.util.ArrayList;
 
 import Model.Model;
-import Model.QBStat;
+import Model.QBStatTable;
 import Model.TeamStat;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 public class ViewQBStatController {
 	
 	@FXML
-	private TableView<QBStat> qbStatTable;
+	private TableView<QBStatTable> qbStatTable;
 
 	@FXML
 	private TableColumn qbStatName;
@@ -44,23 +44,23 @@ public class ViewQBStatController {
         String stringTeam = tcc.getStringTeam();
         String stringOpponent = tcc.getStringOpponent();
         
-        /*TeamStat team = new TeamStat();
+        TeamStat team = new TeamStat();
         stringTeamName = team.getTeamName(stringTeam);
         stringOppName = team.getTeamName(stringOpponent);
         
-        qbStatName.setCellValueFactory(new PropertyValueFactory<QBStat, String>("qbStatName"));
-		qbHomeStat.setCellValueFactory(new PropertyValueFactory<QBStat, String>("qbHomeStat"));
-		qbOppStat.setCellValueFactory(new PropertyValueFactory<QBStat, String>("qbOppStat"));
-		ObservableList<QBStat> qbStatList = FXCollections.observableArrayList(populateQBStatList());
-		qbStatTable.setItems(qbStatList);*/ 
+        qbStatName.setCellValueFactory(new PropertyValueFactory<QBStatTable, String>("qbStatName"));
+		qbHomeStat.setCellValueFactory(new PropertyValueFactory<QBStatTable, String>("qbHomeStat"));
+		qbOppStat.setCellValueFactory(new PropertyValueFactory<QBStatTable, String>("qbOppStat"));
+		ObservableList<QBStatTable> qbStatList = FXCollections.observableArrayList(populateQBStatList());
+		qbStatTable.setItems(qbStatList);
 	} 
 	
 	/**
 	 * Populates an arrayList for the table view
 	 * @return
 	 */
-	private ArrayList<QBStat> populateQBStatList() {
-		ArrayList<QBStat> returnList = new ArrayList<QBStat>();
+	private ArrayList<QBStatTable> populateQBStatList() {
+		ArrayList<QBStatTable> returnList = new ArrayList<QBStatTable>();
 		
 		Model model = new Model();
 		ArrayList<String> statNames = model.getQBStatsName(stringTeamName);
@@ -72,7 +72,7 @@ public class ViewQBStatController {
 		
 		int index = 0;
 		for (String name: statNames) {
-			returnList.add(new QBStat(name, homeStats.get(index), oppStats.get(index)));
+			returnList.add(new QBStatTable(name, homeStats.get(index), oppStats.get(index)));
 			index++;	
 		}
 		

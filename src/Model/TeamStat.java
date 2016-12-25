@@ -3,9 +3,7 @@ package Model;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,13 +17,7 @@ public class TeamStat extends Stat {
 	private static final Logger logger = Logger.getLogger("Team.class");
 	private final Connection connection = database.establishConnection();
 	public Document document;
-	
-	private static final TeamStat instance = new TeamStat();
-	
-	public static TeamStat getInstance() {
-	        return instance;
-	}
-	
+
 	//empty constructor
 	public TeamStat() {
 		
@@ -77,7 +69,6 @@ public class TeamStat extends Stat {
 
 	/**
 	 * Update the database if the website info has changed
-	 * 
 	 * @param hash
 	 */
 	public void updateDatabase(HashMap<String, String> hash, String team) {
@@ -93,10 +84,10 @@ public class TeamStat extends Stat {
 				if (databaseValue.contains(" -")) {
 					databaseValue = databaseValue.split(" -")[0];
 					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team);
+					updateQueryInt(databaseKey, ivi, team, "teamstats");
 				} else {
 					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team);
+					updateQueryInt(databaseKey, ivi, team, "teamstats");
 				}
 				
 			} else if (entry.getKey().contains("(")) {
@@ -104,7 +95,7 @@ public class TeamStat extends Stat {
 				databaseKey = databaseKey.substring(1, databaseKey.length()-1);
 				databaseValue = entry.getValue().split(" -")[0];
 				int ivi = Integer.parseInt(databaseValue);
-				updateQueryInt(databaseKey, ivi, team);
+				updateQueryInt(databaseKey, ivi, team, "teamstats");
 				
 			} else if (entry.getKey().contains(" ")) {
 				databaseKey = entry.getKey().replace(" ", "_");
@@ -112,22 +103,22 @@ public class TeamStat extends Stat {
 				if (databaseValue.contains(" -")) {
 					databaseValue = databaseValue.split(" -")[0];
 					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team);
+					updateQueryInt(databaseKey, ivi, team, "teamstats");
 				} else if (databaseValue.contains("/")) {
 					String[] arr = databaseValue.split("/");
 					double dvi = Double.parseDouble(arr[0]) / Double.parseDouble(arr[1]);
-					updateQueryDouble(databaseKey, dvi, team);
+					updateQueryDouble(databaseKey, dvi, team, "teamstats");
 				} else if (databaseValue.contains(":")) {
 					databaseValue = databaseValue.replace(":", ".");
 					double dvi = Double.parseDouble(databaseValue);
-					updateQueryDouble(databaseKey, dvi, team);
+					updateQueryDouble(databaseKey, dvi, team, "teamstats");
 				} else if (databaseValue.contains("+")){
 					databaseValue = databaseValue.substring(1);
 					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team);
+					updateQueryInt(databaseKey, ivi, team, "teamstats");
 				}else {
 					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team);
+					updateQueryInt(databaseKey, ivi, team, "teamstats");
 				}
 				
 			} else {
@@ -136,47 +127,13 @@ public class TeamStat extends Stat {
 				if (databaseValue.contains(" -")) {
 					databaseValue = databaseValue.split(" -")[0];
 					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team);
+					updateQueryInt(databaseKey, ivi, team, "teamstats");
 				} else {
 					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team);
+					updateQueryInt(databaseKey, ivi, team, "teamstats");
 				}
 			}
 		}
 	}
 	
-
-	/**
-	 * Updates the database with a double
-	 * @param key
-	 * @param value
-	 * @param team
-	 */
-	private void updateQueryDouble(String key, double value, String team) {
-		String update = "UPDATE footballstats.teamstats SET " + key + " = " + value + " WHERE Team = '" + team + "';";
-		try {
-			PreparedStatement prepStatement = connection.prepareStatement(update);
-			prepStatement.executeUpdate();
-		} catch (SQLException e) {
-			logger.log(Level.FINE, "Cannot update query (double).");
-		}
-	}
-	
-	/**
-	 * Updates the database with an int
-	 * @param key
-	 * @param value
-	 * @param team
-	 */
-	private void updateQueryInt(String key, int value, String team) {
-		String update = "UPDATE footballstats.teamstats SET " + key + " = " + value + " WHERE Team = '" + team + "';";
-		try {
-			PreparedStatement prepStatement = connection.prepareStatement(update);
-			prepStatement.executeUpdate();
-		} catch (SQLException e) {
-			logger.log(Level.FINE, "Cannot update query (int).");
-		}
-	}
-	
-
 }

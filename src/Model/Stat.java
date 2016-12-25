@@ -1,6 +1,7 @@
 package Model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -40,7 +41,59 @@ public abstract class Stat {
 			logger.log(Level.FINE, "Could not check the database");
 		}
 		return true;
+		
 	}
+	
+	/**
+	 * Updates the database with a double
+	 * @param key
+	 * @param value
+	 * @param team
+	 */
+	public void updateQueryDouble(String key, double value, String team, String table) {
+		String update = "UPDATE footballstats." + table + " SET " + key + " = " + value + " WHERE Team = '" + team + "';";
+		try {
+			PreparedStatement prepStatement = connection.prepareStatement(update);
+			prepStatement.executeUpdate();
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Cannot update query (double).");
+		}
+	}
+
+	/**
+	 * Updates the database with an int
+	 * @param key
+	 * @param value
+	 * @param team
+	 */
+	public void updateQueryInt(String key, int value, String team, String table) {
+		String update = "UPDATE footballstats." + table + " SET " + key + " = " + value + " WHERE Team = '" + team + "';";
+		//System.out.println(update);
+		try {
+			PreparedStatement prepStatement = connection.prepareStatement(update);
+			prepStatement.executeUpdate();
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Cannot update query (int).");
+		}
+	}
+	
+	/**
+	 * Updates the database with a String
+	 * @param key
+	 * @param value
+	 * @param team
+	 */
+	public void updateQueryString(String key, String value, String team, String table) {
+		String update = "UPDATE footballstats." + table + " SET " + key + " = " + value + " WHERE Team = '" + team + "';";
+		try {
+			PreparedStatement prepStatement = connection.prepareStatement(update);
+			prepStatement.executeUpdate();
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Cannot update query (String).");
+		}
+	}
+	
+
 	
 	/**
 	 * Gets the team name from enum

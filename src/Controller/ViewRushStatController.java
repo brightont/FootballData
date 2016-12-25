@@ -1,7 +1,7 @@
 package Controller;
 
 import Model.Model;
-import Model.QBStat;
+import Model.QBStatTable;
 import Model.TeamStat;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -10,7 +10,7 @@ import javafx.scene.control.TableView;
 public class ViewRushStatController {
 	
 	@FXML
-	private TableView<QBStat> rushStatTable;
+	private TableView<QBStatTable> rushStatTable;
 	
 	@FXML
 	private TableColumn homePlayer;
@@ -31,7 +31,7 @@ public class ViewRushStatController {
 	private TableColumn homeTD;
 
 	@FXML
-	private TableView<QBStat> oppRushStatTable;
+	private TableView<QBStatTable> oppRushStatTable;
 	
 	@FXML
 	private TableColumn oppPlayer;
