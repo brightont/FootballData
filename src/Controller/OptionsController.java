@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import MainApplication.MainApplication;
+import Model.PassStat;
 import Model.QBStat;
 import Model.RushStat;
 import Model.TeamStat;
@@ -30,6 +31,9 @@ public class OptionsController {
 	
 	@FXML
 	private Button rushStats;
+	
+	@FXML
+	private Button passStats;
 	
 	@FXML
 	private Button mainScreenButton;
@@ -145,14 +149,14 @@ public class OptionsController {
             ArrayList<String> listOpponent = rush.getRushStats(stringOpponent);
             
             //add a new player if a new player is added
-            ArrayList<Integer> intListTeam = rush.checkForNewPlayer(listTeam);
-        	if (intListTeam.size() != 0) {
-        		rush.scrapeNewPlayer(listTeam, intListTeam, stringTeam);
+            ArrayList<Integer> intListTeam = rush.checkForNewPlayer(listTeam, "rushstats");
+            if (intListTeam.size() != 0) {
+        		rush.scrapeNewPlayer(listTeam, intListTeam, rush.getTeamName(stringTeam));
         	}
         	
-        	ArrayList<Integer> intListOpponent = rush.checkForNewPlayer(listOpponent);
+        	ArrayList<Integer> intListOpponent = rush.checkForNewPlayer(listOpponent, "rushstats");
         	if (intListOpponent.size() != 0) {
-        		rush.scrapeNewPlayer(listOpponent, intListOpponent, stringOpponent);
+        		rush.scrapeNewPlayer(listOpponent, intListOpponent, rush.getTeamName(stringTeam));
         	}
         	
         	//update database if needed
@@ -167,7 +171,59 @@ public class OptionsController {
 			}
             
 		} catch (IOException e) {
-			logger.log(Level.FINE, "Rush Stats button couldn't be clicked.");
+			logger.log(Level.FINE, "Rush Stats couldn't be loaded.");
+		}
+		
+	}
+	
+	/**
+	 * View the pass stats
+	 */
+	@FXML
+	private void selectPassStats() {
+		try {
+			Stage stage;
+            Parent root;
+
+            stage = (Stage) passStats.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../view/PassStatView.fxml"));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            
+            TeamSelectorController tcc = new TeamSelectorController();
+            String stringTeam = tcc.getStringTeam();
+            String stringOpponent = tcc.getStringOpponent();
+			
+            PassStat pass = new PassStat();
+            ArrayList<String> listTeam = pass.getPassStats(stringTeam);
+            ArrayList<String> listOpponent = pass.getPassStats(stringOpponent);
+            
+            //add a new player if a new player is added
+            ArrayList<Integer> intListTeam = pass.checkForNewPlayer(listTeam, "pass_stats");
+            if (intListTeam.size() != 0) {
+        		pass.scrapeNewPlayer(listTeam, intListTeam, pass.getTeamName(stringTeam));
+        	}
+        	
+        	ArrayList<Integer> intListOpponent = pass.checkForNewPlayer(listOpponent, "pass_stats");
+        	if (intListOpponent.size() != 0) {
+        		pass.scrapeNewPlayer(listOpponent, intListOpponent, pass.getTeamName(stringTeam));
+        	}
+        	
+        	//update database if needed
+			if (pass.checkDatabaseList(listTeam, 7, "pass_") == false
+					|| pass.checkDatabaseList(listTeam, 13, "pass_") == false) {
+				pass.updateDatabase(listTeam, pass.getTeamName(stringTeam));
+			}
+			
+			if (pass.checkDatabaseList(listOpponent, 7, "pass_") == false
+					|| pass.checkDatabaseList(listOpponent, 13, "pass_") == false) {
+				pass.updateDatabase(listOpponent, pass.getTeamName(stringOpponent));
+			}
+            
+		} catch (IOException e) {
+			logger.log(Level.FINE, "Pass Stats couldn't be loaded.");
 		}
 		
 	}

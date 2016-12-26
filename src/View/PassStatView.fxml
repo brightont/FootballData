@@ -9,30 +9,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ViewRushStatController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ViewPassStatController">
 	<children>
 		<SplitPane dividerPositions="0.7157190635451505" layoutY="14.0" prefHeight="381.0" prefWidth="600.0" style="-fx-background-color: black;">
 			<items>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: red;">
 					<children>
-						<TableView fx:id="rushStatTable" layoutX="11.0" layoutY="40.0" prefHeight="125.0" prefWidth="402.0">
+						<TableView fx:id="passStatTable" layoutX="11.0" layoutY="40.0" prefHeight="125.0" prefWidth="402.0">
 							<columns>
-								<TableColumn fx:id="homePlayer" prefWidth="107.66668701171875" text="Player" />
-								<TableColumn fx:id="homeAtt" prefWidth="48.333343505859375" text="Att" />
-								<TableColumn fx:id="homeYds" prefWidth="52.66668701171875" text="Yds" />
-                        <TableColumn fx:id="homeYA" prefWidth="55.33331298828125" text="Yds/Att" />
-                        <TableColumn fx:id="homeLong" prefWidth="66.33331298828125" text="Long" />
-                        <TableColumn fx:id="homeTD" prefWidth="68.0" text="TD" />
+								<TableColumn fx:id="phomePlayer" prefWidth="107.66668701171875" text="Player" />
+								<TableColumn fx:id="phomeRec" prefWidth="48.333343505859375" text="Rec" />
+								<TableColumn fx:id="phomeYds" prefWidth="52.66668701171875" text="Yds" />
+                        <TableColumn fx:id="phomeYR" prefWidth="55.33331298828125" text="Yds/Rec" />
+                        <TableColumn fx:id="phomeLong" prefWidth="66.33331298828125" text="Long" />
+                        <TableColumn fx:id="phomeTD" prefWidth="68.0" text="TD" />
 							</columns>
 						</TableView>
-                  <TableView fx:id="oppRushStatTable" layoutX="11.0" layoutY="221.0" prefHeight="125.0" prefWidth="402.0">
+                  <TableView fx:id="oppPassStatTable" layoutX="11.0" layoutY="221.0" prefHeight="125.0" prefWidth="402.0">
                      <columns>
-                        <TableColumn fx:id="oppPlayer" prefWidth="105.66665649414062" text="Player" />
-                        <TableColumn fx:id="oppAtt" prefWidth="42.33331298828125" text="Att" />
-                        <TableColumn fx:id="oppYds" prefWidth="61.33331298828125" text="Yds" />
-                        <TableColumn fx:id="oppYA" prefWidth="63.66668701171875" text="Yds/Att" />
-                        <TableColumn fx:id="oppLong" prefWidth="69.33331298828125" text="Long" />
-                        <TableColumn fx:id="oppTD" prefWidth="60.0" text="TD" />
+                        <TableColumn fx:id="poppPlayer" prefWidth="105.66665649414062" text="Player" />
+                        <TableColumn fx:id="poppRec" prefWidth="42.33331298828125" text="Rec" />
+                        <TableColumn fx:id="poppYds" prefWidth="61.33331298828125" text="Yds" />
+                        <TableColumn fx:id="poppYR" prefWidth="63.66668701171875" text="Yds/Rec" />
+                        <TableColumn fx:id="poppLong" prefWidth="69.33331298828125" text="Long" />
+                        <TableColumn fx:id="poppTD" prefWidth="60.0" text="TD" />
                      </columns>
                   </TableView>
                   <Label layoutX="153.0" layoutY="14.0" text="Home Team">
@@ -54,7 +54,7 @@
                         <Font name="Cooper Black" size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="rushReturnButton" layoutX="67.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleBack" text="return" />
+                  <Button fx:id="passReturnButton" layoutX="67.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleBack" text="return" />
                   <ListView layoutX="22.0" layoutY="73.0" prefHeight="200.0" prefWidth="138.0" />
                </children>
             </AnchorPane>

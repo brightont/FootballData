@@ -47,7 +47,7 @@ public class QBStat extends Stat{
 		try {
 			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team).get();
 		} catch (IOException e) {
-			logger.info("Failed to get quarter back information.");
+			logger.info("Failed to get quarter back statistics.");
 		}
 		Elements qbStats = document.getElementsByClass("data-table1 ");
 		Elements qbStatsRow = qbStats.select("td");

@@ -70,12 +70,12 @@ public abstract class Stat {
 	 * @param list
 	 * @return
 	 */
-	public ArrayList<Integer> checkForNewPlayer(ArrayList<String> list) {
+	public ArrayList<Integer> checkForNewPlayer(ArrayList<String> list, String table) {
 		ArrayList<Integer> returnArray = new ArrayList<Integer>();
 		int i;
 		for (i = 6; i < list.size(); i++) {
 			if ((i % 6) == 0) {
-				if ((getPlayer(list.get(i), "rushStats")) == "") {
+				if ((getPlayer(list.get(i), table)) == "") {
 					returnArray.add(i);
 				} 
 			}

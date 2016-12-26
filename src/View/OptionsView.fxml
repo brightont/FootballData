@@ -33,5 +33,18 @@
       </ImageView>
       <Button fx:id="rushStats" layoutX="75.0" layoutY="294.0" mnemonicParsing="false" onAction="#selectRushStats" text="Rush Stats" />
       <Button fx:id="mainScreenButton" layoutX="492.0" layoutY="352.0" mnemonicParsing="false" onAction="#handleBack" text="Main Screen" />
+      <ImageView fitHeight="49.0" fitWidth="82.0" layoutX="78.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Pictures/rushIcon.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="passStats" layoutX="201.0" layoutY="123.0" mnemonicParsing="false" onAction="#selectPassStats" prefHeight="25.0" prefWidth="74.0" text="Pass Stats" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="41.0" fitWidth="74.0" layoutX="205.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Pictures/passIcon.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="fieldGoals" layoutX="199.0" layoutY="208.0" mnemonicParsing="false" text="Field Goals" />
    </children>
 </AnchorPane>

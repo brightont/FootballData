@@ -14,9 +14,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import Model.Model;
-import Model.RushStat;
+import Model.PassStat;
 
-public class RushStatsTest {
+public class PassStatsTest {
 	private static final int TIMEOUT = 10000;
 	private Model database = new Model();
     
@@ -27,7 +27,7 @@ public class RushStatsTest {
     	database = new Model();
 		database.readDatabase();
 		
-		RushStat rushStat = new RushStat("Testing", "Tester", 1, 1, 1, 1, 1);
+		PassStat passStat = new PassStat("Testing", "Tester", 1, 1, 1, 1, 1);
 		//list of stat names
 		list.add("Stat1");
 		list.add("Stat2");
@@ -48,9 +48,7 @@ public class RushStatsTest {
     
     @Test(timeout = TIMEOUT)
     public void checkForNewPlayer() throws InterruptedException {
-    	//adding values
-    	
-    	//player 2
+		// player 2
 		list.add("Tester2");
 		list.add("2");
 		list.add("2");
@@ -65,12 +63,12 @@ public class RushStatsTest {
 		list.add("3");
 		list.add("3");
 		list.add("3");
-    	
-    	RushStat rush = new RushStat();
 		
-    	ArrayList<Integer> intList = rush.checkForNewPlayer(list, "rushstats");
+		PassStat pass = new PassStat();
+		
+    	ArrayList<Integer> intList = pass.checkForNewPlayer(list, "pass_stats");
     	if (intList.size() != 0) {
-    		rush.scrapeNewPlayer(list, intList, "Testing");
+    		pass.scrapeNewPlayer(list, intList, "Testing");
     	}
     	assertEquals("Tester2", getPlayer("Tester2"));
     	assertEquals("Tester3", getPlayer("Tester3"));
@@ -78,15 +76,15 @@ public class RushStatsTest {
     
     @Test(timeout = TIMEOUT)
     public void checkDatabaseTest() throws InterruptedException {		
-    	RushStat rush = new RushStat();
-    	boolean bool = rush.checkDatabaseList(list, 7 , "rush");
+    	PassStat pass = new PassStat();
+    	boolean bool = pass.checkDatabaseList(list, 7 , "rush");
     	
 		assertTrue(bool);
     }
     
     @Test(timeout = TIMEOUT)
     public void updateDatabase() throws InterruptedException {
-    	RushStat rush = new RushStat();
+    	PassStat pass = new PassStat();
     	
     	//set for integer
     	list.set(7, "2");
@@ -94,10 +92,10 @@ public class RushStatsTest {
     	//set for double
     	list.set(9, "2.3");
     	
-    	rush.updateDatabase(list, "Testing");
+    	pass.updateDatabase(list, "Testing");
     	
-    	assertEquals("2", getValueInt("Att"));
-    	assertEquals("2.3", getValueDouble("Yds_Att"));
+    	assertEquals("2", getValueInt("Rec"));
+    	assertEquals("2.3", getValueDouble("Yds_Rec"));
     }
     
     /**
@@ -106,7 +104,7 @@ public class RushStatsTest {
      * @return
      */
     public String getPlayer(String player) {
-        String queryUser = "SELECT * FROM footballstats.rushstats WHERE Player = '" + player + "';";
+        String queryUser = "SELECT * FROM footballstats.pass_stats WHERE Player = '" + player + "';";
         String answer = "";
         Connection connection = database.establishConnection();
         try {
@@ -130,7 +128,7 @@ public class RushStatsTest {
 	public String getValueInt(String name) {
 		String newResult = "";
 		Connection connection = database.establishConnection();
-		String queryUser = "SELECT " + name + " FROM footballstats.rushstats WHERE Team = 'Testing';";
+		String queryUser = "SELECT " + name + " FROM footballstats.pass_stats WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();
 			ResultSet result = userStatement.executeQuery(queryUser);
@@ -153,7 +151,7 @@ public class RushStatsTest {
 	public String getValueDouble(String name) {
 		String newResult = "";
 		Connection connection = database.establishConnection();
-		String queryUser = "SELECT " + name + " FROM footballstats.rushstats WHERE Team = 'Testing';";
+		String queryUser = "SELECT " + name + " FROM footballstats.pass_stats WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();
 			ResultSet result = userStatement.executeQuery(queryUser);
@@ -169,7 +167,7 @@ public class RushStatsTest {
     
     @After
     public void delete() {
-    	database.removeStat("Testing", "rushstats");
+    	database.removeStat("Testing", "pass_stats");
     }
 
 }

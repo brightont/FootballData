@@ -12,53 +12,58 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class RushStat extends Stat{
+public class PassStat extends Stat{
 	private Model database = new Model();
 	private static final Logger logger = Logger.getLogger("Rush.class");
 	private final Connection connection = database.establishConnection();
 	public Document document;
-	
-	//empty constructor
-	public RushStat() {
-		
+
+	// empty constructor
+	public PassStat() {
+
 	}
-	
-	public RushStat(String team, String player, int att, int yds, double ya, int lng, int td) {
+
+	public PassStat(String team, String player, int rec, int yds, double yr, int lng, int td) {
 		super(team);
-		String insert = "INSERT INTO footballstats.rushstats VALUES" + " ('" + team + "','" + player + "','" + att + "','"
-				+ yds + "','" + ya + "','" + lng + "','" + td + "');";
+		String insert = "INSERT INTO footballstats.pass_stats VALUES" + " ('" + team + "','" + player + "','" + rec
+				+ "','" + yds + "','" + yr + "','" + lng + "','" + td + "');";
 		try {
 			PreparedStatement prepStatement = connection.prepareStatement(insert);
 			prepStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 	
 	/**
-	 * Gets Rush statistics off NFL website
+	 * Gets Pass statistics off NFL website
 	 * @param team
 	 * @return
 	 */
-	public ArrayList<String> getRushStats(String team) {
-		ArrayList<String> rushStatistics = new ArrayList<String>();
+	public ArrayList<String> getPassStats(String team) {
+		int start = 0;
+		ArrayList<String> passStatistics = new ArrayList<String>();
 		try {
 			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team).get();
 		} catch (IOException e) {
-			logger.info("Failed to get rush statistics.");
+			logger.info("Failed to get pass statistics.");
 		}
-		Elements rushStats = document.getElementsByClass("data-table1 six-col");
-		Elements rushStatsRow = rushStats.select("td");
-		for (int i = 1; i < rushStatsRow.size(); i++) {
-			String temp = rushStatsRow.get(i).text();
-			if (temp.equals("Receiving Statistics")) {
+		Elements passStats = document.getElementsByClass("data-table1 six-col");
+		Elements passStatsRow = passStats.select("td");
+		for (int i = 1; i < passStatsRow.size(); i++) {
+			String temp = passStatsRow.get(i).text();
+			if (temp.equals("Punt Return Statistics")) {
 				break;
-			} else {
-				rushStatistics.add(temp);
 			}
+			if (start != 0) {
+				passStatistics.add(temp);
+			}
+			if (temp.equals("Receiving Statistics")) {
+				start = i;
+			} 
 		}
-		return rushStatistics;
+		return passStatistics;
 	}
 	
 	/**
@@ -69,36 +74,36 @@ public class RushStat extends Stat{
 	public void scrapeNewPlayer(ArrayList<String> list, ArrayList<Integer> intList, String team) {
 		for (Integer i : intList) {
 			String player = list.get(i);
-			String att = list.get(i + 1);
+			String rec = list.get(i + 1);
 			String yds = list.get(i + 2);
-			String ya = list.get(i + 3);
+			String yr = list.get(i + 3);
 			String lng = list.get(i + 4);
 			String td = list.get(i + 5);
 	
 			// convert the appropriate values
-			int attInt = Integer.parseInt(att);
+			int recInt = Integer.parseInt(rec);
 			int ydsInt = Integer.parseInt(yds);
-			double yaInt = Double.parseDouble(ya);
+			double yrInt = Double.parseDouble(yr);
 			int lngInt = Integer.parseInt(lng);
 			int tdInt = Integer.parseInt(td);
 	
-			addNewPlayer(team, player, attInt, ydsInt, yaInt, lngInt, tdInt);
+			addNewPlayer(team, player, recInt, ydsInt, yrInt, lngInt, tdInt);
 		}
 	}
-	
+
 	/**
-	 * Adds a new player into database
+	 * Adds a new player to pass_stats
 	 * @param team
 	 * @param player
-	 * @param att
+	 * @param rec
 	 * @param yds
-	 * @param ya
+	 * @param yr
 	 * @param lng
 	 * @param td
 	 */
-	public void addNewPlayer(String team, String player, int att, int yds, double ya, int lng, int td) {
-		String insert = "INSERT INTO footballstats.rushstats VALUES ('" + team + "','" + player + "','" + att + "','"
-				+ yds + "','" + ya + "','" + lng + "','" + td + "');";
+	public void addNewPlayer(String team, String player, int rec, int yds, double yr, int lng, int td) {
+		String insert = "INSERT INTO footballstats.pass_stats VALUES ('" + team + "','" + player + "','" + rec + "','"
+				+ yds + "','" + yr + "','" + lng + "','" + td + "');";
 		try {
 			PreparedStatement prepStatement = connection.prepareStatement(insert);
 			prepStatement.executeUpdate();
@@ -128,23 +133,23 @@ public class RushStat extends Stat{
 				}
 				if (((i - 5) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
-					update = "UPDATE footballstats.rushstats SET TD = " + resultInt + " WHERE Team = '" + team
+					update = "UPDATE footballstats.pass_stats SET TD = " + resultInt + " WHERE Team = '" + team
 							+ "' AND Player = '" + player + "';";
 				} else if (((i - 4) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
-					update = "UPDATE footballstats.rushstats SET Lng = " + resultInt + " WHERE Team = '" + team
+					update = "UPDATE footballstats.pass_stats SET Lng = " + resultInt + " WHERE Team = '" + team
 							+ "' AND Player = '" + player + "';";
 				} else if (((i - 3) % 6) == 0) {
 					resultDouble = Double.parseDouble(result);
-					update = "UPDATE footballstats.rushstats SET Yds_Att = " + resultDouble + " WHERE Team = '" + team
+					update = "UPDATE footballstats.pass_stats SET Yds_Rec = " + resultDouble + " WHERE Team = '" + team
 							+ "' AND Player = '" + player + "';";
 				} else if (((i - 2) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
-					update = "UPDATE footballstats.rushstats SET Yds = " + resultInt + " WHERE Team = '" + team
+					update = "UPDATE footballstats.pass_stats SET Yds = " + resultInt + " WHERE Team = '" + team
 							+ "' AND Player = '" + player + "';";
 				} else {
 					resultInt = Integer.parseInt(result);
-					update = "UPDATE footballstats.rushstats SET Att = " + resultInt + " WHERE Team = '" + team
+					update = "UPDATE footballstats.pass_stats SET Rec = " + resultInt + " WHERE Team = '" + team
 							+ "' AND Player = '" + player + "';";
 				}
 				try {
@@ -157,5 +162,4 @@ public class RushStat extends Stat{
 			}
 		}
 	}
-	
 }
