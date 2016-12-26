@@ -63,6 +63,7 @@ public class RushStatsTest {
     	if (result != 0) {
     		rush.scrapeNewPlayer(list, result, "Testing");
     	}
+    	assertEquals("Tester2", getPlayer("Tester2"));
     }
     
     public String getPlayer(String player) {
