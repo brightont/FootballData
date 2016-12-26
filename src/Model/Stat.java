@@ -45,20 +45,42 @@ public abstract class Stat {
 	}
 	
 	/**
+	 * Check database and make sure the facts are correct
+	 * @param list
+	 * @return
+	 */
+	public boolean checkDatabaseList(ArrayList<String> list, int i, String table) {
+		String temp = list.get(i);
+		String query = "SELECT * FROM footballstats." + table + "stats WHERE Att = " + temp + ";";
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(query);
+			boolean bool = result.next();
+			if (bool == false) {
+				return false;
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not check the database");
+		}
+		return true;
+	}
+	
+	/**
 	 * Checks to see if there's a player and returns the index
 	 * @param list
 	 * @return
 	 */
-	public int checkForNewPlayer(ArrayList<String> list) {
-		int i = 0;
+	public ArrayList<Integer> checkForNewPlayer(ArrayList<String> list) {
+		ArrayList<Integer> returnArray = new ArrayList<Integer>();
+		int i;
 		for (i = 6; i < list.size(); i++) {
 			if ((i % 6) == 0) {
 				if ((getPlayer(list.get(i), "rushStats")) == "") {
-					return i;
+					returnArray.add(i);
 				} 
 			}
 		}
-		return 0;
+		return returnArray;
 	}
 	
 	/**

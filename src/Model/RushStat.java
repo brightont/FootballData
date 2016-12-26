@@ -3,9 +3,7 @@ package Model;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,22 +66,24 @@ public class RushStat extends Stat{
 	 * @param i
 	 * @param team
 	 */	
-	public void scrapeNewPlayer(ArrayList<String> list, int i, String team) {
-		String player = list.get(i);
-		String att = list.get(i + 1);
-		String yds = list.get(i + 2);
-		String ya = list.get(i + 3);
-		String lng = list.get(i + 4);
-		String td = list.get(i + 5);
-
-		// convert the appropriate values
-		int attInt = Integer.parseInt(att);
-		int ydsInt = Integer.parseInt(yds);
-		double yaInt = Double.parseDouble(ya);
-		int lngInt = Integer.parseInt(lng);
-		int tdInt = Integer.parseInt(td);
-
-		addNewPlayer(team, player, attInt, ydsInt, yaInt, lngInt, tdInt);
+	public void scrapeNewPlayer(ArrayList<String> list, ArrayList<Integer> intList, String team) {
+		for (Integer i : intList) {
+			String player = list.get(i);
+			String att = list.get(i + 1);
+			String yds = list.get(i + 2);
+			String ya = list.get(i + 3);
+			String lng = list.get(i + 4);
+			String td = list.get(i + 5);
+	
+			// convert the appropriate values
+			int attInt = Integer.parseInt(att);
+			int ydsInt = Integer.parseInt(yds);
+			double yaInt = Double.parseDouble(ya);
+			int lngInt = Integer.parseInt(lng);
+			int tdInt = Integer.parseInt(td);
+	
+			addNewPlayer(team, player, attInt, ydsInt, yaInt, lngInt, tdInt);
+		}
 	}
 	
 	/**
@@ -108,57 +108,47 @@ public class RushStat extends Stat{
 	}
 	
 	/**
-	 * Check database to see if the data has changed
-	 * @param list
-	 * @return
-	 */
-	public boolean checkDatabase(ArrayList<String> list) {
-		for (int i = 0; i < list.size(); i++) {
-			if (((i-1) % 6) == 0) {
-				String temp = list.get(i);
-				String query = "SELECT * FROM footballstats.rushstats WHERE Att = " + temp + ";";
-				try {
-					Statement statement = connection.createStatement();
-					ResultSet result = statement.executeQuery(query);
-					boolean bool = result.next();
-					if (bool == false) {
-						return false;
-					}
-				} catch (SQLException e) {
-					logger.log(Level.FINE, "Database failed to load");
-				}
-			}
-		}
-		return true;
-	}
-	
-	/**
 	 * Update the database
 	 * @param list
 	 * @param team
 	 */
 	public void updateDatabase(ArrayList<String> list, String team) {
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 6; i < list.size(); i++) {
 			if ((i % 6) != 0) {
 				String update = "";
-				if ((i % 5) == 0) {
-					update = "UPDATE footballstats.rushstats SET TD = " + list.get(i) + " WHERE team = '" + team + "';";
-				} else if ((i % 4) == 0) {
-					update = "UPDATE footballstats.rushstats SET Long = " + list.get(i) + " WHERE team = '" + team + "';";
-				} else if ((i % 3) == 0) {
-					update = "UPDATE footballstats.rushstats SET Yds/Att = " + list.get(i) + " WHERE team = '" + team
+				String result = list.get(i);
+				double resultDouble;
+				int resultInt;
+				if (result.contains("-")) {
+					resultDouble = 0;
+					resultInt = 0;
+				}
+				if (((i - 5) % 6) == 0) {
+					resultInt = Integer.parseInt(result);
+					update = "UPDATE footballstats.rushstats SET TD = " + resultInt + " WHERE Team = '" + team + "';";
+				} else if (((i - 4) % 6) == 0) {
+					resultInt = Integer.parseInt(result);
+					update = "UPDATE footballstats.rushstats SET Lng = " + resultInt + " WHERE Team = '" + team
 							+ "';";
-				} else if ((i % 2) == 0) {
-					update = "UPDATE footballstats.rushstats SET Yds = " + list.get(i) + " WHERE team = '" + team + "';";
+				} else if (((i - 3) % 6) == 0) {
+					resultDouble = Double.parseDouble(result);
+					update = "UPDATE footballstats.rushstats SET Yds_Att = " + resultDouble + " WHERE Team = '" + team
+							+ "';";
+				} else if (((i - 2) % 6) == 0) {
+					resultInt = Integer.parseInt(result);
+					update = "UPDATE footballstats.rushstats SET Yds = " + resultInt + " WHERE Team = '" + team
+							+ "';";
 				} else {
-					update = "UPDATE footballstats.rushstats SET Att = " + list.get(i) + " WHERE team = '" + team + "';";
+					resultInt = Integer.parseInt(result);
+					update = "UPDATE footballstats.rushstats SET Att = " + resultInt + " WHERE Team = '" + team
+							+ "';";
 				}
 				try {
 					PreparedStatement prepStatement = connection.prepareStatement(update);
-		            prepStatement.executeUpdate();
-		        } catch (SQLException e) {
-		            e.printStackTrace();
-		        }
+					prepStatement.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 
 			}
 		}

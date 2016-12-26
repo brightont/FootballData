@@ -142,24 +142,29 @@ public class OptionsController {
             
             RushStat rush = new RushStat();
             ArrayList<String> listTeam = rush.getRushStats(stringTeam);
-            ArrayList<String> listOpp = rush.getRushStats(stringOpponent);
+            ArrayList<String> listOpponent = rush.getRushStats(stringOpponent);
             
-            /*for (String r : listTeam) {
-            	System.out.println(r);
-            }*/
-            
-            /*int result = rush.checkForNewPlayer(listTeam);
-            if (result != 0) {
-            	
-            }*/
-            /*rush.checkForNewPlayer(listOpp, stringOpponent);
-            
-            if (rush.checkDatabase(listTeam) == false) {
-            	rush.updateDatabase(listTeam, rush.getTeamName(stringTeam));
-            } 
-            if (rush.checkDatabase(listOpp) == false) {
-            	rush.updateDatabase(listOpp, rush.getTeamName(stringOpponent));
-            }*/
+            //add a new player if a new player is added
+            ArrayList<Integer> intListTeam = rush.checkForNewPlayer(listTeam);
+        	if (intListTeam.size() != 0) {
+        		rush.scrapeNewPlayer(listTeam, intListTeam, stringTeam);
+        	}
+        	
+        	ArrayList<Integer> intListOpponent = rush.checkForNewPlayer(listOpponent);
+        	if (intListOpponent.size() != 0) {
+        		rush.scrapeNewPlayer(listOpponent, intListOpponent, stringOpponent);
+        	}
+        	
+        	//update database if needed
+			if (rush.checkDatabaseList(listTeam, 7, "rush") == false
+					|| rush.checkDatabaseList(listTeam, 13, "rush") == false) {
+				rush.updateDatabase(listTeam, rush.getTeamName(stringTeam));
+			}
+			
+			if (rush.checkDatabaseList(listOpponent, 7, "rush") == false
+					|| rush.checkDatabaseList(listOpponent, 13, "rush") == false) {
+				rush.updateDatabase(listOpponent, rush.getTeamName(stringOpponent));
+			}
             
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Rush Stats button couldn't be clicked.");
