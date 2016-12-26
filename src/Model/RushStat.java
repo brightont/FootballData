@@ -113,8 +113,11 @@ public class RushStat extends Stat{
 	 * @param team
 	 */
 	public void updateDatabase(ArrayList<String> list, String team) {
+		String player = "";
 		for (int i = 6; i < list.size(); i++) {
-			if ((i % 6) != 0) {
+			if ((i % 6) == 0) {
+				player = list.get(i);
+			} else if ((i % 6) != 0) {
 				String update = "";
 				String result = list.get(i);
 				double resultDouble;
@@ -125,23 +128,24 @@ public class RushStat extends Stat{
 				}
 				if (((i - 5) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
-					update = "UPDATE footballstats.rushstats SET TD = " + resultInt + " WHERE Team = '" + team + "';";
+					update = "UPDATE footballstats.rushstats SET TD = " + resultInt + " WHERE Team = '" + team
+							+ "' AND Player = '" + player + "';";
 				} else if (((i - 4) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.rushstats SET Lng = " + resultInt + " WHERE Team = '" + team
-							+ "';";
+							+ "' AND Player = '" + player + "';";
 				} else if (((i - 3) % 6) == 0) {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.rushstats SET Yds_Att = " + resultDouble + " WHERE Team = '" + team
-							+ "';";
+							+ "' AND Player = '" + player + "';";
 				} else if (((i - 2) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.rushstats SET Yds = " + resultInt + " WHERE Team = '" + team
-							+ "';";
+							+ "' AND Player = '" + player + "';";
 				} else {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.rushstats SET Att = " + resultInt + " WHERE Team = '" + team
-							+ "';";
+							+ "' AND Player = '" + player + "';";
 				}
 				try {
 					PreparedStatement prepStatement = connection.prepareStatement(update);

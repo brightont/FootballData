@@ -3,8 +3,8 @@ package Controller;
 import java.util.ArrayList;
 
 import Model.Model;
+import Model.QBStat;
 import Model.QBStatTable;
-import Model.TeamStat;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -44,7 +44,7 @@ public class ViewQBStatController {
         String stringTeam = tcc.getStringTeam();
         String stringOpponent = tcc.getStringOpponent();
         
-        TeamStat team = new TeamStat();
+        QBStat team = new QBStat();
         stringTeamName = team.getTeamName(stringTeam);
         stringOppName = team.getTeamName(stringOpponent);
         
@@ -65,10 +65,7 @@ public class ViewQBStatController {
 		Model model = new Model();
 		ArrayList<String> statNames = model.getQBStatsName(stringTeamName);
 		ArrayList<String> homeStats = model.getQBStats(stringTeamName);
-		
-		//prevents pointing to the same thing
-		Model model2 = new Model();
-		ArrayList<String> oppStats = model2.getQBStats(stringOppName);
+		ArrayList<String> oppStats = model.getQBStats(stringOppName);
 		
 		int index = 0;
 		for (String name: statNames) {

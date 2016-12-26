@@ -11,28 +11,28 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ViewRushStatController">
 	<children>
-		<SplitPane dividerPositions="0.6923076923076923" layoutY="14.0" prefHeight="381.0" prefWidth="600.0" style="-fx-background-color: black;">
+		<SplitPane dividerPositions="0.7157190635451505" layoutY="14.0" prefHeight="381.0" prefWidth="600.0" style="-fx-background-color: black;">
 			<items>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: red;">
 					<children>
-						<TableView fx:id="rushStatTable" layoutX="11.0" layoutY="40.0" prefHeight="125.0" prefWidth="390.0">
+						<TableView fx:id="rushStatTable" layoutX="11.0" layoutY="40.0" prefHeight="125.0" prefWidth="402.0">
 							<columns>
-								<TableColumn fx:id="homePlayer" prefWidth="77.0" text="Player" />
-								<TableColumn fx:id="homeAtt" prefWidth="56.33331298828125" text="Att" />
-								<TableColumn fx:id="homeYds" prefWidth="56.3333740234375" text="Yds" />
-                        <TableColumn fx:id="homeYA" prefWidth="71.6666259765625" text="Yds/Att" />
-                        <TableColumn fx:id="homeLong" prefWidth="57.0" text="Long" />
-                        <TableColumn fx:id="homeTD" prefWidth="75.0" text="TD" />
+								<TableColumn fx:id="homePlayer" prefWidth="107.66668701171875" text="Player" />
+								<TableColumn fx:id="homeAtt" prefWidth="48.333343505859375" text="Att" />
+								<TableColumn fx:id="homeYds" prefWidth="52.66668701171875" text="Yds" />
+                        <TableColumn fx:id="homeYA" prefWidth="55.33331298828125" text="Yds/Att" />
+                        <TableColumn fx:id="homeLong" prefWidth="66.33331298828125" text="Long" />
+                        <TableColumn fx:id="homeTD" prefWidth="68.0" text="TD" />
 							</columns>
 						</TableView>
-                  <TableView fx:id="oppRushStatTable" layoutX="11.0" layoutY="221.0" prefHeight="125.0" prefWidth="390.0">
+                  <TableView fx:id="oppRushStatTable" layoutX="11.0" layoutY="221.0" prefHeight="125.0" prefWidth="402.0">
                      <columns>
-                        <TableColumn fx:id="oppPlayer" prefWidth="77.0" text="Player" />
-                        <TableColumn fx:id="oppAtt" prefWidth="56.33331298828125" text="Att" />
-                        <TableColumn fx:id="oppYds" prefWidth="56.3333740234375" text="Yds" />
-                        <TableColumn fx:id="oppYA" prefWidth="71.6666259765625" text="Yds/Att" />
-                        <TableColumn fx:id="oppLong" prefWidth="57.0" text="Long" />
-                        <TableColumn fx:id="oppTD" prefWidth="75.0" text="TD" />
+                        <TableColumn fx:id="oppPlayer" prefWidth="105.66665649414062" text="Player" />
+                        <TableColumn fx:id="oppAtt" prefWidth="42.33331298828125" text="Att" />
+                        <TableColumn fx:id="oppYds" prefWidth="61.33331298828125" text="Yds" />
+                        <TableColumn fx:id="oppYA" prefWidth="63.66668701171875" text="Yds/Att" />
+                        <TableColumn fx:id="oppLong" prefWidth="69.33331298828125" text="Long" />
+                        <TableColumn fx:id="oppTD" prefWidth="60.0" text="TD" />
                      </columns>
                   </TableView>
                   <Label layoutX="153.0" layoutY="14.0" text="Home Team">

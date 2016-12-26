@@ -73,10 +73,7 @@ public class ViewTeamStatController {
 		Model model = new Model();
 		ArrayList<String> statNames = model.getStatsName();
 		ArrayList<String> homeStats = model.getTeamStats(stringTeamName);
-		
-		//prevents pointing to the same thing
-		Model model2 = new Model();
-		ArrayList<String> oppStats = model2.getTeamStats(stringOppName);
+		ArrayList<String> oppStats = model.getTeamStats(stringOppName);
 		
 		int index = 0;
 		

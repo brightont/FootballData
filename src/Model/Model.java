@@ -14,10 +14,6 @@ public class Model {
 
 	private static final Model instance = new Model();
 	private static final Logger logger = Logger.getLogger("Model.class");
-	public ArrayList<String> statsName = new ArrayList<>();
-	public ArrayList<String> stats = new ArrayList<>();
-	public ArrayList<String> qbStatsName = new ArrayList<>();
-	public ArrayList<String> qbStats = new ArrayList<>();
 	
 	private Connection connection;
 
@@ -75,6 +71,7 @@ public class Model {
      * @return
      */
     public ArrayList<String> getStatsName() {
+    	ArrayList<String> statsName = new ArrayList<>();
     	String newName = "";
     	try {
     		establishConnection();
@@ -103,7 +100,7 @@ public class Model {
      * @return 
      */
     public ArrayList<String> getTeamStats(String team) {
-    	stats.clear();
+    	ArrayList<String> stats = new ArrayList<>();
     	try {
     		stats.add(team);
     		establishConnection();
@@ -133,6 +130,7 @@ public class Model {
      * @return
      */
     public ArrayList<String> getQBStatsName(String team) {
+    	ArrayList<String> qbStatsName = new ArrayList<String>();
     	String newName = "";
     	try {
     		establishConnection();
@@ -161,7 +159,7 @@ public class Model {
      * @return 
      */
     public ArrayList<String> getQBStats(String team) {
-    	qbStats.clear();
+    	ArrayList<String> qbStats = new ArrayList<>();
     	try {
     		qbStats.add(team);
     		establishConnection();
@@ -202,5 +200,37 @@ public class Model {
         }
     }
     
-    
+    /**
+     * Gets the rush stat
+     * @param team
+     * @param columnIndex
+     * @return
+     */
+    public ArrayList<String> getRushStat(String team, int columnIndex) {
+    	ArrayList<String> rushStats =  new ArrayList<String>();
+    	try {
+    		establishConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.rushstats;");
+			ResultSetMetaData rsmd = rs.getMetaData();
+			String name = rsmd.getColumnName(columnIndex);
+			String query = "SELECT " + name + " FROM footballstats.rushstats WHERE team = '" + team + "';";
+			ResultSet result = statement.executeQuery(query);
+			if (columnIndex == 2) {
+				while (result.next()) {
+					String player = result.getString(name);
+					rushStats.add(player);
+				}
+			} else {
+				while (result.next()) {
+					double data = result.getDouble(name);
+					String dataString = Double.toString(data);
+					rushStats.add(dataString);
+				}
+			}
+    	} catch (SQLException e) {
+    		logger.log(Level.FINE, "Could not get RushStats.");
+    	}
+    	return rushStats;
+    }
 }
