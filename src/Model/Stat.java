@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +42,23 @@ public abstract class Stat {
 			logger.log(Level.FINE, "Could not check the database");
 		}
 		return true;
-		
+	}
+	
+	/**
+	 * Checks to see if there's a player and returns the index
+	 * @param list
+	 * @return
+	 */
+	public int checkForNewPlayer(ArrayList<String> list) {
+		int i = 0;
+		for (i = 6; i < list.size(); i++) {
+			if ((i % 6) == 0) {
+				if ((getPlayer(list.get(i), "rushStats")) == "") {
+					return i;
+				} 
+			}
+		}
+		return 0;
 	}
 	
 	/**
@@ -68,7 +85,6 @@ public abstract class Stat {
 	 */
 	public void updateQueryInt(String key, int value, String team, String table) {
 		String update = "UPDATE footballstats." + table + " SET " + key + " = " + value + " WHERE Team = '" + team + "';";
-		//System.out.println(update);
 		try {
 			PreparedStatement prepStatement = connection.prepareStatement(update);
 			prepStatement.executeUpdate();
@@ -93,6 +109,25 @@ public abstract class Stat {
 		}
 	}
 	
+	/**
+	 * Gets the player
+	 * @param player
+	 * @return
+	 */
+    public String getPlayer(String player, String table) {
+        String queryUser = "SELECT * FROM footballstats." + table + " WHERE Player = '" + player + "';";
+        String answer = "";
+        try {
+            Statement userStatement = connection.createStatement();
+            ResultSet result = userStatement.executeQuery(queryUser);
+            while (result.next()) {
+                answer = result.getString("Player");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return answer;
+    }
 
 	
 	/**

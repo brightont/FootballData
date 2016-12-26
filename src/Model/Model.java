@@ -192,7 +192,7 @@ public class Model {
     	return qbStats;
     }
     
-    public void removeTeamStat(String team, String table) {
+    public void removeStat(String team, String table) {
     	String query = "DELETE FROM footballstats." + table + " WHERE Team = '" + team + "';";
     	try {
             Statement userStatement = connection.createStatement();

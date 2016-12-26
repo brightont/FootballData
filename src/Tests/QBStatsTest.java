@@ -114,14 +114,12 @@ public class QBStatsTest {
 		String newResult = "";
 		Connection connection = database.establishConnection();
 		String queryUser = "SELECT " + name + " FROM footballstats.qbstats WHERE Team = 'Testing';";
-		System.out.println(queryUser);
 		try {
 			Statement userStatement = connection.createStatement();
 			ResultSet result = userStatement.executeQuery(queryUser);
 			while (result.next()) {
 				double newResultDouble = result.getDouble(name);
 				newResult = String.valueOf(newResultDouble);
-				System.out.println(newResult + " " + newResultDouble);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -131,6 +129,6 @@ public class QBStatsTest {
 	
     @After
     public void delete() {
-    	database.removeTeamStat("Testing", "qbstats");
+    	database.removeStat("Testing", "qbstats");
     }
 }

@@ -1,12 +1,14 @@
 package Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import MainApplication.MainApplication;
 import Model.QBStat;
+import Model.RushStat;
 import Model.TeamStat;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -134,16 +136,23 @@ public class OptionsController {
             stage.setScene(scene);
             stage.show();
             
-            /*TeamSelectorController tcc = new TeamSelectorController();
+            TeamSelectorController tcc = new TeamSelectorController();
             String stringTeam = tcc.getStringTeam();
             String stringOpponent = tcc.getStringOpponent();
             
-            Rush rush = new Rush();
+            RushStat rush = new RushStat();
             ArrayList<String> listTeam = rush.getRushStats(stringTeam);
             ArrayList<String> listOpp = rush.getRushStats(stringOpponent);
             
-            rush.checkForNewPlayer(listTeam, stringTeam);
-            rush.checkForNewPlayer(listOpp, stringOpponent);
+            /*for (String r : listTeam) {
+            	System.out.println(r);
+            }*/
+            
+            /*int result = rush.checkForNewPlayer(listTeam);
+            if (result != 0) {
+            	
+            }*/
+            /*rush.checkForNewPlayer(listOpp, stringOpponent);
             
             if (rush.checkDatabase(listTeam) == false) {
             	rush.updateDatabase(listTeam, rush.getTeamName(stringTeam));

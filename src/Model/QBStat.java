@@ -3,11 +3,8 @@ package Model;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jsoup.Jsoup;
@@ -106,24 +103,5 @@ public class QBStat extends Stat{
 			}
 		}
 	}
-	
-	public String getValueDouble(String name) {
-		String newResult = "";
-		Connection connection = database.establishConnection();
-		String queryUser = "SELECT " + name + " FROM footballstats.qbstats WHERE Team = 'Testing';";
-		try {
-			Statement userStatement = connection.createStatement();
-			ResultSet result = userStatement.executeQuery(queryUser);
-			while (result.next()) {
-				double newResultDouble = result.getDouble(name);
-				newResult = String.valueOf(newResultDouble);
-				System.out.println(newResult + " " + newResultDouble);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return newResult;
-	}
-	
 	
 }
