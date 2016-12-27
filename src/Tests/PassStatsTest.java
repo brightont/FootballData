@@ -77,7 +77,7 @@ public class PassStatsTest {
     @Test(timeout = TIMEOUT)
     public void checkDatabaseTest() throws InterruptedException {		
     	PassStat pass = new PassStat();
-    	boolean bool = pass.checkDatabaseList(list, 7 , "rush");
+    	boolean bool = pass.checkDatabaseList(list, 7 , "rush", "Att");
     	
 		assertTrue(bool);
     }

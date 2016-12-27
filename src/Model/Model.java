@@ -338,4 +338,38 @@ public class Model {
 		}
     	return fgStats;
     }
+    
+    /**
+     * Gets the def stat
+     * @param team
+     * @param columnIndex
+     * @return
+     */
+    public ArrayList<String> getDefStat(String team, int columnIndex) {
+    	ArrayList<String> defStats =  new ArrayList<String>();
+    	try {
+    		establishConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.defstats;");
+			ResultSetMetaData rsmd = rs.getMetaData();
+			String name = rsmd.getColumnName(columnIndex);
+			String query = "SELECT " + name + " FROM footballstats.defstats WHERE team = '" + team + "';";
+			ResultSet result = statement.executeQuery(query);
+			if (columnIndex == 2) {
+				while (result.next()) {
+					String player = result.getString(name);
+					defStats.add(player);
+				}
+			} else {
+				while (result.next()) {
+					double data = result.getDouble(name);
+					String dataString = Double.toString(data);
+					defStats.add(dataString);
+				}
+			}
+    	} catch (SQLException e) {
+    		logger.log(Level.FINE, "Could not get Defensive Stats.");
+    	}
+    	return defStats;
+    }
 }

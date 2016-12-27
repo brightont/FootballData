@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import MainApplication.MainApplication;
+import Model.DefStat;
 import Model.FieldGoalStat;
 import Model.PassStat;
 import Model.QBStat;
@@ -38,6 +39,9 @@ public class OptionsController {
 	
 	@FXML
 	private Button fieldGoals;
+	
+	@FXML
+	private Button defStats;
 	
 	@FXML
 	private Button mainScreenButton;
@@ -78,12 +82,12 @@ public class OptionsController {
             hashOpponent.values().remove(stringOpponent);
             
             if (team.checkDatabase(hashTeam, value, "team") == false) {
-            	System.out.println("Dog");
             	team.updateDatabase(hashTeam, team.getTeamName(stringTeam));
             }  
             if (team.checkDatabase(hashOpponent, value, "team") == false) {
             	team.updateDatabase(hashOpponent, team.getTeamName(stringOpponent));
             }
+            
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Team Stats could not be loaded.");
 		}
@@ -164,13 +168,13 @@ public class OptionsController {
         	}
         	
         	//update database if needed
-			if (rush.checkDatabaseList(listTeam, 7, "rush") == false
-					|| rush.checkDatabaseList(listTeam, 13, "rush") == false) {
+			if (rush.checkDatabaseList(listTeam, 7, "rush", "Att") == false
+					|| rush.checkDatabaseList(listTeam, 13, "rush", "Att") == false) {
 				rush.updateDatabase(listTeam, rush.getTeamName(stringTeam));
 			}
 			
-			if (rush.checkDatabaseList(listOpponent, 7, "rush") == false
-					|| rush.checkDatabaseList(listOpponent, 13, "rush") == false) {
+			if (rush.checkDatabaseList(listOpponent, 7, "rush", "Att") == false
+					|| rush.checkDatabaseList(listOpponent, 13, "rush", "Att") == false) {
 				rush.updateDatabase(listOpponent, rush.getTeamName(stringOpponent));
 			}
             
@@ -212,17 +216,17 @@ public class OptionsController {
         	
         	ArrayList<Integer> intListOpponent = pass.checkForNewPlayer(listOpponent, "pass_stats");
         	if (intListOpponent.size() != 0) {
-        		pass.scrapeNewPlayer(listOpponent, intListOpponent, pass.getTeamName(stringTeam));
+        		pass.scrapeNewPlayer(listOpponent, intListOpponent, pass.getTeamName(stringOpponent));
         	}
         	
         	//update database if needed
-			if (pass.checkDatabaseList(listTeam, 7, "pass_") == false
-					|| pass.checkDatabaseList(listTeam, 13, "pass_") == false) {
+			if (pass.checkDatabaseList(listTeam, 7, "pass_", "Att") == false
+					|| pass.checkDatabaseList(listTeam, 13, "pass_", "Att") == false) {
 				pass.updateDatabase(listTeam, pass.getTeamName(stringTeam));
 			}
 			
-			if (pass.checkDatabaseList(listOpponent, 7, "pass_") == false
-					|| pass.checkDatabaseList(listOpponent, 13, "pass_") == false) {
+			if (pass.checkDatabaseList(listOpponent, 7, "pass_", "Att") == false
+					|| pass.checkDatabaseList(listOpponent, 13, "pass_", "Att") == false) {
 				pass.updateDatabase(listOpponent, pass.getTeamName(stringOpponent));
 			}
             
@@ -268,6 +272,59 @@ public class OptionsController {
 			logger.log(Level.FINE, "Field Goal Stats couldn't be loaded.");
 		}
 		
+	}
+	
+	/**
+	 * View Def Stats
+	 */
+	@FXML
+	private void selectDefStats() {
+		try {
+        	Stage stage;
+            Parent root;
+
+            stage = (Stage) defStats.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../view/DefStatView.fxml"));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            
+            TeamSelectorController tcc = new TeamSelectorController();
+            String stringTeam = tcc.getStringTeam();
+            String stringOpponent = tcc.getStringOpponent();
+			
+            DefStat def = new DefStat();
+            ArrayList<String> listTeam = def.getDefStats(stringTeam);
+            ArrayList<String> listOpponent = def.getDefStats(stringOpponent);
+            
+            listTeam = def.removeLastItem(listTeam);
+            listOpponent = def.removeLastItem(listOpponent);
+           
+            ArrayList<Integer> intListTeam = def.checkForNewPlayer(listTeam, "defstats");
+            if (intListTeam.size() != 0) {
+        		def.scrapeNewPlayer(listTeam, intListTeam, def.getTeamName(stringTeam));
+        	}
+        	
+        	ArrayList<Integer> intListOpponent = def.checkForNewPlayer(listOpponent, "defstats");
+        	if (intListOpponent.size() != 0) {
+        		def.scrapeNewPlayer(listOpponent, intListOpponent, def.getTeamName(stringOpponent));
+        	}
+        	
+        	//update database if needed
+			if (def.checkDatabaseList(listTeam, 7, "def", "Comb") == false
+					|| def.checkDatabaseList(listTeam, 13, "def", "Comb") == false) {
+				def.updateDatabase(listTeam, def.getTeamName(stringTeam));
+			}
+			
+			if (def.checkDatabaseList(listOpponent, 7, "def", "Comb") == false
+					|| def.checkDatabaseList(listOpponent, 13, "def", "Comb") == false) {
+				def.updateDatabase(listOpponent, def.getTeamName(stringOpponent));
+			}
+            
+		} catch (IOException e) {
+			logger.log(Level.FINE, "Defense Stats couldn't be loaded.");
+		}
 	}
 	
 	@FXML

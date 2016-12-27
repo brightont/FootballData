@@ -53,9 +53,9 @@ public abstract class Stat {
 	 * @param list
 	 * @return
 	 */
-	public boolean checkDatabaseList(ArrayList<String> list, int i, String table) {
+	public boolean checkDatabaseList(ArrayList<String> list, int i, String table, String val) {
 		String temp = list.get(i);
-		String query = "SELECT * FROM footballstats." + table + "stats WHERE Att = " + temp + ";";
+		String query = "SELECT * FROM footballstats." + table + "stats WHERE " + val + " = " + temp + ";";
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(query);
@@ -79,9 +79,11 @@ public abstract class Stat {
 		int i;
 		for (i = 6; i < list.size(); i++) {
 			if ((i % 6) == 0) {
-				if ((getPlayer(list.get(i), table)) == "") {
-					returnArray.add(i);
-				} 
+				if (list.get(i) != "TEAM TOTAL") {
+					if ((getPlayer(list.get(i), table)) == "") {
+						returnArray.add(i);
+					} 
+				}
 			}
 		}
 		return returnArray;
@@ -141,6 +143,9 @@ public abstract class Stat {
 	 * @return
 	 */
     public String getPlayer(String player, String table) {
+    	if (player.contains("'")) {
+    		player = player.replace("'", "");
+    	}
         String queryUser = "SELECT * FROM footballstats." + table + " WHERE Player = '" + player + "';";
         String answer = "";
         try {

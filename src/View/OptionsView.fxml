@@ -46,5 +46,11 @@
          </image>
       </ImageView>
       <Button fx:id="fieldGoals" layoutX="199.0" layoutY="208.0" mnemonicParsing="false" onAction="#selectFieldGoals" text="Field Goals" />
+      <ImageView fitHeight="49.0" fitWidth="71.0" layoutX="200.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Pictures/fgIcon.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="defStats" layoutX="197.0" layoutY="294.0" mnemonicParsing="false" onAction="#selectDefStats" prefHeight="25.0" prefWidth="71.0" text="Def. Stats" />
    </children>
 </AnchorPane>

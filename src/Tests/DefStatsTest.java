@@ -13,10 +13,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import Model.DefStat;
 import Model.Model;
-import Model.RushStat;
 
-public class RushStatsTest {
+public class DefStatsTest {
 	private static final int TIMEOUT = 10000;
 	private Model database = new Model();
     
@@ -27,7 +27,7 @@ public class RushStatsTest {
     	database = new Model();
 		database.readDatabase();
 		
-		RushStat rushStat = new RushStat("Testing", "Tester", 1, 1, 1, 1, 1);
+		DefStat defstat= new DefStat("Testing", "Tester", 1, 1, 1, 1, 1);
 		//list of stat names
 		list.add("Stat1");
 		list.add("Stat2");
@@ -43,14 +43,11 @@ public class RushStatsTest {
 		list.add("1");
 		list.add("1");
 		list.add("1");
-	
     }
     
     @Test(timeout = TIMEOUT)
     public void checkForNewPlayer() throws InterruptedException {
-    	//adding values
-    	
-    	//player 2
+		// player 2
 		list.add("Tester2");
 		list.add("2");
 		list.add("2");
@@ -65,48 +62,49 @@ public class RushStatsTest {
 		list.add("3");
 		list.add("3");
 		list.add("3");
+    			
+    	DefStat defStat = new DefStat();
     	
-    	RushStat rush = new RushStat();
-		
-    	ArrayList<Integer> intList = rush.checkForNewPlayer(list, "rushstats");
+    	ArrayList<Integer> intList = defStat.checkForNewPlayer(list, "defstats");
     	if (intList.size() != 0) {
-    		rush.scrapeNewPlayer(list, intList, "Testing");
+    		defStat.scrapeNewPlayer(list, intList, "Testing");
     	}
+    	
     	assertEquals("Tester2", getPlayer("Tester2"));
     	assertEquals("Tester3", getPlayer("Tester3"));
     }
     
     @Test(timeout = TIMEOUT)
     public void checkDatabaseTest() throws InterruptedException {		
-    	RushStat rush = new RushStat();
-    	boolean bool = rush.checkDatabaseList(list, 7 , "rush", "Att");
+    	DefStat def = new DefStat();
+    	boolean bool = def.checkDatabaseList(list, 7 , "def", "Comb");
     	
 		assertTrue(bool);
     }
     
     @Test(timeout = TIMEOUT)
     public void updateDatabase() throws InterruptedException {
-    	RushStat rush = new RushStat();
+    	DefStat def = new DefStat();
     	
     	//set for integer
     	list.set(7, "2");
     
     	//set for double
-    	list.set(9, "2.3");
+    	list.set(10, "2.3");
     	
-    	rush.updateDatabase(list, "Testing");
+    	def.updateDatabase(list, "Testing");
     	
-    	assertEquals("2", getValueInt("Att"));
-    	assertEquals("2.3", getValueDouble("Yds_Att"));
+    	assertEquals("2", getValueInt("Comb"));
+    	assertEquals("2.3", getValueDouble("Sck"));
     }
-    
+
     /**
      * Gets the player from a database
      * @param player
      * @return
      */
     public String getPlayer(String player) {
-        String queryUser = "SELECT * FROM footballstats.rushstats WHERE Player = '" + player + "';";
+        String queryUser = "SELECT * FROM footballstats.defstats WHERE Player = '" + player + "';";
         String answer = "";
         Connection connection = database.establishConnection();
         try {
@@ -130,7 +128,7 @@ public class RushStatsTest {
 	public String getValueInt(String name) {
 		String newResult = "";
 		Connection connection = database.establishConnection();
-		String queryUser = "SELECT " + name + " FROM footballstats.rushstats WHERE Team = 'Testing';";
+		String queryUser = "SELECT " + name + " FROM footballstats.defstats WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();
 			ResultSet result = userStatement.executeQuery(queryUser);
@@ -153,7 +151,7 @@ public class RushStatsTest {
 	public String getValueDouble(String name) {
 		String newResult = "";
 		Connection connection = database.establishConnection();
-		String queryUser = "SELECT " + name + " FROM footballstats.rushstats WHERE Team = 'Testing';";
+		String queryUser = "SELECT " + name + " FROM footballstats.defstats WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();
 			ResultSet result = userStatement.executeQuery(queryUser);
@@ -166,10 +164,8 @@ public class RushStatsTest {
 		}
 		return newResult;
 	}
-    
     @After
     public void delete() {
-    	database.removeStat("Testing", "rushstats");
+    	database.removeStat("Testing", "defstats");
     }
-
 }
