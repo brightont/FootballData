@@ -14,7 +14,7 @@ import org.jsoup.select.Elements;
 
 public class TeamStat extends Stat {
 	private Model database = new Model();
-	private static final Logger logger = Logger.getLogger("Team.class");
+	private static final Logger logger = Logger.getLogger("TeamStat.class");
 	private final Connection connection = database.establishConnection();
 	public Document document;
 

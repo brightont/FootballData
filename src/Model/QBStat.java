@@ -13,7 +13,7 @@ import org.jsoup.select.Elements;
 
 public class QBStat extends Stat{
 	private Model database = new Model();
-	private static final Logger logger = Logger.getLogger("QuarterBack.class");
+	private static final Logger logger = Logger.getLogger("QBStat.class");
 	private final Connection connection = database.establishConnection();
 	public Document document;
 	

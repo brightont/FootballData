@@ -14,7 +14,7 @@ import org.jsoup.select.Elements;
 
 public class RushStat extends Stat{
 	private Model database = new Model();
-	private static final Logger logger = Logger.getLogger("Rush.class");
+	private static final Logger logger = Logger.getLogger("RushStat.class");
 	private final Connection connection = database.establishConnection();
 	public Document document;
 	

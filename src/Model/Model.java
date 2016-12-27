@@ -267,4 +267,75 @@ public class Model {
     	}
     	return passStats;
     }
+    
+    /**
+     * Gets the name of the stats
+     * @param team
+     * @return
+     */
+    public ArrayList<String> getFGStatsName(String team) {
+    	ArrayList<String> fgStatsName = new ArrayList<String>();
+    	String newName = "";
+    	try {
+    		establishConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.fgstats;");
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int columnCount = rsmd.getColumnCount();
+			for (int i = 1; i <= columnCount; i++) {
+				String name = rsmd.getColumnName(i);
+				if (name.contains("to")) {
+					newName = name.replace("to", "-");
+					newName = newName.replace("_", " ");
+					fgStatsName.add(newName);
+				} else if (name.contains("plus")) {
+					newName = name.replace("plus", "+");
+					newName = newName.replace("_", " ");
+					fgStatsName.add(newName);
+				} else {
+					fgStatsName.add(name);
+				}
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get the field goal stats name.");
+		}
+    	return fgStatsName;
+    }
+    
+    /**
+     * Gets the fg stats and displays them
+     * @param team
+     * @return 
+     */
+    public ArrayList<String> getFGStats(String team) {
+    	ArrayList<String> fgStats = new ArrayList<>();
+    	try {
+    		fgStats.add(team);
+    		establishConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.fgstats;");
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int columnCount = rsmd.getColumnCount();
+			for (int i = 2; i <= columnCount; i++) {
+				String name = rsmd.getColumnName(i);
+				String query2 = "SELECT * FROM footballstats.fgstats WHERE team = '" + team + "';";
+				ResultSet result = statement.executeQuery(query2);
+				if (i == 2) {
+					while (result.next()) {
+						String player = result.getString(name);
+						fgStats.add(player);
+					}
+				} else {
+					while (result.next()) {
+						int data = result.getInt(name);
+						String dataString = Integer.toString(data);
+						fgStats.add(dataString);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get field goal stat values.");
+		}
+    	return fgStats;
+    }
 }

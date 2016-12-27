@@ -14,7 +14,7 @@ import org.jsoup.select.Elements;
 
 public class PassStat extends Stat{
 	private Model database = new Model();
-	private static final Logger logger = Logger.getLogger("Rush.class");
+	private static final Logger logger = Logger.getLogger("PassStat.class");
 	private final Connection connection = database.establishConnection();
 	public Document document;
 

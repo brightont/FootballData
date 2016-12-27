@@ -45,6 +45,6 @@
             <Image url="@../../../../Pictures/passIcon.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="fieldGoals" layoutX="199.0" layoutY="208.0" mnemonicParsing="false" text="Field Goals" />
+      <Button fx:id="fieldGoals" layoutX="199.0" layoutY="208.0" mnemonicParsing="false" onAction="#selectFieldGoals" text="Field Goals" />
    </children>
 </AnchorPane>

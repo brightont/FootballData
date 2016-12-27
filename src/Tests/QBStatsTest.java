@@ -53,7 +53,7 @@ public class QBStatsTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void updateDatabaseTestNorm() throws InterruptedException {		
+    public void updateDatabaseTest() throws InterruptedException {		
     	QBStat qb = new QBStat();
     	
     	//regular hash map value

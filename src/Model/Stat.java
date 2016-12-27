@@ -30,6 +30,10 @@ public abstract class Stat {
 	public boolean checkDatabase(HashMap<String, String> hash, String value, String table) {
 		String hashValue = hash.get(value);
 		int intVal = Integer.parseInt(hashValue);
+		if (value.contains("-")) {
+			value = value.replace("-", "to");
+			value = value.replace(" ", "_");
+		} 
 		String query = "SELECT * FROM footballstats." + table + "stats WHERE " + value + " = " + intVal + ";";
 		try {
 			Statement statement = connection.createStatement();

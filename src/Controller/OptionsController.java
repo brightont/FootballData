@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import MainApplication.MainApplication;
+import Model.FieldGoalStat;
 import Model.PassStat;
 import Model.QBStat;
 import Model.RushStat;
@@ -34,6 +35,9 @@ public class OptionsController {
 	
 	@FXML
 	private Button passStats;
+	
+	@FXML
+	private Button fieldGoals;
 	
 	@FXML
 	private Button mainScreenButton;
@@ -224,6 +228,44 @@ public class OptionsController {
             
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Pass Stats couldn't be loaded.");
+		}
+		
+	}
+	
+	/**
+	 * View Field Goals
+	 */
+	@FXML
+	private void selectFieldGoals() {
+		try {
+			Stage stage;
+            Parent root;
+
+            stage = (Stage) fieldGoals.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../view/FieldGoalView.fxml"));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            
+            TeamSelectorController tcc = new TeamSelectorController();
+            String stringTeam = tcc.getStringTeam();
+            String stringOpponent = tcc.getStringOpponent();
+            
+            FieldGoalStat fg = new FieldGoalStat();
+            HashMap<String, String> hashFG = fg.getFGStats(stringTeam);
+            HashMap<String, String> hashOppFG = fg.getFGStats(stringOpponent);
+            
+            String value = "30-39 M";
+        	if (fg.checkDatabase(hashFG, value, "fg") == false) {
+        		fg.updateDatabase(hashFG, fg.getTeamName(stringTeam));
+        	}
+			if (fg.checkDatabase(hashOppFG, value, "fg") == false) {
+				fg.updateDatabase(hashFG, fg.getTeamName(stringOpponent));
+			}
+            
+		} catch (IOException e) {
+			logger.log(Level.FINE, "Field Goal Stats couldn't be loaded.");
 		}
 		
 	}
