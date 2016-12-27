@@ -372,4 +372,38 @@ public class Model {
     	}
     	return defStats;
     }
+    
+    /**
+     * Gets the pass stat
+     * @param team
+     * @param columnIndex
+     * @return
+     */
+    public ArrayList<String> getIntStat(String team, int columnIndex) {
+    	ArrayList<String> intStats =  new ArrayList<String>();
+    	try {
+    		establishConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.intstats;");
+			ResultSetMetaData rsmd = rs.getMetaData();
+			String name = rsmd.getColumnName(columnIndex);
+			String query = "SELECT " + name + " FROM footballstats.intstats WHERE team = '" + team + "';";
+			ResultSet result = statement.executeQuery(query);
+			if (columnIndex == 2) {
+				while (result.next()) {
+					String player = result.getString(name);
+					intStats.add(player);
+				}
+			} else {
+				while (result.next()) {
+					double data = result.getDouble(name);
+					String dataString = Double.toString(data);
+					intStats.add(dataString);
+				}
+			}
+    	} catch (SQLException e) {
+    		logger.log(Level.FINE, "Could not get Interception Stats.");
+    	}
+    	return intStats;
+    }
 }

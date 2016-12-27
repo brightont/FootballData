@@ -145,6 +145,8 @@ public abstract class Stat {
     public String getPlayer(String player, String table) {
     	if (player.contains("'")) {
     		player = player.replace("'", "");
+    	} else if (player.contains(".")) {
+    		player = player.replace(".", "");
     	}
         String queryUser = "SELECT * FROM footballstats." + table + " WHERE Player = '" + player + "';";
         String answer = "";

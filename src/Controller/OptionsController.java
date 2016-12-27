@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import MainApplication.MainApplication;
 import Model.DefStat;
 import Model.FieldGoalStat;
+import Model.IntStat;
 import Model.PassStat;
 import Model.QBStat;
 import Model.RushStat;
@@ -42,6 +43,9 @@ public class OptionsController {
 	
 	@FXML
 	private Button defStats;
+	
+	@FXML 
+	private Button interceptions;
 	
 	@FXML
 	private Button mainScreenButton;
@@ -327,6 +331,55 @@ public class OptionsController {
 		}
 	}
 	
+	/**
+	 * View Interceptions Stats
+	 */
+	@FXML
+	private void selectInterceptions() {
+		try {
+        	Stage stage;
+            Parent root;
+
+            stage = (Stage) interceptions.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../view/InterceptionsView.fxml"));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            
+            TeamSelectorController tcc = new TeamSelectorController();
+            String stringTeam = tcc.getStringTeam();
+            String stringOpponent = tcc.getStringOpponent();
+			
+            IntStat intStat = new IntStat();
+            ArrayList<String> listTeam = intStat.getIntStats(stringTeam);
+            ArrayList<String> listOpponent = intStat.getIntStats(stringOpponent);
+            
+            ArrayList<Integer> intListTeam = intStat.checkForNewPlayer(listTeam, "intstats");
+            if (intListTeam.size() != 0) {
+        		intStat.scrapeNewPlayer(listTeam, intListTeam, intStat.getTeamName(stringTeam));
+        	}
+        	
+        	ArrayList<Integer> intListOpponent = intStat.checkForNewPlayer(listOpponent, "intstats");
+        	if (intListOpponent.size() != 0) {
+        		intStat.scrapeNewPlayer(listOpponent, intListOpponent, intStat.getTeamName(stringOpponent));
+        	}
+            
+        	//update database if needed
+			if (intStat.checkDatabaseList(listTeam, 7, "int", "It") == false
+					|| intStat.checkDatabaseList(listTeam, 13, "int", "It") == false) {
+				intStat.updateDatabase(listTeam, intStat.getTeamName(stringTeam));
+			}
+			
+			if (intStat.checkDatabaseList(listOpponent, 7, "int", "It") == false
+					|| intStat.checkDatabaseList(listOpponent, 13, "int", "It") == false) {
+				intStat.updateDatabase(listOpponent, intStat.getTeamName(stringOpponent));
+			}
+		} catch (IOException e) {
+			logger.log(Level.FINE, "Interception Stats couldn't be loaded.");
+		}
+	}
+	
 	@FXML
 	private void handleBack() throws Exception {
 		Stage stage;
@@ -340,5 +393,6 @@ public class OptionsController {
 
         stage.setScene(scene);
         stage.show();
+        
 	}
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ViewInterceptionsController">
+	<children>
+		<SplitPane dividerPositions="0.7157190635451505" layoutY="14.0" prefHeight="381.0" prefWidth="600.0" style="-fx-background-color: black;">
+			<items>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: red;">
+					<children>
+						<TableView fx:id="intStatTable" layoutX="11.0" layoutY="40.0" prefHeight="125.0" prefWidth="402.0">
+							<columns>
+								<TableColumn fx:id="ihomePlayer" prefWidth="107.66668701171875" text="Player" />
+								<TableColumn fx:id="ihomeInt" prefWidth="48.333343505859375" text="Int" />
+								<TableColumn fx:id="ihomeYds" prefWidth="52.66668701171875" text="Yds" />
+                        <TableColumn fx:id="ihomeYI" prefWidth="55.33331298828125" text="Yds/Int" />
+                        <TableColumn fx:id="ihomeLong" prefWidth="66.33331298828125" text="Long" />
+                        <TableColumn fx:id="ihomeTD" prefWidth="68.0" text="TD" />
+							</columns>
+						</TableView>
+                  <TableView fx:id="oppIntStatTable" layoutX="11.0" layoutY="221.0" prefHeight="125.0" prefWidth="402.0">
+                     <columns>
+                        <TableColumn fx:id="ioppPlayer" prefWidth="105.66665649414062" text="Player" />
+                        <TableColumn fx:id="ioppInt" prefWidth="42.33331298828125" text="Int" />
+                        <TableColumn fx:id="ioppYds" prefWidth="61.33331298828125" text="Yds" />
+                        <TableColumn fx:id="ioppYI" prefWidth="63.66668701171875" text="Yds/Int" />
+                        <TableColumn fx:id="ioppLong" prefWidth="69.33331298828125" text="Long" />
+                        <TableColumn fx:id="ioppTD" prefWidth="60.0" text="TD" />
+                     </columns>
+                  </TableView>
+                  <Label layoutX="153.0" layoutY="14.0" text="Home Team">
+                     <font>
+                        <Font name="Cooper Black" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="139.0" layoutY="190.0" prefHeight="21.0" prefWidth="153.0" text="Opponent Team">
+                     <font>
+                        <Font name="Cooper Black" size="18.0" />
+                     </font>
+                  </Label>
+					</children>
+				</AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: red;">
+               <children>
+                  <Label layoutX="38.0" layoutY="30.0" text="Probability">
+                     <font>
+                        <Font name="Cooper Black" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="ireturnButton" layoutX="67.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleBack" text="return" />
+                  <ListView layoutX="22.0" layoutY="73.0" prefHeight="200.0" prefWidth="138.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
