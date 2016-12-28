@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import MainApplication.MainApplication;
 import Model.DefStat;
 import Model.FieldGoalStat;
+import Model.InjuryStat;
 import Model.IntStat;
 import Model.PassStat;
 import Model.QBStat;
@@ -46,6 +47,9 @@ public class OptionsController {
 	
 	@FXML 
 	private Button interceptions;
+	
+	@FXML
+	private Button injuries;
 	
 	@FXML
 	private Button mainScreenButton;
@@ -377,6 +381,49 @@ public class OptionsController {
 			}
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Interception Stats couldn't be loaded.");
+		}
+	}
+	
+	@FXML
+	private void selectInjuries() {
+		try {
+        	Stage stage;
+            Parent root;
+
+            stage = (Stage) injuries.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../view/InjuriesView.fxml"));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            
+            TeamSelectorController tcc = new TeamSelectorController();
+            String stringTeam = tcc.getStringTeam();
+            String stringOpponent = tcc.getStringOpponent();
+            
+            InjuryStat injuryStat = new InjuryStat();
+            ArrayList<String> listTeam = injuryStat.getAllInjuries(stringTeam);
+            ArrayList<String> listOpponent = injuryStat.getAllInjuries(stringOpponent);
+            
+            ArrayList<Integer> intListTeam = injuryStat.checkForNewInjury(listTeam, "injuries");
+            if (intListTeam.size() != 0) {
+        		injuryStat.scrapeNewPlayer(listTeam, intListTeam, injuryStat.getTeamName(stringTeam));
+        	}
+        	
+        	ArrayList<Integer> intListOpponent = injuryStat.checkForNewInjury(listOpponent, "injuries");
+        	if (intListOpponent.size() != 0) {
+        		injuryStat.scrapeNewPlayer(listOpponent, intListOpponent, injuryStat.getTeamName(stringOpponent));
+        	}
+        	
+        	if (injuryStat.removeNewPlayer(listTeam, stringTeam) == false) {
+        		injuryStat.updateDatabase(listTeam, injuryStat.getTeamName(stringTeam));
+        	}
+        	if (injuryStat.removeNewPlayer(listOpponent, stringOpponent) == false) {
+        		injuryStat.updateDatabase(listOpponent, injuryStat.getTeamName(stringOpponent));
+        	}
+            
+		} catch (IOException e) {
+			logger.log(Level.FINE, "Injuries couldn't be loaded.");
 		}
 	}
 	

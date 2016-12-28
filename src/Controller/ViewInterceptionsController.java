@@ -3,12 +3,9 @@ package Controller;
 import java.util.ArrayList;
 
 import Model.HomeIntStatTable;
-import Model.HomeIntStatTable;
-import Model.HomeIntStatTable;
 import Model.IntStat;
 import Model.Model;
 import Model.OppIntStatTable;
-import Model.PassStat;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

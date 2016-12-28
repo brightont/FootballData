@@ -147,6 +147,8 @@ public abstract class Stat {
     		player = player.replace("'", "");
     	} else if (player.contains(".")) {
     		player = player.replace(".", "");
+    	} else if (player.contains("-")) {
+    		player = player.split("-")[0];
     	}
         String queryUser = "SELECT * FROM footballstats." + table + " WHERE Player = '" + player + "';";
         String answer = "";

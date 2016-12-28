@@ -58,5 +58,11 @@
          </image>
       </ImageView>
       <Button fx:id="interceptions" layoutX="332.0" layoutY="123.0" mnemonicParsing="false" onAction="#selectInterceptions" prefHeight="25.0" prefWidth="74.0" text="Intercept." />
+      <ImageView fitHeight="121.0" fitWidth="62.0" layoutX="338.0" layoutY="83.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Pictures/intIcon.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="injuries" layoutX="332.0" layoutY="208.0" mnemonicParsing="false" onAction="#selectInjuries" prefHeight="25.0" prefWidth="74.0" text="Injuries" />
    </children>
 </AnchorPane>

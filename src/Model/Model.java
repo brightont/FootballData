@@ -406,4 +406,33 @@ public class Model {
     	}
     	return intStats;
     }
+    
+    /**
+     * Gets the rush stat
+     * @param team
+     * @param columnIndex
+     * @return
+     */
+    public ArrayList<String> getInjury(String team, int columnIndex) {
+    	ArrayList<String> injuries =  new ArrayList<String>();
+    	try {
+    		establishConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.injuries;");
+			ResultSetMetaData rsmd = rs.getMetaData();
+			String name = rsmd.getColumnName(columnIndex);
+			String query = "SELECT " + name + " FROM footballstats.injuries WHERE team = '" + team + "';";
+			ResultSet result = statement.executeQuery(query);
+			while (result.next()) {
+				String item = result.getString(name);
+				if (item.equals("NULL")) {
+					item = item.replace("NULL", "--");
+				}
+				injuries.add(item);
+			}
+    	} catch (SQLException e) {
+    		logger.log(Level.FINE, "Could not get injuries.");
+    	}
+    	return injuries;
+    }
 }
