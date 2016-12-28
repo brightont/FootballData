@@ -408,7 +408,7 @@ public class Model {
     }
     
     /**
-     * Gets the rush stat
+     * Gets the injury stat
      * @param team
      * @param columnIndex
      * @return
@@ -434,5 +434,77 @@ public class Model {
     		logger.log(Level.FINE, "Could not get injuries.");
     	}
     	return injuries;
+    }
+    
+    /**
+     * Gets the scores stat
+     * @param team
+     * @param columnIndex
+     * @return
+     */
+    public ArrayList<String> getScores(String team, int columnIndex) {
+    	ArrayList<String> scores =  new ArrayList<String>();
+    	try {
+    		establishConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.scores;");
+			ResultSetMetaData rsmd = rs.getMetaData();
+			String name = rsmd.getColumnName(columnIndex);
+			String query = "SELECT " + name + " FROM footballstats.scores WHERE team = '" + team + " ' ORDER BY Week;";
+			ResultSet result = statement.executeQuery(query);
+			if (columnIndex == 2) {
+				while (result.next()) {
+					String item = result.getString(name);
+					scores.add(item);
+				}
+			} else if (columnIndex == 3) {
+				while (result.next()) {
+					String item = result.getString(name);
+					item = item.replace("_", " ");
+					scores.add(item);
+				}
+			}
+    	} catch (SQLException e) {
+    		logger.log(Level.FINE, "Could not get scores.");
+    	}
+    	return scores;
+    }
+    
+    /**
+     * Gets the scores stat (opponent)
+     * @param team
+     * @param columnIndex
+     * @return
+     */
+    public ArrayList<String> getScoresOpp(String team) {
+    	ArrayList<String> opp =  new ArrayList<String>();
+    	ScoreStat ss = new ScoreStat();
+    	String newOpp = "";
+    	try {
+    		establishConnection();
+			Statement statement = connection.createStatement();
+			String query = "SELECT Score FROM footballstats.scores WHERE team = '" + team + "';";
+			ResultSet result = statement.executeQuery(query);
+			while (result.next()) {
+				String item = result.getString("Score");
+				String[] items = item.split("@");
+				System.out.println("item 1 " + items[0]);
+				if (!items[0].contains(ss.getTeamAbb(team))) {
+					String[] chunks = items[0].split("_");
+					String chunk = chunks[0];
+					newOpp = ss.getTeamName(chunk);
+					opp.add(newOpp);
+				} else {
+					String[] chunks = items[1].split("_");
+					String chunk = chunks[1];
+					newOpp = ss.getTeamName(chunk);
+					opp.add(newOpp);
+				}
+			}
+			
+    	} catch (SQLException e) {
+    		logger.log(Level.FINE, "Could not get scores' opponent.");
+    	}
+    	return opp;
     }
 }

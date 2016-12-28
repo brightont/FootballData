@@ -78,15 +78,6 @@ public class DefStat extends Stat {
 	}
 	
 	/**
-	 * Removes the last item from list
-	 * @param arr
-	 */
-	public ArrayList<String> removeLastItem(ArrayList<String> arr) {
-		arr.remove(arr.size()-1);
-		return arr;
-	}
-	
-	/**
 	 * Gets the information for a new player
 	 * @param i
 	 * @param team

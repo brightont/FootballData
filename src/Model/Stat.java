@@ -163,6 +163,15 @@ public abstract class Stat {
         }
         return answer;
     }
+    
+    /**
+	 * Removes the last item from list
+	 * @param arr
+	 */
+	public ArrayList<String> removeLastItem(ArrayList<String> arr) {
+		arr.remove(arr.size()-1);
+		return arr;
+	}
 
 	
 	/**
@@ -180,5 +189,23 @@ public abstract class Stat {
 		}
 		return team;
 	}
+	
+	/**
+	 * Gets the team name from enum
+	 * @param teamName
+	 */
+	public String getTeamAbb(String teamName) {
+		String team = "";
+		if (teamName.equals("Falcons")) {
+			team = "ATL";
+		} else if (teamName.equals("Buccaneers")) {
+			team = "TB";
+		} else if (teamName.equals("Ravens")) {
+			team = "BAL";
+		}
+		return team;
+	}
+	
+
 
 }

@@ -14,6 +14,7 @@ import Model.IntStat;
 import Model.PassStat;
 import Model.QBStat;
 import Model.RushStat;
+import Model.ScoreStat;
 import Model.TeamStat;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,6 +51,9 @@ public class OptionsController {
 	
 	@FXML
 	private Button injuries;
+	
+	@FXML
+	private Button scores;
 	
 	@FXML
 	private Button mainScreenButton;
@@ -424,6 +428,37 @@ public class OptionsController {
             
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Injuries couldn't be loaded.");
+		}
+	}
+	
+	@FXML
+	private void selectScores() {
+		try {
+        	Stage stage;
+            Parent root;
+
+            stage = (Stage) scores.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../view/ScoresView.fxml"));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            
+            TeamSelectorController tcc = new TeamSelectorController();
+            String stringTeam = tcc.getStringTeam();
+            
+            ScoreStat scoreStat = new ScoreStat();
+            ArrayList<String> listTeam = scoreStat.getScoreStats(stringTeam);
+            
+            listTeam = scoreStat.removeLastItem(listTeam);
+            listTeam = scoreStat.removeLastItem(listTeam);
+           
+            if (scoreStat.checkNewGame(listTeam, scoreStat.getTeamName(stringTeam)) == false) {
+            	scoreStat.addGame(listTeam, stringTeam, scoreStat.getTeamName(stringTeam));
+            	
+            }
+		} catch (IOException e) {
+			logger.log(Level.FINE, "Scores couldn't be loaded.");
 		}
 	}
 	

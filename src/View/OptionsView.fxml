@@ -64,5 +64,11 @@
          </image>
       </ImageView>
       <Button fx:id="injuries" layoutX="332.0" layoutY="208.0" mnemonicParsing="false" onAction="#selectInjuries" prefHeight="25.0" prefWidth="74.0" text="Injuries" />
+      <ImageView fitHeight="41.0" fitWidth="65.0" layoutX="337.0" layoutY="166.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../Pictures/injuryIcon.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="scores" layoutX="333.0" layoutY="294.0" mnemonicParsing="false" onAction="#selectScores" prefHeight="25.0" prefWidth="71.0" text="Scores" />
    </children>
 </AnchorPane>
