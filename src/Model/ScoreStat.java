@@ -118,14 +118,18 @@ public class ScoreStat extends Stat{
 		if (outcomes[0].contains(team)) {
 			if (s1 > s2) {
 				outcome = "W";
-			} else {
+			} else if (s1 < s2) {
 				outcome = "L";
+			} else {
+				outcome = "T";
 			}
 		} else {
 			if (s1 > s2) {
 				outcome = "L";
-			} else {
+			} else if (s1 < s2){
 				outcome = "W";
+			} else {
+				outcome = "T";
 			}
 		}
 		String label = fullName + weekInt;
@@ -139,5 +143,36 @@ public class ScoreStat extends Stat{
 		}
 	}
 	
+	/**
+	 * Gets the total record
+	 * @param list
+	 * @param team
+	 */
+	public String getRecord(String team) {
+		String arr[] = { "W", "L", "T" };
+		String record = "";
+		int count = 0;
+		int answer = 0;
+		for (String a : arr) {
+			String query = "SELECT COUNT(Week) FROM footballstats.scores WHERE Team = '" + team + "' AND Outcome = '"
+					+ a + "';";
+			try {
+				Statement userStatement = connection.createStatement();
+				ResultSet result = userStatement.executeQuery(query);
+				while (result.next()) {
+					answer = result.getInt("COUNT(Week)");
+				}
+			} catch (SQLException e) {
+				logger.log(Level.FINE, "Could not select record count.");
+			}
+			if (count != 2) {
+				record = record + answer + " - ";
+			} else {
+				record = record + answer;
+			}
+			count++;
+		}
+		return record;
+	}
 
 }

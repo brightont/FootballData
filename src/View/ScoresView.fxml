@@ -16,13 +16,14 @@
 			<items>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: red;">
 					<children>
-						<TableView fx:id="scoreTable" layoutX="14.0" layoutY="20.0" prefHeight="345.0" prefWidth="331.0">
+						<TableView fx:id="scoreTable" layoutX="14.0" layoutY="20.0" prefHeight="259.0" prefWidth="331.0">
 							<columns>
 								<TableColumn fx:id="week" prefWidth="106.0" text="Week" />
 								<TableColumn fx:id="opp" prefWidth="108.33331298828125" text="Opponent" />
 								<TableColumn fx:id="score" prefWidth="115.66668701171875" text="Score" />
 							</columns>
 						</TableView>
+                  <ListView fx:id="record" layoutX="86.0" layoutY="309.0" prefHeight="34.0" prefWidth="200.0" />
 					</children>
 				</AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: red;">
@@ -37,7 +38,7 @@
                         <Font name="Cooper Black" size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="scoreReturnButton" layoutX="85.0" layoutY="304.0" mnemonicParsing="false" text="return" />
+                  <Button fx:id="sReturnButton" layoutX="85.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleBack" text="return" />
                </children>
             </AnchorPane>
         </items>
