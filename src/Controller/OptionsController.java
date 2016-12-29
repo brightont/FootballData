@@ -56,6 +56,9 @@ public class OptionsController {
 	private Button scores;
 	
 	@FXML
+	private Button ranking;
+	
+	@FXML
 	private Button mainScreenButton;
 	
 	public void setMainApp(MainApplication main) {
@@ -388,6 +391,9 @@ public class OptionsController {
 		}
 	}
 	
+	/**
+	 * Select Injuries
+	 */
 	@FXML
 	private void selectInjuries() {
 		try {
@@ -431,6 +437,9 @@ public class OptionsController {
 		}
 	}
 	
+	/**
+	 * Selects scors
+	 */
 	@FXML
 	private void selectScores() {
 		try {
@@ -460,6 +469,28 @@ public class OptionsController {
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Scores couldn't be loaded.");
 		}
+	}
+	
+	@FXML
+	private void selectRanking() throws Exception {
+		try {
+        	Stage stage;
+            Parent root;
+
+            stage = (Stage) scores.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../view/ScoresView.fxml"));
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            
+            TeamSelectorController tcc = new TeamSelectorController();
+            String stringTeam = tcc.getStringTeam();
+            
+		} catch (IOException e) {
+			logger.log(Level.FINE, "Scores couldn't be loaded.");
+		}
+		
 	}
 	
 	@FXML

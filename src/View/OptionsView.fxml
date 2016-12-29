@@ -70,5 +70,11 @@
          </image>
       </ImageView>
       <Button fx:id="scores" layoutX="333.0" layoutY="294.0" mnemonicParsing="false" onAction="#selectScores" prefHeight="25.0" prefWidth="71.0" text="Scores" />
+      <ImageView fitHeight="90.0" fitWidth="65.0" layoutX="336.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Pictures/scoreIcon.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="ranking" layoutX="466.0" layoutY="166.0" mnemonicParsing="false" onAction="#selectRanking" text="Ranking" />
    </children>
 </AnchorPane>
