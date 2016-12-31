@@ -16,6 +16,7 @@ import Model.QBStat;
 import Model.RushStat;
 import Model.ScoreStat;
 import Model.TeamStat;
+import Model.YardsRankStat;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -438,7 +439,7 @@ public class OptionsController {
 	}
 	
 	/**
-	 * Selects scors
+	 * Selects scores
 	 */
 	@FXML
 	private void selectScores() {
@@ -486,6 +487,16 @@ public class OptionsController {
             
             TeamSelectorController tcc = new TeamSelectorController();
             String stringTeam = tcc.getStringTeam();
+            
+            //get the first team
+            YardsRankStat yrStat = new YardsRankStat();
+            ArrayList<String> listTeam = yrStat.getYardsStats();
+            
+            if (yrStat.checkDatabaseList(listTeam, 2, "yardsrank", "Pts_G") == false) {
+            	yrStat.updateDatabase(listTeam, stringTeam);
+            }
+            
+            
             
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Scores couldn't be loaded.");
