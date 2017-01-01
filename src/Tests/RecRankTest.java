@@ -14,54 +14,57 @@ import org.junit.Before;
 import org.junit.Test;
 
 import Model.Model;
-import Model.YardsRankStat;
+import Model.RecRankStat;
 
-public class YardsRankingTest {
-
+public class RecRankTest {
+	
 	private static final int TIMEOUT = 10000;
 	private Model database = new Model();
 	ArrayList<String> list = new ArrayList<String>();
 	
-    @Before
+	@Before
 	public void beforeTest(){
     	database = new Model();
 		database.readDatabase();
 		
-		YardsRankStat stat = new YardsRankStat("Testing", 1, 1, 1, 1, 1);
+		RecRankStat stat = new RecRankStat("Testing", 1, 1, 1, 1, 1, 1, 1);
+		
 		list.add("Testing");
 		list.add("1");
 		list.add("1");
 		list.add("1");
 		list.add("1");
 		list.add("1");
+		list.add("1");
+		list.add("1");
+	}
+
+	@Test(timeout = TIMEOUT)
+	public void checkDatabaseTest() throws InterruptedException {
+		RecRankStat rrs = new RecRankStat();
 		
-    }
-    
-    @Test(timeout = TIMEOUT)
-    public void checkDatabaseTest() throws InterruptedException {		
-    	YardsRankStat yrs = new YardsRankStat();
-    	
-    	boolean bool = yrs.checkDatabaseList(list, 1 , "yardsrank", "Pts_G");
+		boolean bool = rrs.checkDatabaseList(list, 1 , "recrank", "Pts_G");
 		assertTrue(bool);
-    }
-    
-    @Test(timeout = TIMEOUT)
+	
+	}
+	
+	@Test(timeout = TIMEOUT)
     public void updateDatabase() throws InterruptedException {
-    	YardsRankStat yrs = new YardsRankStat();
-    	
+		RecRankStat rrs = new RecRankStat();
+		
     	//set for integer
     	list.set(1, "2.3");
     
     	//set for double
     	list.set(2, "2");
     	
-    	yrs.updateDatabase(list, "Testing");
+    	rrs.updateDatabase(list, "Testing");
     	
     	assertEquals("2.3", getValueDouble("Pts_G"));
     	assertEquals("2", getValueInt("TotPts"));
     }
-    
-    /**
+	
+	/**
 	 * Gets the value from the database
 	 * @param name
 	 * @param value
@@ -70,7 +73,7 @@ public class YardsRankingTest {
 	public String getValueInt(String name) {
 		String newResult = "";
 		Connection connection = database.establishConnection();
-		String queryUser = "SELECT " + name + " FROM footballstats.yardsrank WHERE Team = 'Testing';";
+		String queryUser = "SELECT " + name + " FROM footballstats.recrank WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();
 			ResultSet result = userStatement.executeQuery(queryUser);
@@ -93,7 +96,7 @@ public class YardsRankingTest {
 	public String getValueDouble(String name) {
 		String newResult = "";
 		Connection connection = database.establishConnection();
-		String queryUser = "SELECT " + name + " FROM footballstats.yardsrank WHERE Team = 'Testing';";
+		String queryUser = "SELECT " + name + " FROM footballstats.recrank WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();
 			ResultSet result = userStatement.executeQuery(queryUser);
@@ -107,8 +110,9 @@ public class YardsRankingTest {
 		return newResult;
 	}
 	
-    @After
+	@After
     public void delete() {
-    	database.removeStat("Testing", "yardsrank");
+    	database.removeStat("Testing", "recrank");
     }
+	
 }

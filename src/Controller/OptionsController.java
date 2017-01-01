@@ -13,6 +13,7 @@ import Model.InjuryStat;
 import Model.IntStat;
 import Model.PassStat;
 import Model.QBStat;
+import Model.RecRankStat;
 import Model.RushRankStat;
 import Model.RushStat;
 import Model.ScoreStat;
@@ -503,6 +504,14 @@ public class OptionsController {
             if (rrStat.checkDatabaseList(listTeam1, 1, "rushrank", "Pts_G") == false) {
             	rrStat.updateDatabase(listTeam1, stringTeam);
             }
+            
+            RecRankStat rcStat = new RecRankStat();
+            ArrayList<String> listTeam2 = rcStat.getRecRankStat();
+            
+            if (rcStat.checkDatabaseList(listTeam2, 1, "recrank", "Pts_G") == false) {
+            	rcStat.updateDatabase(listTeam2, stringTeam);
+            }
+            
             
             
             

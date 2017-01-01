@@ -41,27 +41,25 @@ public class Cat {
 				String t3 = row.get(i + 4).text();
 				int i3 = Integer.parseInt(t3);
 				String t4 = row.get(i + 5).text();
+				t4 = t4.replace(",", "");
 				int i4 = Integer.parseInt(t4);
 				String t5 = row.get(i + 6).text();
-				t5 = t5.replace(",", "");
-				int i5 = Integer.parseInt(t5);
+				double d5 = Double.parseDouble(t5);
 				String t6  = row.get(i+7).text();
 				double d6 = Double.parseDouble(t6);
-				String t7 = row.get(i + 8).text();
-				double d7 = Double.parseDouble(t7);
-				String t8 = row.get(i+10).text();
-				int i8 = Integer.parseInt(t8);
+				String t7 = row.get(i+9).text();
+				int i7 = Integer.parseInt(t7);
 
-				String insert = "INSERT INTO footballstats.rushrank VALUES" + " ('" + t0 + "','" + d1 + "','" + i2
-						+ "','" + i3 + "','" + i4 + "','" + i5 + "','" + d6 + "','" + d7 + "','" + i8 + "');";
+				String insert = "INSERT INTO footballstats.recrank VALUES" + " ('" + t0 + "','" + d1 + "','" + i2
+						+ "','" + i3 + "','" + i4 + "','" + d5 + "','" + d6 + "','" + i7 + "');";
 
-				System.out.println(insert);
-				/*try {
+				//System.out.println(insert);
+				try {
 					PreparedStatement prepStatement = connection.prepareStatement(insert);
 					prepStatement.executeUpdate();
 				} catch (SQLException e) {
 					e.printStackTrace();
-				}*/
+				}
 				
 			}
 		}
