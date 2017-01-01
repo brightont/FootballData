@@ -22,7 +22,7 @@ public class Cat {
 		try {
 			document = Jsoup
 					.connect(
-							"http://www.nfl.com/stats/categorystats?seasonType=REG&offensiveStatisticCategory=RUSHING&d-447263-n=1&d-447263-o=2&d-447263-p=1&d-447263-s=RUSHING_ATTEMPTS&tabSeq=2&season=2016&role=TM&Submit=Go&archive=false&conference=null&defensiveStatisticCategory=null&qualified=false")
+							"http://www.nfl.com/stats/categorystats?archive=false&conference=null&role=TM&offensiveStatisticCategory=TEAM_RECEIVING&defensiveStatisticCategory=null&season=2016&seasonType=REG&tabSeq=2&qualified=false&Submit=Go")
 					.get();
 		} catch (IOException e) {
 			
@@ -30,7 +30,7 @@ public class Cat {
 		Elements elements = document.getElementsByClass("data-table1");
 		Elements row = elements.select("td");
 		for (int i = 1; i < row.size(); i++) {
-			if ((i - 1) % 21 == 0) {
+			if ((i - 1) % 16 == 0) {
 				String temp = row.get(i).text();
 				String[] tarr = temp.split(" ");
 				String t0 = tarr[tarr.length - 1];
@@ -38,16 +38,22 @@ public class Cat {
 				double d1 = Double.parseDouble(t1);
 				String t2 = row.get(i + 3).text();
 				int i2 = Integer.parseInt(t2);
-				String t3 = row.get(i + 6).text();
-				t3 = t3.replace(",", "");
+				String t3 = row.get(i + 4).text();
 				int i3 = Integer.parseInt(t3);
-				String t4  = row.get(i+7).text();
-				double d4 = Double.parseDouble(t4);
-				String t5 = row.get(i + 8).text();
-				double d5 = Double.parseDouble(t5);
+				String t4 = row.get(i + 5).text();
+				int i4 = Integer.parseInt(t4);
+				String t5 = row.get(i + 6).text();
+				t5 = t5.replace(",", "");
+				int i5 = Integer.parseInt(t5);
+				String t6  = row.get(i+7).text();
+				double d6 = Double.parseDouble(t6);
+				String t7 = row.get(i + 8).text();
+				double d7 = Double.parseDouble(t7);
+				String t8 = row.get(i+10).text();
+				int i8 = Integer.parseInt(t8);
 
-				String insert = "INSERT INTO footballstats.yardsrank VALUES" + " ('" + t0 + "','" + d1 + "','" + i2
-						+ "','" + i3 + "','" + d4 + "','" + d5 + "');";
+				String insert = "INSERT INTO footballstats.rushrank VALUES" + " ('" + t0 + "','" + d1 + "','" + i2
+						+ "','" + i3 + "','" + i4 + "','" + i5 + "','" + d6 + "','" + d7 + "','" + i8 + "');";
 
 				System.out.println(insert);
 				/*try {

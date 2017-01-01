@@ -40,7 +40,6 @@ public class Model {
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/footballstats", "root", "root");
 		} catch (SQLException e) {
-			System.out.println("The error is here");
 			e.printStackTrace();
 		}
 		return connection;
@@ -488,7 +487,6 @@ public class Model {
 			while (result.next()) {
 				String item = result.getString("Score");
 				String[] items = item.split("@");
-				System.out.println("item 1 " + items[0]);
 				if (!items[0].contains(ss.getTeamAbb(team))) {
 					String[] chunks = items[0].split("_");
 					String chunk = chunks[0];

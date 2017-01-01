@@ -13,6 +13,7 @@ import Model.InjuryStat;
 import Model.IntStat;
 import Model.PassStat;
 import Model.QBStat;
+import Model.RushRankStat;
 import Model.RushStat;
 import Model.ScoreStat;
 import Model.TeamStat;
@@ -478,8 +479,8 @@ public class OptionsController {
         	Stage stage;
             Parent root;
 
-            stage = (Stage) scores.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("../view/ScoresView.fxml"));
+            stage = (Stage) ranking.getScene().getWindow();
+            root = FXMLLoader.load(getClass().getResource("../view/RankView.fxml"));
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -492,8 +493,15 @@ public class OptionsController {
             YardsRankStat yrStat = new YardsRankStat();
             ArrayList<String> listTeam = yrStat.getYardsStats();
             
-            if (yrStat.checkDatabaseList(listTeam, 2, "yardsrank", "Pts_G") == false) {
+            if (yrStat.checkDatabaseList(listTeam, 1, "yardsrank", "Pts_G") == false) {
             	yrStat.updateDatabase(listTeam, stringTeam);
+            }
+            
+            RushRankStat rrStat = new RushRankStat();
+            ArrayList<String> listTeam1 = rrStat.getRushRankStat();
+            
+            if (rrStat.checkDatabaseList(listTeam1, 1, "rushrank", "Pts_G") == false) {
+            	rrStat.updateDatabase(listTeam1, stringTeam);
             }
             
             
