@@ -13,6 +13,7 @@ import Model.DefStat;
 import Model.DefYardsRankStat;
 import Model.FieldGoalStat;
 import Model.InjuryStat;
+import Model.IntRankStat;
 import Model.IntStat;
 import Model.PassStat;
 import Model.QBStat;
@@ -542,6 +543,13 @@ public class OptionsController {
             
             if (srStat.checkDatabaseList(listTeam6, 1, "sackrank", "Sacks") == false) {
             	srStat.updateDatabase(listTeam6, stringTeam);
+            }
+            
+            IntRankStat irStat = new IntRankStat();
+            ArrayList<String> listTeam7 = irStat.getIntRankStats();
+            
+            if (irStat.checkDatabaseList(listTeam7, 1, "intrank", "Interceptions") == false) {
+            	irStat.updateDatabase(listTeam7, stringTeam);
             }
             
 		} catch (IOException e) {

@@ -22,7 +22,7 @@ public class Cat {
 		try {
 			document = Jsoup
 					.connect(
-							"http://www.nfl.com/stats/categorystats?archive=false&conference=null&role=OPP&offensiveStatisticCategory=null&defensiveStatisticCategory=SACKS&season=2016&seasonType=REG&tabSeq=2&qualified=false&Submit=Go")
+							"http://www.nfl.com/stats/categorystats?archive=false&conference=null&role=OPP&offensiveStatisticCategory=null&defensiveStatisticCategory=INTERCEPTIONS&season=2016&seasonType=REG&tabSeq=2&qualified=false&Submit=Go")
 					.get();
 		} catch (IOException e) {
 			
@@ -34,10 +34,10 @@ public class Cat {
 				String temp = row.get(i).text();
 				String[] tarr = temp.split(" ");
 				String t0 = tarr[tarr.length - 1];
-				String t1 = row.get(i + 7).text();
-				double d1 = Double.parseDouble(t1);
+				String t1 = row.get(i + 10).text();
+				int i1 = Integer.parseInt(t1);
 		
-				String insert = "INSERT INTO footballstats.sackrank VALUES" + " ('" + t0 + "','" + d1 + "');";
+				String insert = "INSERT INTO footballstats.intrank VALUES" + " ('" + t0 + "','" + i1 + "');";
 
 				//System.out.println(insert);
 				try {
