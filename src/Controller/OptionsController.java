@@ -7,7 +7,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import MainApplication.MainApplication;
+import Model.DefRecRankStat;
+import Model.DefRushRankStat;
 import Model.DefStat;
+import Model.DefYardsRankStat;
 import Model.FieldGoalStat;
 import Model.InjuryStat;
 import Model.IntStat;
@@ -16,6 +19,7 @@ import Model.QBStat;
 import Model.RecRankStat;
 import Model.RushRankStat;
 import Model.RushStat;
+import Model.SackRankStat;
 import Model.ScoreStat;
 import Model.TeamStat;
 import Model.YardsRankStat;
@@ -512,11 +516,36 @@ public class OptionsController {
             	rcStat.updateDatabase(listTeam2, stringTeam);
             }
             
+            DefYardsRankStat dyrStat = new DefYardsRankStat();
+            ArrayList<String> listTeam3 = dyrStat.getDefYardsStats();
             
+            if (dyrStat.checkDatabaseList(listTeam3, 1, "defyardsrank", "Pts_G") == false) {
+            	dyrStat.updateDatabase(listTeam3, stringTeam);
+            }
             
+            DefRushRankStat drrStat = new DefRushRankStat();
+            ArrayList<String> listTeam4 = drrStat.getDefRushStats();
+            
+            if (drrStat.checkDatabaseList(listTeam4, 1, "defrushrank", "Avg") == false) {
+            	drrStat.updateDatabase(listTeam4, stringTeam);
+            }
+            
+            DefRecRankStat drcStat = new DefRecRankStat();
+            ArrayList<String> listTeam5 = drcStat.getDefRecStats();
+            
+            if (drcStat.checkDatabaseList(listTeam5, 1, "defrecrank", "Avg") == false) {
+            	drcStat.updateDatabase(listTeam5, stringTeam);
+            }
+            
+            SackRankStat srStat = new SackRankStat();
+            ArrayList<String> listTeam6 = srStat.getSackStats();
+            
+            if (srStat.checkDatabaseList(listTeam6, 1, "sackrank", "Sacks") == false) {
+            	srStat.updateDatabase(listTeam6, stringTeam);
+            }
             
 		} catch (IOException e) {
-			logger.log(Level.FINE, "Scores couldn't be loaded.");
+			logger.log(Level.FINE, "Ranks couldn't be loaded.");
 		}
 		
 	}
