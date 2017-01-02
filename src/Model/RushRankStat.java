@@ -91,7 +91,7 @@ public class RushRankStat extends Stat {
 					update = "UPDATE footballstats.rushrank SET Yds_G = " + resultDouble + " WHERE Team = '" + team + "';";
 				} else if (((i - 4) % 6) == 0) {
 					resultDouble = Double.parseDouble(result);
-					update = "UPDATE footballstats.rushrank SET Avg = " + resultDouble + " WHERE Team = '" + team + "';";
+					update = "UPDATE footballstats.rushrank SET Avge = " + resultDouble + " WHERE Team = '" + team + "';";
 				} else if (((i - 3) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.rushrank SET Yds = " + resultInt + " WHERE Team = '" + team + "';";

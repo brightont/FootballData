@@ -91,7 +91,7 @@ public class ViewTeamStatController {
 		Parent root;
 		
 		stage = (Stage) returnButton.getScene().getWindow();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/TeamSelector.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/OptionsView.fxml"));
 		root = loader.load();
 		
 		Scene scene = new Scene(root);

@@ -121,12 +121,12 @@ public class ViewPassStatController {
 		ArrayList<OppPassStatTable> returnList = new ArrayList<OppPassStatTable>();
 		
 		Model model = new Model();
-		ArrayList<String> players = model.getPassStat(stringTeamName, 2);
-		ArrayList<String> rec = model.getPassStat(stringTeamName, 3);
-		ArrayList<String> yds = model.getPassStat(stringTeamName, 4);
-		ArrayList<String> yr = model.getPassStat(stringTeamName, 5);
-		ArrayList<String> lng = model.getPassStat(stringTeamName, 6);
-		ArrayList<String> td = model.getPassStat(stringTeamName, 7);
+		ArrayList<String> players = model.getPassStat(stringOppName, 2);
+		ArrayList<String> rec = model.getPassStat(stringOppName, 3);
+		ArrayList<String> yds = model.getPassStat(stringOppName, 4);
+		ArrayList<String> yr = model.getPassStat(stringOppName, 5);
+		ArrayList<String> lng = model.getPassStat(stringOppName, 6);
+		ArrayList<String> td = model.getPassStat(stringOppName, 7);
 		
 		int index = 0;
 		for (String player : players) {

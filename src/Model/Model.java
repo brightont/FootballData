@@ -505,4 +505,73 @@ public class Model {
     	}
     	return opp;
     }
+    
+    /**
+     * Gets the name of the stats
+     * @param team
+     * @return
+     */
+    public ArrayList<String> getRankStatsName() {
+    	ArrayList<String> statsName = new ArrayList<>();
+    	statsName.add("Offensive Yards");
+    	statsName.add("Offensive Rushing");
+    	statsName.add("Offensive Receiving");
+    	statsName.add("Defensive Yards");
+    	statsName.add("Defensive Rushing");
+    	statsName.add("Defensive Receiving");
+    	statsName.add("Sacks");
+    	statsName.add("Interceptions");
+    	statsName.add("Points");
+    	statsName.add("Passing");
+    	return statsName;
+    }
+    
+    /**
+     * Gets the ranking
+     * @param team
+     * @param columnIndex
+     * @return
+     */
+    public ArrayList<String> getRanking(String team) {
+		ArrayList<String> ranking = new ArrayList<>();
+		String query = "";
+		for (int i = 0; i < 8; i++) {
+			if (i == 0) {
+				query = "SELECT a.Yds_G, a.Team, count(*) as row_number FROM footballstats.yardsrank a JOIN footballstats.yardsrank b ON a.Yds_G <= b.Yds_G WHERE a.Team = '"
+						+ team + "' GROUP BY a.Team;";
+			} else if (i == 1) {
+				query = "SELECT a.Yds_G, a.Team, count(*) as row_number FROM footballstats.rushrank a JOIN footballstats.rushrank b ON a.Yds_G <= b.Yds_G WHERE a.Team = '"
+						+ team + "' GROUP BY a.Team;";
+			} else if (i == 2) {
+				query = "SELECT a.Yds_G, a.Team, count(*) as row_number FROM footballstats.recrank a JOIN footballstats.recrank b ON a.Yds_G <= b.Yds_G WHERE a.Team = '"
+						+ team + "' GROUP BY a.Team;";
+			}
+		}
+    	
+    	/*ArrayList<String> scores =  new ArrayList<String>();
+    	try {
+    		establishConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.scores;");
+			ResultSetMetaData rsmd = rs.getMetaData();
+			String name = rsmd.getColumnName(columnIndex);
+			String query = "SELECT " + name + " FROM footballstats.scores WHERE team = '" + team + " ' ORDER BY Week;";
+			ResultSet result = statement.executeQuery(query);
+			if (columnIndex == 2) {
+				while (result.next()) {
+					String item = result.getString(name);
+					scores.add(item);
+				}
+			} else if (columnIndex == 3) {
+				while (result.next()) {
+					String item = result.getString(name);
+					item = item.replace("_", " ");
+					scores.add(item);
+				}
+			}
+    	} catch (SQLException e) {
+    		logger.log(Level.FINE, "Could not get scores.");
+    	}*/
+    	return ranking;
+    }
 }

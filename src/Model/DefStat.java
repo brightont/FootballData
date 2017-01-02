@@ -133,6 +133,13 @@ public class DefStat extends Stat {
 		for (int i = 6; i < list.size(); i++) {
 			if ((i % 6) == 0) {
 				player = list.get(i);
+				if (player.contains("'")) {
+		    		player = player.replace("'", "");
+		    	} else if (player.contains(".")) {
+		    		player = player.replace(".", "");
+		    	} else if (player.contains("-")) {
+		    		player = player.split("-")[0];
+		    	}
 			} else if ((i % 6) != 0) {
 				String update = "";
 				String result = list.get(i);
@@ -148,7 +155,7 @@ public class DefStat extends Stat {
 							+ "' AND Player = '" + player + "';";
 				} else if (((i - 3) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
-					update = "UPDATE footballstats.defstats SET Assist = " + resultDouble + " WHERE Team = '" + team
+					update = "UPDATE footballstats.defstats SET Assist = " + resultInt + " WHERE Team = '" + team
 							+ "' AND Player = '" + player + "';";
 				} else if (((i - 2) % 6) == 0) {
 					resultInt = Integer.parseInt(result);

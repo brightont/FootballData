@@ -244,13 +244,13 @@ public class OptionsController {
         	}
         	
         	//update database if needed
-			if (pass.checkDatabaseList(listTeam, 7, "pass_", "Att") == false
-					|| pass.checkDatabaseList(listTeam, 13, "pass_", "Att") == false) {
+			if (pass.checkDatabaseList(listTeam, 7, "pass_", "Rec") == false
+					|| pass.checkDatabaseList(listTeam, 13, "pass_", "Rec") == false) {
 				pass.updateDatabase(listTeam, pass.getTeamName(stringTeam));
 			}
 			
-			if (pass.checkDatabaseList(listOpponent, 7, "pass_", "Att") == false
-					|| pass.checkDatabaseList(listOpponent, 13, "pass_", "Att") == false) {
+			if (pass.checkDatabaseList(listOpponent, 7, "pass_", "Rec") == false
+					|| pass.checkDatabaseList(listOpponent, 13, "pass_", "Rec") == false) {
 				pass.updateDatabase(listOpponent, pass.getTeamName(stringOpponent));
 			}
             
@@ -285,11 +285,12 @@ public class OptionsController {
             HashMap<String, String> hashOppFG = fg.getFGStats(stringOpponent);
             
             String value = "30-39 M";
-        	if (fg.checkDatabase(hashFG, value, "fg") == false) {
-        		fg.updateDatabase(hashFG, fg.getTeamName(stringTeam));
-        	}
-			if (fg.checkDatabase(hashOppFG, value, "fg") == false) {
-				fg.updateDatabase(hashFG, fg.getTeamName(stringOpponent));
+            String value1 = "20-29 A";
+			if (fg.checkDatabase(hashFG, value, "fg") == false || fg.checkDatabase(hashFG, value1, "fg")) {
+				fg.updateDatabase(hashFG, fg.getTeamName(stringTeam));
+			}
+			if (fg.checkDatabase(hashOppFG, value, "fg") == false || fg.checkDatabase(hashFG, value1, "fg")) {
+				fg.updateDatabase(hashOppFG, fg.getTeamName(stringOpponent));
 			}
             
 		} catch (IOException e) {
@@ -500,7 +501,12 @@ public class OptionsController {
             YardsRankStat yrStat = new YardsRankStat();
             ArrayList<String> listTeam = yrStat.getYardsStats();
             
+            for (String l : listTeam) {
+            	System.out.println(l);
+            }
+            
             if (yrStat.checkDatabaseList(listTeam, 1, "yardsrank", "Pts_G") == false) {
+            	System.out.println("This is false");
             	yrStat.updateDatabase(listTeam, stringTeam);
             }
             

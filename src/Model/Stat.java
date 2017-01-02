@@ -55,6 +55,7 @@ public abstract class Stat {
 	 */
 	public boolean checkDatabaseList(ArrayList<String> list, int i, String table, String val) {
 		String temp = list.get(i);
+		System.out.println("This is the temp" + temp);
 		String query = "SELECT * FROM footballstats." + table + "stats WHERE " + val + " = " + temp + ";";
 		try {
 			Statement statement = connection.createStatement();

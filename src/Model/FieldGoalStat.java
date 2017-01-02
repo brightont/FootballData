@@ -93,7 +93,6 @@ public class FieldGoalStat extends Stat {
 				databaseValue = entry.getValue();
 				int ivi = Integer.parseInt(databaseValue);
 				updateQueryInt(databaseKey, ivi, team, "fgstats");
-				
 			} else {
 				databaseKey = entry.getKey();
 				databaseValue = entry.getValue();

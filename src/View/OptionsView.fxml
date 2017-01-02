@@ -39,7 +39,6 @@
          </image>
       </ImageView>
       <Button fx:id="passStats" layoutX="201.0" layoutY="123.0" mnemonicParsing="false" onAction="#selectPassStats" prefHeight="25.0" prefWidth="74.0" text="Pass Stats" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="41.0" fitWidth="74.0" layoutX="205.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../Pictures/passIcon.jpg" />

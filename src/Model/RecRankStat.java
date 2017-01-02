@@ -95,7 +95,7 @@ public class RecRankStat extends Stat {
 							+ "';";
 				} else if (((i - 5) % 6) == 0) {
 					resultDouble = Double.parseDouble(result);
-					update = "UPDATE footballstats.recrank SET Avg = " + resultDouble + " WHERE Team = '" + team + "';";
+					update = "UPDATE footballstats.recrank SET Avge = " + resultDouble + " WHERE Team = '" + team + "';";
 				} else if (((i - 4) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.recrank SET Yds = " + resultInt + " WHERE Team = '" + team + "';";
