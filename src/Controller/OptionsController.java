@@ -493,6 +493,7 @@ public class OptionsController {
             
             TeamSelectorController tcc = new TeamSelectorController();
             String stringTeam = tcc.getStringTeam();
+            String stringOpponent = tcc.getStringOpponent();
             
             //get the first team
             YardsRankStat yrStat = new YardsRankStat();
@@ -543,9 +544,14 @@ public class OptionsController {
            
             QuickStats qStat = new QuickStats();
             ArrayList<String> listTeam8 = qStat.getQuickStats(stringTeam);
+            ArrayList<String> listOpponent = qStat.getQuickStats(stringOpponent);
          
             if (qStat.checkDatabaseList(listTeam8, 1, "quick", "Pts") == false) {
             	qStat.updateDatabase(listTeam8, qStat.getTeamName(stringTeam));
+            } 
+            
+            if (qStat.checkDatabaseList(listOpponent, 1, "quick", "Pts") == false) {
+            	qStat.updateDatabase(listOpponent, qStat.getTeamName(stringOpponent));
             } 
             
 		} catch (IOException e) {

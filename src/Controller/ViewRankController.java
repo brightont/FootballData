@@ -6,6 +6,8 @@ import Model.HomeRushStatTable;
 import Model.Model;
 import Model.QuickStats;
 import Model.RankStatTable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +20,7 @@ import javafx.stage.Stage;
 
 public class ViewRankController {
 	@FXML
-	private TableView<HomeRushStatTable> scoreTable;
+	private TableView<RankStatTable> scoreTable;
 	
 	@FXML
 	private TableColumn rankStat;
@@ -49,8 +51,9 @@ public class ViewRankController {
         rankStat.setCellValueFactory(new PropertyValueFactory<RankStatTable, String>("rankStat"));
 		homeRank.setCellValueFactory(new PropertyValueFactory<RankStatTable, String>("homeRank"));
 		oppRank.setCellValueFactory(new PropertyValueFactory<RankStatTable, String>("oppRank"));
-		/*ObservableList<RankStatTable> rankStatList = FXCollections.observableArrayList(populateQBStatList());
-		qbStatTable.setItems(qbStatList);*/
+	
+		ObservableList<RankStatTable> rankStatList = FXCollections.observableArrayList(populateRankStatList());
+		scoreTable.setItems(rankStatList);
 	} 
 	
 	/**
@@ -62,14 +65,16 @@ public class ViewRankController {
 		
 		Model model = new Model();
 		ArrayList<String> statNames = model.getRankStatsName();
-		ArrayList<String> homeStats = model.getQBStats(stringTeamName);
-		ArrayList<String> oppStats = model.getQBStats(stringOppName);
+		ArrayList<Integer> homeRank = model.getRanking(stringTeamName);
+		ArrayList<Integer> oppRank = model.getRanking(stringOppName);
 		
 		int index = 0;
-		/*for (String name: statNames) {
-			returnList.add(new QBStatTable(name, homeStats.get(index), oppStats.get(index)));
+		for (String name: statNames) {
+			String hrs = homeRank.get(index).toString();
+			String ors = oppRank.get(index).toString();
+			returnList.add(new RankStatTable(name, hrs, ors));
 			index++;	
-		}*/
+		}
 		
 		return returnList;
 	}
