@@ -482,7 +482,7 @@ public class Model {
     	try {
     		establishConnection();
 			Statement statement = connection.createStatement();
-			String query = "SELECT Score FROM footballstats.scores WHERE team = '" + team + "';";
+			String query = "SELECT Score FROM footballstats.scores WHERE team = '" + team + "' ORDER BY Week;";
 			ResultSet result = statement.executeQuery(query);
 			while (result.next()) {
 				String item = result.getString("Score");
@@ -490,11 +490,13 @@ public class Model {
 				if (!items[0].contains(ss.getTeamAbb(team))) {
 					String[] chunks = items[0].split("_");
 					String chunk = chunks[0];
+					System.out.println("Here is the chunk " + chunk);
 					newOpp = ss.getTeamName(chunk);
 					opp.add(newOpp);
 				} else {
 					String[] chunks = items[1].split("_");
 					String chunk = chunks[1];
+					System.out.println("Here is the other " + chunks[1]);
 					newOpp = ss.getTeamName(chunk);
 					opp.add(newOpp);
 				}

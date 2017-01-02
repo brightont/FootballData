@@ -52,7 +52,7 @@ public class ScoreStat extends Stat{
 		}
 		Elements scoreStats = document.getElementsByClass("data-table1");
 		Elements scoreStatsRow = scoreStats.select("td");
-		for (int i = 9; i < scoreStatsRow.size() - 8; i++) {
+		for (int i = 9; i < scoreStatsRow.size(); i++) {
 			String temp = scoreStatsRow.get(i).text();
 			if ((i - 1) % 8 == 0 && start == 0) {
 				scores.add(scoreStatsRow.get(i).text());
@@ -90,7 +90,7 @@ public class ScoreStat extends Stat{
         } catch (SQLException e) {
             logger.log(Level.FINE, "Could not select count of games.");
         }
-		if ((games-1) != answer) {
+		if ((games - 1) != answer) {
 			return false;
 		}
 		return true;

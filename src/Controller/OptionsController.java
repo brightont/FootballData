@@ -469,13 +469,14 @@ public class OptionsController {
             ScoreStat scoreStat = new ScoreStat();
             ArrayList<String> listTeam = scoreStat.getScoreStats(stringTeam);
             
-            listTeam = scoreStat.removeLastItem(listTeam);
-            listTeam = scoreStat.removeLastItem(listTeam);
+            for (String l : listTeam) {
+            	System.out.println(l);
+            }
            
             if (scoreStat.checkNewGame(listTeam, scoreStat.getTeamName(stringTeam)) == false) {
             	scoreStat.addGame(listTeam, stringTeam, scoreStat.getTeamName(stringTeam));
-            	
             }
+            
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Scores couldn't be loaded.");
 		}
