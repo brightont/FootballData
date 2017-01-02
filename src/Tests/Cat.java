@@ -1,5 +1,6 @@
 package Tests;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import Model.Model;
@@ -22,33 +24,28 @@ public class Cat {
 		try {
 			document = Jsoup
 					.connect(
-							"http://www.nfl.com/stats/categorystats?archive=false&conference=null&role=OPP&offensiveStatisticCategory=null&defensiveStatisticCategory=INTERCEPTIONS&season=2016&seasonType=REG&tabSeq=2&qualified=false&Submit=Go")
+							"http://www.nfl.com/teams/atlantafalcons/statistics?team=ATL")
 					.get();
 		} catch (IOException e) {
 			
 		}
-		Elements elements = document.getElementsByClass("data-table1");
-		Elements row = elements.select("td");
-		for (int i = 1; i < row.size(); i++) {
-			if ((i - 1) % 18 == 0) {
-				String temp = row.get(i).text();
-				String[] tarr = temp.split(" ");
-				String t0 = tarr[tarr.length - 1];
-				String t1 = row.get(i + 10).text();
-				int i1 = Integer.parseInt(t1);
-		
-				String insert = "INSERT INTO footballstats.intrank VALUES" + " ('" + t0 + "','" + i1 + "');";
-
-				//System.out.println(insert);
-				try {
-					PreparedStatement prepStatement = connection.prepareStatement(insert);
-					prepStatement.executeUpdate();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				
-			}
+		Elements elements = document.getElementsByClass("team-quick-stat-body");
+		for (int i = 0; i < 4; i++) {
+			String temp = elements.get(i).text();
+			String[] tempArr = temp.split("\\(");
+			System.out.println(tempArr[0] + "DOD");
+			String[] tempArr2 = tempArr[1].split("\\)");
+			System.out.println(tempArr2[0] + "DDD");
+			char place = tempArr[1].charAt(0);
+			System.out.println(place + "place");
+			
 		}
+		/*for (Element e : elements) {
+			System.out.println(e.text() + "DOD");
+		}*/
+		/*for (int i = 0; i < miniClass.size(); i++) {
+			System.out.println(i);
+		}*/
 
 	}
 

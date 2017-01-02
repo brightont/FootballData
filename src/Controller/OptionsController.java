@@ -17,6 +17,7 @@ import Model.IntRankStat;
 import Model.IntStat;
 import Model.PassStat;
 import Model.QBStat;
+import Model.QuickStats;
 import Model.RecRankStat;
 import Model.RushRankStat;
 import Model.RushStat;
@@ -550,6 +551,12 @@ public class OptionsController {
             
             if (irStat.checkDatabaseList(listTeam7, 1, "intrank", "Interceptions") == false) {
             	irStat.updateDatabase(listTeam7, stringTeam);
+            }
+            
+            QuickStats qStat = new QuickStats();
+            ArrayList<String> listTeam8 = qStat.getQuickStats(stringTeam);
+            if (qStat.checkDatabaseList(listTeam8, 1, "quickstats", "Pts") == false) {
+            	qStat.updateDatabase(listTeam8, stringTeam);
             }
             
 		} catch (IOException e) {
