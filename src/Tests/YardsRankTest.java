@@ -55,7 +55,7 @@ public class YardsRankTest {
     	//set for double
     	list.set(2, "2");
     	
-    	yrs.updateDatabase(list, "Testing");
+    	yrs.updateDatabase(list);
     	
     	assertEquals("2.3", getValueDouble("Pts_G"));
     	assertEquals("2", getValueInt("TotPts"));

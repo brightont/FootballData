@@ -69,22 +69,31 @@ public class DefYardsRankStat extends Stat {
 	 * @param list
 	 * @param team
 	 */
-	public void updateDatabase(ArrayList<String> list, String team) {
+	public void updateDatabase(ArrayList<String> list) {
+		String team = "";
+		int j = 0;
 		for (int i = 0; i < list.size(); i++) {
-			if ((i % 4) != 0) {
+			if ((j % 4) == 0) {
+				team = list.get(i);
+				j++;
+			} else if ((j % 4) != 0) {
 				String update = "";
 				String result = list.get(i);
 				double resultDouble;
 				int resultInt;
-				if (((i - 3) % 4) == 0) {
+				if (((j - 3) % 4) == 0) {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.defyardsrank SET Yds_G = " + resultDouble + " WHERE Team = '" + team + "';";
-				} else if (((i - 2) % 6) == 0) {
+					j = 0;
+				} else if (((j - 2) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.defyardsrank SET TotPts = " + resultInt + " WHERE Team = '" + team + "';";
 				} else {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.defyardsrank SET Pts_G = " + resultDouble + " WHERE Team = '" + team + "';";
+				}
+				if (j != 0) {
+					j++;
 				}
 				try {
 					PreparedStatement prepStatement = connection.prepareStatement(update);

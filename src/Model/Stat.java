@@ -55,8 +55,28 @@ public abstract class Stat {
 	 */
 	public boolean checkDatabaseList(ArrayList<String> list, int i, String table, String val) {
 		String temp = list.get(i);
-		System.out.println("This is the temp" + temp);
 		String query = "SELECT * FROM footballstats." + table + "stats WHERE " + val + " = " + temp + ";";
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet result = statement.executeQuery(query);
+			boolean bool = result.next();
+			if (bool == false) {
+				return false;
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not check the database");
+		}
+		return true;
+	}
+	
+	/**
+	 * Check database and make sure the facts are correct
+	 * @param list
+	 * @return
+	 */
+	public boolean checkDatabaseRank(ArrayList<String> list, int i, String table, String val) {
+		String temp = list.get(i);
+		String query = "SELECT * FROM footballstats." + table + "rank WHERE " + val + " = " + temp + ";";
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(query);

@@ -52,7 +52,7 @@ public class DefYardsRankTest {
     	//set for double
     	list.set(2, "2");
     	
-    	dyrs.updateDatabase(list, "Testing");
+    	dyrs.updateDatabase(list);
     	
     	assertEquals("2.3", getValueDouble("Pts_G"));
     	assertEquals("2", getValueInt("TotPts"));

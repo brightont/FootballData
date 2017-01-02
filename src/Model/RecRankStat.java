@@ -79,30 +79,36 @@ public class RecRankStat extends Stat {
 	 * @param list
 	 * @param team
 	 */
-	public void updateDatabase(ArrayList<String> list, String team) {
+	public void updateDatabase(ArrayList<String> list) {
+		String team = "";
+		int j = 0;
 		for (int i = 0; i < list.size(); i++) {
-			if ((i % 8) != 0) {
+			if ((j % 8) == 0) {
+				team = list.get(i);
+				j++;
+			} else if ((j % 8) != 0) {
 				String update = "";
 				String result = list.get(i);
 				double resultDouble;
 				int resultInt;
-				if (((i - 7) % 8) == 0) {
+				if (((j - 7) % 8) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.recrank SET TD = " + resultInt + " WHERE Team = '" + team + "';";
-				} else if (((i - 6) % 8) == 0) {
+					j = 0;
+				} else if (((j - 6) % 8) == 0) {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.recrank SET Yds_G = " + resultDouble + " WHERE Team = '" + team
 							+ "';";
-				} else if (((i - 5) % 6) == 0) {
+				} else if (((j - 5) % 6) == 0) {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.recrank SET Avge = " + resultDouble + " WHERE Team = '" + team + "';";
-				} else if (((i - 4) % 6) == 0) {
+				} else if (((j - 4) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.recrank SET Yds = " + resultInt + " WHERE Team = '" + team + "';";
-				} else if (((i - 3) % 6) == 0) {
+				} else if (((j - 3) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.recrank SET Rec = " + resultInt + " WHERE Team = '" + team + "';";
-				} else if (((i - 2) % 6) == 0) {
+				} else if (((j - 2) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.recrank SET TotPts = " + resultInt + " WHERE Team = '" + team
 							+ "';";
@@ -110,6 +116,9 @@ public class RecRankStat extends Stat {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.recrank SET Pts_G = " + resultDouble + " WHERE Team = '" + team
 							+ "';";
+				}
+				if (j != 0) {
+					j++;
 				}
 				try {
 					PreparedStatement prepStatement = connection.prepareStatement(update);

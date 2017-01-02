@@ -76,31 +76,40 @@ public class RushRankStat extends Stat {
 	 * @param list
 	 * @param team
 	 */
-	public void updateDatabase(ArrayList<String> list, String team) {
+	public void updateDatabase(ArrayList<String> list) {
+		String team = "";
+		int j = 0;
 		for (int i = 0; i < list.size(); i++) {
-			if ((i % 7) != 0) {
+			if ((j % 7) == 0) {
+				team = list.get(i);
+				j++;
+			} else if ((j % 7) != 0) {
 				String update = "";
 				String result = list.get(i);
 				double resultDouble;
 				int resultInt;
-				if (((i - 6) % 7) == 0) {
+				if (((j - 6) % 7) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.rushrank SET TD = " + resultInt + " WHERE Team = '" + team + "';";
-				} else if (((i - 5) % 6) == 0) {
+					j = 0;
+				} else if (((j - 5) % 6) == 0) {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.rushrank SET Yds_G = " + resultDouble + " WHERE Team = '" + team + "';";
-				} else if (((i - 4) % 6) == 0) {
+				} else if (((j - 4) % 6) == 0) {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.rushrank SET Avge = " + resultDouble + " WHERE Team = '" + team + "';";
-				} else if (((i - 3) % 6) == 0) {
+				} else if (((j - 3) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.rushrank SET Yds = " + resultInt + " WHERE Team = '" + team + "';";
-				} else if (((i- 2) % 6) == 0) {
+				} else if (((j- 2) % 6) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.rushrank SET TotPts = " + resultInt + " WHERE Team = '" + team + "';";
 				} else {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.rushrank SET Pts_G = " + resultDouble + " WHERE Team = '" + team + "';";
+				}
+				if (j != 0) {
+					j++;
 				}
 				try {
 					PreparedStatement prepStatement = connection.prepareStatement(update);

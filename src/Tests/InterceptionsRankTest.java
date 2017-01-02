@@ -47,7 +47,7 @@ public class InterceptionsRankTest {
     	//set for integer
     	list.set(1, "2");
     	
-    	irs.updateDatabase(list, "Testing");
+    	irs.updateDatabase(list);
     	
     	assertEquals("2", getValueInt("Interceptions"));
     }

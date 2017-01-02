@@ -36,7 +36,7 @@ public class DefRushRankTest {
     public void checkDatabaseTest() throws InterruptedException {		
     	DefRushRankStat drrs = new DefRushRankStat();
     	
-    	boolean bool = drrs.checkDatabaseList(list, 1 , "defrushrank", "Avg");
+    	boolean bool = drrs.checkDatabaseList(list, 1 , "defrushrank", "Yds_G");
 		assertTrue(bool);
     }
     
@@ -47,9 +47,9 @@ public class DefRushRankTest {
     	//set for integer
     	list.set(1, "2.3");
     	
-    	drrs.updateDatabase(list, "Testing");
+    	drrs.updateDatabase(list);
     	
-    	assertEquals("2.3", getValueDouble("Avg"));
+    	assertEquals("2.3", getValueDouble("Yds_G"));
     }
     
 	/**

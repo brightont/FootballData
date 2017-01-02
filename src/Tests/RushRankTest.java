@@ -56,7 +56,7 @@ public class RushRankTest {
     	//set for double
     	list.set(2, "2");
     	
-    	rrs.updateDatabase(list, "Testing");
+    	rrs.updateDatabase(list);
     	
     	assertEquals("2.3", getValueDouble("Pts_G"));
     	assertEquals("2", getValueInt("TotPts"));

@@ -469,10 +469,6 @@ public class OptionsController {
             ScoreStat scoreStat = new ScoreStat();
             ArrayList<String> listTeam = scoreStat.getScoreStats(stringTeam);
             
-            for (String l : listTeam) {
-            	System.out.println(l);
-            }
-           
             if (scoreStat.checkNewGame(listTeam, scoreStat.getTeamName(stringTeam)) == false) {
             	scoreStat.addGame(listTeam, stringTeam, scoreStat.getTeamName(stringTeam));
             }
@@ -502,69 +498,55 @@ public class OptionsController {
             YardsRankStat yrStat = new YardsRankStat();
             ArrayList<String> listTeam = yrStat.getYardsStats();
             
-            for (String l : listTeam) {
-            	System.out.println(l);
-            }
-            
-            if (yrStat.checkDatabaseList(listTeam, 1, "yardsrank", "Pts_G") == false) {
-            	System.out.println("This is false");
-            	yrStat.updateDatabase(listTeam, stringTeam);
-            }
-            
-            RushRankStat rrStat = new RushRankStat();
-            ArrayList<String> listTeam1 = rrStat.getRushRankStat();
-            
-            if (rrStat.checkDatabaseList(listTeam1, 1, "rushrank", "Pts_G") == false) {
-            	rrStat.updateDatabase(listTeam1, stringTeam);
-            }
-            
-            RecRankStat rcStat = new RecRankStat();
-            ArrayList<String> listTeam2 = rcStat.getRecRankStat();
-            
-            if (rcStat.checkDatabaseList(listTeam2, 1, "recrank", "Pts_G") == false) {
-            	rcStat.updateDatabase(listTeam2, stringTeam);
-            }
+            if (yrStat.checkDatabaseRank(listTeam, 1, "yards", "Pts_G") == false) {
+            	yrStat.updateDatabase(listTeam);
+            	
+            	RushRankStat rrStat = new RushRankStat();
+                ArrayList<String> listTeam1 = rrStat.getRushRankStat();
+                
+                rrStat.updateDatabase(listTeam1);
+                
+            	RecRankStat rcStat = new RecRankStat();
+                ArrayList<String> listTeam2 = rcStat.getRecRankStat();
+                
+            	rcStat.updateDatabase(listTeam2);
+            } 
             
             DefYardsRankStat dyrStat = new DefYardsRankStat();
             ArrayList<String> listTeam3 = dyrStat.getDefYardsStats();
             
-            if (dyrStat.checkDatabaseList(listTeam3, 1, "defyardsrank", "Pts_G") == false) {
-            	dyrStat.updateDatabase(listTeam3, stringTeam);
+            if (dyrStat.checkDatabaseRank(listTeam3, 1, "defyards", "Pts_G") == false) {
+            	dyrStat.updateDatabase(listTeam3);
+            	
+            	DefRushRankStat drrStat = new DefRushRankStat();
+                ArrayList<String> listTeam4 = drrStat.getDefRushStats();
+                
+                drrStat.updateDatabase(listTeam4);
+                
+                DefRecRankStat drcStat = new DefRecRankStat();
+                ArrayList<String> listTeam5 = drcStat.getDefRecStats();
+                
+                drcStat.updateDatabase(listTeam5);
             }
-            
-            DefRushRankStat drrStat = new DefRushRankStat();
-            ArrayList<String> listTeam4 = drrStat.getDefRushStats();
-            
-            if (drrStat.checkDatabaseList(listTeam4, 1, "defrushrank", "Avg") == false) {
-            	drrStat.updateDatabase(listTeam4, stringTeam);
-            }
-            
-            DefRecRankStat drcStat = new DefRecRankStat();
-            ArrayList<String> listTeam5 = drcStat.getDefRecStats();
-            
-            if (drcStat.checkDatabaseList(listTeam5, 1, "defrecrank", "Avg") == false) {
-            	drcStat.updateDatabase(listTeam5, stringTeam);
-            }
-            
-            SackRankStat srStat = new SackRankStat();
-            ArrayList<String> listTeam6 = srStat.getSackStats();
-            
-            if (srStat.checkDatabaseList(listTeam6, 1, "sackrank", "Sacks") == false) {
-            	srStat.updateDatabase(listTeam6, stringTeam);
-            }
-            
-            IntRankStat irStat = new IntRankStat();
-            ArrayList<String> listTeam7 = irStat.getIntRankStats();
-            
-            if (irStat.checkDatabaseList(listTeam7, 1, "intrank", "Interceptions") == false) {
-            	irStat.updateDatabase(listTeam7, stringTeam);
-            }
-            
+           
+			SackRankStat srStat = new SackRankStat();
+			ArrayList<String> listTeam6 = srStat.getSackStats();
+
+			if (srStat.checkDatabaseRank(listTeam6, 1, "sack", "Sacks") == false) {
+				srStat.updateDatabase(listTeam6);
+				
+				IntRankStat irStat = new IntRankStat();
+	            ArrayList<String> listTeam7 = irStat.getIntRankStats();
+	            
+	            irStat.updateDatabase(listTeam7);
+			}
+           
             QuickStats qStat = new QuickStats();
             ArrayList<String> listTeam8 = qStat.getQuickStats(stringTeam);
-            if (qStat.checkDatabaseList(listTeam8, 1, "quickstats", "Pts") == false) {
-            	qStat.updateDatabase(listTeam8, stringTeam);
-            }
+         
+            if (qStat.checkDatabaseList(listTeam8, 1, "quick", "Pts") == false) {
+            	qStat.updateDatabase(listTeam8, qStat.getTeamName(stringTeam));
+            } 
             
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Ranks couldn't be loaded.");

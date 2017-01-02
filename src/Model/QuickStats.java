@@ -68,37 +68,41 @@ public class QuickStats extends Stat {
 	 * @param team
 	 */
 	public void updateDatabase(ArrayList<String> list, String team) {
+		int j = 0;
 		for (int i = 0; i < list.size(); i++) {
-			if ((i % 9) != 0) {
+			if ((i % 9) == 0) {
+				j++;
+			} else if ((i % 9) != 0) {
 				String update = "";
 				String result = list.get(i);
 				double resultDouble;
 				int resultInt;
-				if (((i - 8) % 9) == 0) {
+				if (((j - 8) % 9) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.quickstats SET Rush_Yds_Place = " + resultInt + " WHERE Team = '"
 							+ team + "';";
-				} else if (((i - 7) % 9) == 0) {
+					j = 0;
+				} else if (((j - 7) % 9) == 0) {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.quickstats SET Rush_Yds = " + resultDouble + " WHERE Team = '"
 							+ team + "';";
-				} else if (((i - 6) % 9) == 0) {
+				} else if (((j - 6) % 9) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.quickstats SET Pass_Yds_Place = " + resultInt + " WHERE Team = '"
 							+ team + "';";
-				} else if (((i - 5) % 9) == 0) {
+				} else if (((j - 5) % 9) == 0) {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.quickstats SET Pass_Yds = " + resultDouble + " WHERE Team = '" + team
 							+ "';";
-				} else if (((i - 4) % 9) == 0) {
+				} else if (((j - 4) % 9) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.quickstats SET Yds_Place = " + resultInt + " WHERE Team = '" + team
 							+ "';";
-				} else if (((i - 3) % 9) == 0) {
+				} else if (((j - 3) % 9) == 0) {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.quickstats SET Yds = " + resultDouble + " WHERE Team = '" + team
 							+ "';";
-				} else if (((i - 2) % 9) == 0) {
+				} else if (((j - 2) % 9) == 0) {
 					resultInt = Integer.parseInt(result);
 					update = "UPDATE footballstats.quickstats SET Pts_Place = " + resultInt + " WHERE Team = '" + team
 							+ "';";
@@ -106,6 +110,9 @@ public class QuickStats extends Stat {
 					resultDouble = Double.parseDouble(result);
 					update = "UPDATE footballstats.quickstats SET Pts = " + resultDouble + " WHERE Team = '" + team
 							+ "';";
+				}
+				if (j != 0) {
+					j++;
 				}
 				try {
 					PreparedStatement prepStatement = connection.prepareStatement(update);

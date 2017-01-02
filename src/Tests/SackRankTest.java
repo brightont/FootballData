@@ -46,7 +46,7 @@ public class SackRankTest {
     	//set for integer
     	list.set(1, "2.3");
     	
-    	srs.updateDatabase(list, "Testing");
+    	srs.updateDatabase(list);
     	
     	assertEquals("2.3", getValueDouble("Sacks"));
     }

@@ -37,7 +37,7 @@
                         <Font name="Cooper Black" size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="rankReturnButton" layoutX="85.0" layoutY="304.0" mnemonicParsing="false" text="return" />
+                  <Button fx:id="rankReturnButton" layoutX="85.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleBack" text="return" />
                </children>
             </AnchorPane>
         </items>

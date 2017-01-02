@@ -74,9 +74,12 @@ public class YardsRankStat extends Stat {
 	 * @param list
 	 * @param team
 	 */
-	public void updateDatabase(ArrayList<String> list, String team) {
+	public void updateDatabase(ArrayList<String> list) {
+		String team = "";
 		for (int i = 0; i < list.size(); i++) {
-			if ((i % 6) != 0) {
+			if ((i % 6) == 0) {
+				team = list.get(i);
+			} else if ((i % 6) != 0) {
 				String update = "";
 				String result = list.get(i);
 				double resultDouble;

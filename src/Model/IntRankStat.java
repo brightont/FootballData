@@ -66,9 +66,12 @@ public class IntRankStat extends Stat {
 	 * @param list
 	 * @param team
 	 */
-	public void updateDatabase(ArrayList<String> list, String team) {
+	public void updateDatabase(ArrayList<String> list) {
+		String team = "";
 		for (int i = 0; i < list.size(); i++) {
-			if ((i % 2) != 0) {
+			if ((i % 2) == 0) {
+				team = list.get(i);
+			} else {
 				String update = "";
 				String result = list.get(i);
 				int resultInt = Integer.parseInt(result);

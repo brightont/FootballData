@@ -53,7 +53,7 @@ public class DefRushRankStat extends Stat {
 				String[] tarr = temp.split(" ");
 				String t0 = tarr[tarr.length - 1];
 				arr.add(t0);
-				String t1 = row.get(i + 7).text();
+				String t1 = row.get(i + 8).text();
 				arr.add(t1);
 			}
 		}
@@ -65,13 +65,16 @@ public class DefRushRankStat extends Stat {
 	 * @param list
 	 * @param team
 	 */
-	public void updateDatabase(ArrayList<String> list, String team) {
+	public void updateDatabase(ArrayList<String> list) {
+		String team = "";
 		for (int i = 0; i < list.size(); i++) {
-			if ((i % 2) != 0) {
+			if ((i % 2) == 0) {
+				team = list.get(i);
+			} else {
 				String update = "";
 				String result = list.get(i);
 				Double resultDouble = Double.parseDouble(result);
-				update = "UPDATE footballstats.defrushrank SET Avg = " + resultDouble + " WHERE Team = '" + team
+				update = "UPDATE footballstats.defrushrank SET Yds_G = " + resultDouble + " WHERE Team = '" + team
 						+ "';";
 				try {
 					PreparedStatement prepStatement = connection.prepareStatement(update);
