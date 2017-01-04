@@ -429,6 +429,8 @@ public class OptionsController {
             ArrayList<String> listOpponent = injuryStat.getAllInjuries(stringOpponent);
             
             ArrayList<Integer> intListTeam = injuryStat.checkForNewInjury(listTeam, "injuries");
+            
+         
             if (intListTeam.size() != 0) {
         		injuryStat.scrapeNewPlayer(listTeam, intListTeam, injuryStat.getTeamName(stringTeam));
         	}

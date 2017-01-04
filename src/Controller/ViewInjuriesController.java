@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 import Model.InjuryStatTable;
 import Model.InjuryStat;
-import Model.InjuryStatTable;
 import Model.Model;
-import Model.QBStat;
-import Model.InjuryStatTable;
+import Model.Probability;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,7 +22,7 @@ import javafx.stage.Stage;
 public class ViewInjuriesController {
 	
 	@FXML
-	private TableView<InjuryStatTable> injuries;
+	private TableView<InjuryStatTable> injuryTable;
 
 	@FXML
 	private TableColumn ihome;
@@ -36,6 +35,9 @@ public class ViewInjuriesController {
 	
 	@FXML
 	private TableColumn oppStatus;
+	
+	@FXML
+	private ListView<String> injuryView;
 	
 	@FXML
 	private Button injuriesReturnButton;
@@ -59,7 +61,16 @@ public class ViewInjuriesController {
 		iopp.setCellValueFactory(new PropertyValueFactory<InjuryStatTable, String>("iopp"));
 		oppStatus.setCellValueFactory(new PropertyValueFactory<InjuryStatTable, String>("oppStatus"));
 		ObservableList<InjuryStatTable> injuryStatList = FXCollections.observableArrayList(populateTable());
-		injuries.setItems(injuryStatList);
+		injuryTable.setItems(injuryStatList);
+		
+		ArrayList<String> probability = new ArrayList<String>();
+		Probability prob = new Probability();
+		double result =  prob.calculateInjuryProbability(stringTeamName, stringOppName) * 100;
+		String p = "Probability: " + result + " %";
+		probability.add(p);
+		for (String pr : probability) {
+			injuryView.getItems().add(pr);
+		}
 	} 
 	
 	/**
@@ -76,11 +87,16 @@ public class ViewInjuriesController {
 		ArrayList<String> oppStatus = model.getInjury(stringOppName, 5);
 		
 		int index = 0;
-		for (String player : homePlayer) {
-			returnList.add(new InjuryStatTable(player, homeStatus.get(index), oppPlayer.get(index), oppStatus.get(index)));
+		int stop = 0;
+		if (homePlayer.size() < oppPlayer.size()) {
+			stop = homePlayer.size();
+		} else {
+			stop = oppPlayer.size();
+		}
+		while (index < stop) {
+			returnList.add(new InjuryStatTable(homePlayer.get(index), homeStatus.get(index), oppPlayer.get(index), oppStatus.get(index)));
 			index++;
 		}
-	
 		return returnList;
 	}
 	

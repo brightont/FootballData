@@ -154,12 +154,14 @@ public class InjuryStat extends Stat{
 	 */	
 	public void scrapeNewPlayer(ArrayList<String> list, ArrayList<Integer> intList, String team) {
 		for (Integer i : intList) {
-			String player = list.get(i);
-			String position = list.get(i + 1);
-			String injury = list.get(i + 2);
-			String gs = list.get(i + 3);
-	
-			addNewPlayer(team, player, position, injury, gs);
+			if ((i % 4) == 0) {
+				String player = list.get(i);
+				String position = list.get(i + 1);
+				String injury = list.get(i + 2);
+				String gs = list.get(i + 3);
+		
+				addNewPlayer(team, player, position, injury, gs);
+			}
 		}
 	}
 	

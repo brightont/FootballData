@@ -29,14 +29,13 @@ public class InjuryStatTable {
 	public String getIhome() {
 		return ihome.get();
 	}
-	
-
-	public String getIopp() {
-		return iopp.get();
-	}
 
 	public String getHomeStatus() {
 		return homeStatus.get();
+	}
+	
+	public String getIopp() {
+		return iopp.get();
 	}
 	
 	public String getOppStatus() {
@@ -47,12 +46,13 @@ public class InjuryStatTable {
 		ihome.set(stat);
 	}
 	
-	public void setIopp(String stat) {
-		iopp.set(stat);
-	}
-	
 	public void setHomeStatus(String stat) {
 		homeStatus.set(stat);
+	}
+	
+	
+	public void setIopp(String stat) {
+		iopp.set(stat);
 	}
 	
 	public void setOppStatus(String stat) {
@@ -63,12 +63,12 @@ public class InjuryStatTable {
 		return ihome;
 	}
 	
-	public StringProperty ioppProperty() {
-		return iopp;
-	}
-	
 	public StringProperty homeStatusProperty() {
 		return homeStatus;
+	}
+	
+	public StringProperty ioppProperty() {
+		return iopp;
 	}
 	
 	public StringProperty oppStatusProperty() {
