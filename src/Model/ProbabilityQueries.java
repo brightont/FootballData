@@ -243,22 +243,6 @@ public class ProbabilityQueries {
 		return returnList;
 	}
 	
-	
-	public int getCount(String team, String table) {
-		int count = 0;
-		try {
-			Statement statement = connection.createStatement();
-			String query = "SELECT Count(*) FROM footballstats." + table + "stats WHERE Team = '" + team + "';";
-			ResultSet result = statement.executeQuery(query);
-			while (result.next()) {
-				count = result.getInt(1);
-			}
-		} catch (SQLException e) {
-			logger.log(Level.FINE, "Could not get count.");
-		}
-		return count;
-	}
-	
 	/**
 	 * Gets receiving stats
 	 * @param team
@@ -294,4 +278,160 @@ public class ProbabilityQueries {
 		}
 		return returnList;
 	}
+	
+	public boolean isQBInjured(String team) {
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT Player FROM footballstats.injuries WHERE Position = 'QB' AND Team = '" + team + "';";
+			ResultSet result = statement.executeQuery(query);
+			if (!result.next()) {
+				return false;
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get count.");
+		}
+		return true;
+	}
+	
+	/**
+	 * Finds how many important injuries there are
+	 * @param team
+	 * @return
+	 */
+	public int getInjuryCount(String team) {
+		int count = 0;
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT Count(*) FROM footballstats.injuries WHERE Team = '" + team
+					+ "' AND (GameStatus = 'RES' OR GameStatus = 'PUP' OR GameStatus = 'SUS' OR GameStatus = 'OUT');";
+			ResultSet result = statement.executeQuery(query);
+			while (result.next()) {
+				count = result.getInt(1);
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get count.");
+		}
+		return count;
+	}
+	
+	public ArrayList<String> getImportantPlayers(ArrayList<String> arr, String team, String table, String indicator) {
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT * FROM footballstats." + table + " WHERE Team = '" + team + "' ORDER BY " + indicator
+					+ " DESC LIMIT 2;";
+			ResultSet result = statement.executeQuery(query);
+			while (result.next()) {
+				String answer = result.getString("Player");
+				arr.add(answer);
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get important players.");
+		}
+		return arr;
+	}
+	
+	/**
+	 * Get top 2 defensive players
+	 * @param arr
+	 * @param team
+	 * @return
+	 */
+	public ArrayList<String> getImportantDef(ArrayList<String> arr, String team) {
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT * FROM footballstats.defstats WHERE Team = '" + team + "' AND not (Player = '" + team
+					+ " Total') ORDER BY Comb DESC LIMIT 2;";
+			ResultSet result = statement.executeQuery(query);
+			while (result.next()) {
+				String answer = result.getString("Player");
+				arr.add(answer);
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get important players.");
+		}
+		return arr;
+	}
+	
+	/**
+	 * Gets a very injured player
+	 * @param player
+	 * @return
+	 */
+	public boolean isPlayerInjured(String player) {
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT * FROM footballstats.injuries WHERE Player = '" + player
+					+ "' AND (GameStatus = 'RES' OR GameStatus = 'PUP' OR GameStatus = 'SUS' OR GameStatus = 'OUT');";
+			ResultSet result = statement.executeQuery(query);
+			if (!result.next()) {
+				return false;
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get injured.");
+		}
+		return true;
+	}
+	
+	/**
+	 * Gets a slightly injured player
+	 * @param player
+	 * @return
+	 */
+	public boolean isPlayerSlightly(String player) {
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT * FROM footballstats.injuries WHERE Player = '" + player
+					+ "';";
+			ResultSet result = statement.executeQuery(query);
+			if (!result.next()) {
+				return false;
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get injured.");
+		}
+		return true;
+	}
+	
+	/**
+	 * Counts the injuries for positions
+	 * @param team
+	 * @param position
+	 * @return
+	 */
+	public int countPositionInjuries(String team, String position) {
+		int count = 0;
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT Count(*) FROM footballstats.injuries WHERE Team = '" + team
+					+ "' AND (" + position + ");";
+			ResultSet result = statement.executeQuery(query);
+			while (result.next()) {
+				count = result.getInt(1);
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get count.");
+		}
+		return count;
+	}
+	/**
+	 * Gets the count
+	 * @param team
+	 * @param table
+	 * @return
+	 */
+	public int getCount(String team, String table) {
+		int count = 0;
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT Count(*) FROM footballstats." + table + " WHERE Team = '" + team + "';";
+			ResultSet result = statement.executeQuery(query);
+			while (result.next()) {
+				count = result.getInt(1);
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get count.");
+		}
+		return count;
+	}
+	
 }
