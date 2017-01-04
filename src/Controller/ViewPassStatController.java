@@ -6,6 +6,7 @@ import Model.HomePassStatTable;
 import Model.Model;
 import Model.OppPassStatTable;
 import Model.PassStat;
+import Model.Probability;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -62,6 +64,9 @@ public class ViewPassStatController {
 	private TableColumn poppTD;
 	
 	@FXML
+	private ListView<String> recView;
+	
+	@FXML
 	private Button passReturnButton;
 	
 	private String stringTeamName = "";
@@ -95,6 +100,15 @@ public class ViewPassStatController {
         poppTD.setCellValueFactory(new PropertyValueFactory<OppPassStatTable, String>("poppTD"));
         ObservableList<OppPassStatTable> oppPassStatList = FXCollections.observableArrayList(populateOppTable());
 		oppPassStatTable.setItems(oppPassStatList);
+		
+		ArrayList<String> probability = new ArrayList<String>();
+		Probability prob = new Probability();
+		double result =  prob.calculateRecProbability(stringTeamName, stringOppName) * 100;
+		String p = "Probability: " + result + " %";
+		probability.add(p);
+		for (String pr : probability) {
+			recView.getItems().add(pr);
+		}
 	}
 	
 	private ArrayList<HomePassStatTable> populateHomeTable() {

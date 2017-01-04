@@ -6,6 +6,7 @@ import Model.HomeIntStatTable;
 import Model.IntStat;
 import Model.Model;
 import Model.OppIntStatTable;
+import Model.Probability;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -62,6 +64,9 @@ public class ViewInterceptionsController {
 	private TableColumn ioppTD;
 	
 	@FXML
+	private ListView<String> intView;
+	
+	@FXML
 	private Button ireturnButton;
 
 	private String stringTeamName = "";
@@ -95,6 +100,15 @@ public class ViewInterceptionsController {
         ioppTD.setCellValueFactory(new PropertyValueFactory<OppIntStatTable, String>("ioppTD"));
         ObservableList<OppIntStatTable> oppIntStatList = FXCollections.observableArrayList(populateOppTable());
 		oppIntStatTable.setItems(oppIntStatList);
+		
+		ArrayList<String> probability = new ArrayList<String>();
+		Probability prob = new Probability();
+		double result =  prob.calculateIntProbability(stringTeamName, stringOppName) * 100;
+		String p = "Probability: " + result + " %";
+		probability.add(p);
+		for (String pr : probability) {
+			intView.getItems().add(pr);
+		}
 	}
 	
 	private ArrayList<HomeIntStatTable> populateHomeTable() {

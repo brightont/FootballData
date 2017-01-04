@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import Model.FieldGoalStat;
 import Model.FieldGoalStatTable;
 import Model.Model;
-import Model.QBStatTable;
+import Model.Probability;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,6 +31,9 @@ public class ViewFieldGoalsController {
 	
 	@FXML
 	private TableColumn fgOppStat;
+	
+	@FXML
+	private ListView<String> fgView;
 	
 	@FXML
 	private Button fgReturnButton;
@@ -53,6 +57,15 @@ public class ViewFieldGoalsController {
 		fgOppStat.setCellValueFactory(new PropertyValueFactory<FieldGoalStatTable, String>("fgOppStat"));
 		ObservableList<FieldGoalStatTable> fgStatList = FXCollections.observableArrayList(populateFGStatList());
 		fgStatTable.setItems(fgStatList);
+		
+		ArrayList<String> probability = new ArrayList<String>();
+		Probability prob = new Probability();
+		double result =  prob.calculateFGProbability(stringTeamName, stringOppName) * 100;
+		String p = "Probability: " + result + " %";
+		probability.add(p);
+		for (String pr : probability) {
+			fgView.getItems().add(pr);
+		}
 	} 
 	
 	/**

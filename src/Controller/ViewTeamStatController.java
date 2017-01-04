@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import MainApplication.MainApplication;
 import Model.Model;
+import Model.Probability;
 import Model.TeamStat;
 import Model.TeamStatTable;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -33,6 +35,9 @@ public class ViewTeamStatController {
 	
 	@FXML
 	private TableColumn oppStat;
+	
+	@FXML
+	private ListView<String> teamView;
 	
 	@FXML
 	private Button returnButton;
@@ -60,6 +65,15 @@ public class ViewTeamStatController {
 		oppStat.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("oppStat"));
 		ObservableList<TeamStatTable> teamStatList = FXCollections.observableArrayList(populateTeamStatList());
 		statTable.setItems(teamStatList);
+		
+		ArrayList<String> probability = new ArrayList<String>();
+		Probability prob = new Probability();
+		double result =  prob.calculateTeamProbability(stringTeamName, stringOppName) * 100;
+		String p = "Probability: " + result + " %";
+		probability.add(p);
+		for (String pr : probability) {
+			teamView.getItems().add(pr);
+		}
 		
 	}
 

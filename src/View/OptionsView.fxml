@@ -74,6 +74,12 @@
             <Image url="@../../../../Pictures/scoreIcon.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="ranking" layoutX="466.0" layoutY="166.0" mnemonicParsing="false" onAction="#selectRanking" text="Ranking" />
+      <Button fx:id="ranking" layoutX="466.0" layoutY="160.0" mnemonicParsing="false" onAction="#selectRanking" prefHeight="25.0" prefWidth="71.0" text="Ranking" />
+      <ImageView fitHeight="44.0" fitWidth="65.0" layoutX="469.0" layoutY="116.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../Pictures/rankIcon.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="probability" layoutX="465.0" layoutY="257.0" mnemonicParsing="false" onAction="#selectProb" text="Probability" />
    </children>
 </AnchorPane>

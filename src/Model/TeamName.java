@@ -21,7 +21,7 @@ public enum TeamName {
 	MIA("Dolphins", "Miami"),
 	MIN("Vikings", "Minesota"),
 	NWE("Patriots", "New England"),
-	NOR("Saints", "New Orleans"),
+	NO("Saints", "New Orleans"),
 	NYG("Giants", "New York"),
 	NYJ("Jets", "New York"),
 	OAK("Raiders", "Oakland"),

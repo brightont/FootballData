@@ -203,11 +203,13 @@ public abstract class Stat {
 		String team = "";
 		if (teamName.equals("ATL")) {
 			team = TeamName.ATL.getTeam();
-		} else if (teamName.equals("TB")) {
-			team = TeamName.TB.getTeam();
 		} else if (teamName.equals("BAL")) {
 			team = TeamName.BAL.getTeam();
-		}
+		} else if (teamName.equals("NO")) {
+			team = TeamName.NO.getTeam();
+		} else if (teamName.equals("TB")) {
+			team = TeamName.TB.getTeam();
+		} 
 		return team;
 	}
 	
@@ -219,11 +221,13 @@ public abstract class Stat {
 		String team = "";
 		if (teamName.equals("Falcons")) {
 			team = "ATL";
-		} else if (teamName.equals("Buccaneers")) {
-			team = "TB";
 		} else if (teamName.equals("Ravens")) {
 			team = "BAL";
-		}
+		} else if (teamName.equals("Saints")) {
+			team = "NO";
+		} else if (teamName.equals("Buccaneers")) {
+			team = "TB";
+		} 
 		return team;
 	}
 	

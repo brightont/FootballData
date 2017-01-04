@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Model.HomeRushStatTable;
 import Model.Model;
 import Model.OppRushStatTable;
+import Model.Probability;
 import Model.RushStat;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -63,6 +65,9 @@ public class ViewRushStatController {
 	private TableColumn oppTD;
 	
 	@FXML
+	private ListView<String> rushView;
+	
+	@FXML
 	private Button rushReturnButton;
 	
 	private String stringTeamName = "";
@@ -96,6 +101,15 @@ public class ViewRushStatController {
 		oppTD.setCellValueFactory(new PropertyValueFactory<OppRushStatTable, String>("oppTD"));
 		ObservableList<OppRushStatTable> oppRushStatList = FXCollections.observableArrayList(populateOppTable());
 		oppRushStatTable.setItems(oppRushStatList);
+		
+		ArrayList<String> probability = new ArrayList<String>();
+		Probability prob = new Probability();
+		double result =  prob.calculateRushProbability(stringTeamName, stringOppName) * 100;
+		String p = "Probability: " + result + " %";
+		probability.add(p);
+		for (String pr : probability) {
+			rushView.getItems().add(pr);
+		}
 	}
 	
 	private ArrayList<HomeRushStatTable> populateHomeTable() {

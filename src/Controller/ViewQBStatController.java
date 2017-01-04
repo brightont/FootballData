@@ -3,6 +3,7 @@ package Controller;
 import java.util.ArrayList;
 
 import Model.Model;
+import Model.Probability;
 import Model.QBStat;
 import Model.QBStatTable;
 import javafx.collections.FXCollections;
@@ -12,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,6 +32,9 @@ public class ViewQBStatController {
 	
 	@FXML
 	private TableColumn qbOppStat;
+	
+	@FXML
+	private ListView<String> qbView;
 	
 	@FXML
 	private Button qbReturnButton;
@@ -53,6 +58,15 @@ public class ViewQBStatController {
 		qbOppStat.setCellValueFactory(new PropertyValueFactory<QBStatTable, String>("qbOppStat"));
 		ObservableList<QBStatTable> qbStatList = FXCollections.observableArrayList(populateQBStatList());
 		qbStatTable.setItems(qbStatList);
+		
+		ArrayList<String> probability = new ArrayList<String>();
+		Probability prob = new Probability();
+		double result =  prob.calculateQBProbability(stringTeamName, stringOppName) * 100;
+		String p = "Probability: " + result + " %";
+		probability.add(p);
+		for (String pr : probability) {
+			qbView.getItems().add(pr);
+		}
 	} 
 	
 	/**

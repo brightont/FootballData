@@ -68,6 +68,9 @@ public class OptionsController {
 	private Button ranking;
 	
 	@FXML
+	private Button probability;
+	
+	@FXML
 	private Button mainScreenButton;
 	
 	public void setMainApp(MainApplication main) {
@@ -558,6 +561,22 @@ public class OptionsController {
 			logger.log(Level.FINE, "Ranks couldn't be loaded.");
 		}
 		
+	}
+	
+	@FXML
+	private void selectProb() throws Exception {
+		Stage stage;
+		Parent root;
+		
+		stage = (Stage) probability.getScene().getWindow();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/ProbabilityView.fxml"));
+		root = loader.load();
+		
+		Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.show();
+        
 	}
 	
 	@FXML

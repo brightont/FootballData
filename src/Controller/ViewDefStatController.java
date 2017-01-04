@@ -4,6 +4,7 @@ import Model.HomeDefStatTable;
 import Model.HomePassStatTable;
 import Model.Model;
 import Model.OppDefStatTable;
+import Model.Probability;
 
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -64,6 +66,9 @@ public class ViewDefStatController {
 	private TableColumn doppFumb;
 	
 	@FXML
+	private ListView<String> defView;
+	
+	@FXML
 	private Button defReturnButton;
 	
 	private String stringTeamName = "";
@@ -97,6 +102,15 @@ public class ViewDefStatController {
 		doppFumb.setCellValueFactory(new PropertyValueFactory<OppDefStatTable, String>("doppFumb"));
 		ObservableList<OppDefStatTable> oppDefStatList = FXCollections.observableArrayList(populateOppTable());
 		oppDefStatTable.setItems(oppDefStatList);
+		
+		ArrayList<String> probability = new ArrayList<String>();
+		Probability prob = new Probability();
+		double result =  prob.calculateDefProbability(stringTeamName, stringOppName) * 100;
+		String p = "Probability: " + result + " %";
+		probability.add(p);
+		for (String pr : probability) {
+			defView.getItems().add(pr);
+		}
 	}
 	
 	private ArrayList<HomeDefStatTable> populateHomeTable() {
