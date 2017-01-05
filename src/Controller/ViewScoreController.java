@@ -3,6 +3,7 @@ package Controller;
 import java.util.ArrayList;
 
 import Model.Model;
+import Model.Probability;
 import Model.QBStatTable;
 import Model.ScoreStat;
 import Model.ScoreStatTable;
@@ -34,21 +35,26 @@ public class ViewScoreController {
 	private TableColumn score;
 	
 	@FXML
+	private ListView<String> scoreView;
+	
+	@FXML
 	private ListView<String> record;
 	
 	@FXML
 	private Button sReturnButton;
 	
 	private String stringTeamName = "";
-	
+	private String stringOppName = "";
 	
 	@FXML
 	private void initialize() {
 		TeamSelectorController tcc = new TeamSelectorController();
         String stringTeam = tcc.getStringTeam();
+        String stringOpponent = tcc.getStringOpponent();
         
         ScoreStat team = new ScoreStat();
         stringTeamName = team.getTeamName(stringTeam);
+        stringOppName = team.getTeamName(stringOpponent);
         
         week.setCellValueFactory(new PropertyValueFactory<ScoreStatTable, String>("week"));
 		opp.setCellValueFactory(new PropertyValueFactory<ScoreStatTable, String>("opp"));
@@ -60,6 +66,15 @@ public class ViewScoreController {
 		records.add(team.getRecord(stringTeamName));
 		for (String r : records) {
 			record.getItems().add(r);
+		}
+		
+		ArrayList<String> probability = new ArrayList<String>();
+		Probability prob = new Probability();
+		double result =  prob.calculateFGProbability(stringTeamName, stringOppName) * 100;
+		String p = "Probability: " + result + " %";
+		probability.add(p);
+		for (String pr : probability) {
+			scoreView.getItems().add(pr);
 		}
 	} 
 	

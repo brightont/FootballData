@@ -201,15 +201,71 @@ public abstract class Stat {
 	 */
 	public String getTeamName(String teamName) {
 		String team = "";
-		if (teamName.equals("ATL")) {
+		if (teamName.equals("ARI")) {
+			team = TeamName.ARI.getTeam();
+		} else if (teamName.equals("ATL")) {
 			team = TeamName.ATL.getTeam();
 		} else if (teamName.equals("BAL")) {
 			team = TeamName.BAL.getTeam();
+		} else if (teamName.equals("BUF")) {
+			team = TeamName.BUF.getTeam();
+		} else if (teamName.equals("CAR")) {
+			team = TeamName.CAR.getTeam();
+		} else if (teamName.equals("CHI")) {
+			team = TeamName.CHI.getTeam();
+		} else if (teamName.equals("CIN")) {
+			team = TeamName.CIN.getTeam();
+		} else if (teamName.equals("CLE")) {
+			team = TeamName.CLE.getTeam();
+		} else if (teamName.equals("DAL")) {
+			team = TeamName.DAL.getTeam();
+		} else if (teamName.equals("DEN")) {
+			team = TeamName.DEN.getTeam();
+		} else if (teamName.equals("DET")) {
+			team = TeamName.DET.getTeam();
+		} else if (teamName.equals("GB")) {
+			team = TeamName.GB.getTeam();
+		} else if (teamName.equals("HOU")) {
+			team = TeamName.HOU.getTeam();
+		} else if (teamName.equals("IND")) {
+			team = TeamName.IND.getTeam();
+		} else if (teamName.equals("JAX")) {
+			team = TeamName.JAX.getTeam();
+		} else if (teamName.equals("KC")) {
+			team = TeamName.KC.getTeam();
+		} else if (teamName.equals("LA")) {
+			team = TeamName.LA.getTeam();
+		} else if (teamName.equals("MIA")) {
+			team = TeamName.MIA.getTeam();
+		} else if (teamName.equals("MIN")) {
+			team = TeamName.MIN.getTeam();
 		} else if (teamName.equals("NO")) {
 			team = TeamName.NO.getTeam();
+		} else if (teamName.equals("NYG")) {
+			team = TeamName.NYG.getTeam();
+		} else if (teamName.equals("NYJ")) {
+			team = TeamName.NYJ.getTeam();
+		} else if (teamName.equals("NWE")) {
+			team = TeamName.NWE.getTeam();
+		} else if (teamName.equals("OAK")) {
+			team = TeamName.OAK.getTeam();
+		} else if (teamName.equals("PHI")) {
+			team = TeamName.PHI.getTeam();
+		} else if (teamName.equals("PIT")) {
+			team = TeamName.PIT.getTeam();
+		} else if (teamName.equals("SD")) {
+			team = TeamName.SD.getTeam();
+		} else if (teamName.equals("SEA")) {
+			team = TeamName.SEA.getTeam();
+		} else if (teamName.equals("SF")) {
+			team = TeamName.SF.getTeam();
 		} else if (teamName.equals("TB")) {
 			team = TeamName.TB.getTeam();
-		} 
+		} else if (teamName.equals("TEN")) {
+			team = TeamName.TEN.getTeam();
+		} else if (teamName.equals("WAS")) {
+			team = TeamName.WAS.getTeam();
+		}
 		return team;
 	}
 	

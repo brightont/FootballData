@@ -28,9 +28,9 @@ public enum TeamName {
 	PHI("Eagles", "Philadelphia"),
 	PHX("Cardinals", "Phoenix"),
 	PIT("Steelers", "Pitsburgh"),
-	SDO("Chargers", "San Diego"),
+	SD("Chargers", "San Diego"),
 	SEA("Seattle", "Seahawks"),
-	SFO("49ers", "San Francisco"),
+	SF("49ers", "San Francisco"),
 	TB("Buccaneers", "Tampa Bay"),
 	TEN("Titans", "Tennessee"),
 	WAS("Redskins", "Washington");

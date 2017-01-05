@@ -25,13 +25,14 @@ public class ProbabilityTest {
 	public void test() throws InterruptedException {
 		Probability prob = new Probability();
 		ProbabilityQueries pq = new ProbabilityQueries();
-		System.out.println(prob.calculateProbability("Falcons", "Saints"));
-	/*	ArrayList<Double> temp = pq.getIntStats("Falcons");
+		prob.previousEncounter("Saints", "Falcons");
+		//System.out.println(prob.calculateProbability("Falcons", "Saints"));
+		/*ArrayList<Integer> temp = prob.convertRanks("Falcons");
 		System.out.println(temp.size());
-		for (Double t : temp) {
+		for (int t : temp) {
 			System.out.println(t);
-		}*/
-		
+		}
+		*/
 		
 		assertEquals(1,1);
 	}
