@@ -191,7 +191,7 @@ public class OptionsController {
         	
         	ArrayList<Integer> intListOpponent = rush.checkForNewPlayer(listOpponent, "rushstats");
         	if (intListOpponent.size() != 0) {
-        		rush.scrapeNewPlayer(listOpponent, intListOpponent, rush.getTeamName(stringTeam));
+        		rush.scrapeNewPlayer(listOpponent, intListOpponent, rush.getTeamName(stringOpponent));
         	}
         	
         	//update database if needed
@@ -333,12 +333,11 @@ public class OptionsController {
             if (intListTeam.size() != 0) {
         		def.scrapeNewPlayer(listTeam, intListTeam, def.getTeamName(stringTeam));
         	}
-        	
         	ArrayList<Integer> intListOpponent = def.checkForNewPlayer(listOpponent, "defstats");
         	if (intListOpponent.size() != 0) {
         		def.scrapeNewPlayer(listOpponent, intListOpponent, def.getTeamName(stringOpponent));
         	}
-        	
+     
         	//update database if needed
 			if (def.checkDatabaseList(listTeam, 7, "def", "Comb") == false
 					|| def.checkDatabaseList(listTeam, 13, "def", "Comb") == false) {
@@ -471,12 +470,13 @@ public class OptionsController {
             TeamSelectorController tcc = new TeamSelectorController();
             String stringTeam = tcc.getStringTeam();
             
-            ScoreStat scoreStat = new ScoreStat();
-            ArrayList<String> listTeam = scoreStat.getScoreStats(stringTeam);
+            //ScoreStat scoreStat = new ScoreStat();
+           //ArrayList<String> listTeam = scoreStat.getScoreStats(stringTeam);
             
-            if (scoreStat.checkNewGame(listTeam, scoreStat.getTeamName(stringTeam)) == false) {
+            //TODO: WIll Fix this function later
+            /*if (scoreStat.checkNewGame(listTeam, scoreStat.getTeamName(stringTeam)) == false) {
             	scoreStat.addGame(listTeam, stringTeam, scoreStat.getTeamName(stringTeam));
-            }
+            }*/
             
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Scores couldn't be loaded.");

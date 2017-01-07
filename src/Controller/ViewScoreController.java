@@ -98,7 +98,6 @@ public class ViewScoreController {
 		
 		return returnList;
 	}
-	
 	/**
 	 * Returns to the main screen
 	 * @throws Exception

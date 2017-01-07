@@ -25,7 +25,9 @@ public class ProbabilityTest {
 	public void test() throws InterruptedException {
 		Probability prob = new Probability();
 		ProbabilityQueries pq = new ProbabilityQueries();
-		prob.previousEncounter("Saints", "Falcons");
+		Model model = new Model();
+		prob.addIndDifficulty("Bengals");
+		//double d = prob.calculateDefProbability("Ravens", "Bengals");
 		//System.out.println(prob.calculateProbability("Falcons", "Saints"));
 		/*ArrayList<Integer> temp = prob.convertRanks("Falcons");
 		System.out.println(temp.size());

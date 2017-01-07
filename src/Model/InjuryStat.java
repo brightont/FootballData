@@ -40,8 +40,8 @@ public class InjuryStat extends Stat{
 	public ArrayList<String> getAllInjuries(String team) {
 		ArrayList<String> returnList = new ArrayList<String>();
 		ArrayList<String> list1 = getMainInjuries(team);
-		ArrayList<String> list2 = getGameInjuries(team);
 		returnList.addAll(list1);
+		ArrayList<String> list2 = getGameInjuries(team);
 		returnList.addAll(list2);
 		return returnList;
 	}
@@ -100,32 +100,32 @@ public class InjuryStat extends Stat{
 		Elements injuryStats = document.getElementsByClass("data-table1");
 		Elements injuryStatsRow = injuryStats.select("td");
 		for (int i = 6; i < injuryStatsRow.size() - 5; i++) {
-			if (((i-1) % 5) == 0) {
-				String name = injuryStatsRow.get(i).text();
-				if (name.contains("'")) {
-					name = name.replace("'", "");
-				} else if (name.contains(".")) {
-					name = name.replace(".", "");
-				} else if (name.contains("-")) {
-					name = name.replace("-", "");
+				if (((i-1) % 5) == 0) {
+					String name = injuryStatsRow.get(i).text();
+					if (name.contains("'")) {
+						name = name.replace("'", "");
+					} else if (name.contains(".")) {
+						name = name.replace(".", "");
+					} else if (name.contains("-")) {
+						name = name.replace("-", "");
+					}
+					injuries.add(name);
+					injuries.add(injuryStatsRow.get(i+1).text());
+					if (injuryStatsRow.get(i+2).text().equals("--")) {
+						injuries.add("NULL");
+					} else {
+						injuries.add(injuryStatsRow.get(i+2).text());
+					} 
+					if (injuryStatsRow.get(i+4).text().equals("--")) {
+						injuries.add("NULL");
+					} else if (injuryStatsRow.get(i+4).text().equals("Out")) {
+						injuries.add(injuryStatsRow.get(i+4).text().toUpperCase());
+					} else {
+						injuries.add(injuryStatsRow.get(i+4).text());
+					}
+					
 				}
-				injuries.add(name);
-				injuries.add(injuryStatsRow.get(i+1).text());
-				if (injuryStatsRow.get(i+2).text().equals("--")) {
-					injuries.add("NULL");
-				} else {
-					injuries.add(injuryStatsRow.get(i+2).text());
-				} 
-				if (injuryStatsRow.get(i+4).text().equals("--")) {
-					injuries.add("NULL");
-				} else if (injuryStatsRow.get(i+4).text().equals("Out")) {
-					injuries.add(injuryStatsRow.get(i+4).text().toUpperCase());
-				} else {
-					injuries.add(injuryStatsRow.get(i+4).text());
-				}
-				
 			}
-		}
 		return injuries;
 	}
 	
@@ -261,6 +261,13 @@ public class InjuryStat extends Stat{
 		for (int i = 0; i < list.size(); i++) {
 			if ((i % 4) == 0) {
 				player = list.get(i);
+				if (player.contains("'")) {
+		    		player = player.replace("'", "");
+		    	} else if (player.contains(".")) {
+		    		player = player.replace(".", "");
+		    	} else if (player.contains("-")) {
+		    		player = player.split("-")[0];
+		    	}
 			} else if ((i % 4) != 0) {
 				String result = list.get(i);
 				if (((i - 3) % 4) == 0) {

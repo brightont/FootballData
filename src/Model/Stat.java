@@ -239,14 +239,14 @@ public abstract class Stat {
 			team = TeamName.MIA.getTeam();
 		} else if (teamName.equals("MIN")) {
 			team = TeamName.MIN.getTeam();
+		} else if (teamName.equals("NE")) {
+			team = TeamName.NE.getTeam();
 		} else if (teamName.equals("NO")) {
 			team = TeamName.NO.getTeam();
 		} else if (teamName.equals("NYG")) {
 			team = TeamName.NYG.getTeam();
 		} else if (teamName.equals("NYJ")) {
 			team = TeamName.NYJ.getTeam();
-		} else if (teamName.equals("NWE")) {
-			team = TeamName.NWE.getTeam();
 		} else if (teamName.equals("OAK")) {
 			team = TeamName.OAK.getTeam();
 		} else if (teamName.equals("PHI")) {
@@ -279,8 +279,16 @@ public abstract class Stat {
 			team = "ATL";
 		} else if (teamName.equals("Ravens")) {
 			team = "BAL";
+		} else if (teamName.equals("Panthers")) {
+			team = "CAR";
+		} else if (teamName.equals("Dolphins")) {
+			team = "MIA";
+		} else if (teamName.equals("Patriots")) {
+			team = "NE";
 		} else if (teamName.equals("Saints")) {
 			team = "NO";
+		} else if (teamName.equals("Chargers")) {
+			team = "SD";
 		} else if (teamName.equals("Buccaneers")) {
 			team = "TB";
 		} 

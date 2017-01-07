@@ -41,9 +41,24 @@ public class Probability {
 	}
 	
 	public double calculateProbability(String team, String opp) {
-		double prob = calculateOffenseDefense(team, opp) + calculateInjuries(team, opp) + calculateStrength(team, opp)
-				+ calculateWins(team, opp) + calculateHomeStrength(team, opp, "home") + calculateRank(team, opp)
-				+ calculateDesperation(team, opp);
+		double od = calculateOffenseDefense(team, opp);
+		double i = calculateInjuries(team, opp);
+		double s = calculateStrength(team, opp);
+		double w = calculateWins(team, opp);
+		double hs = calculateHomeStrength(team, opp, "away");
+		double r = calculateRank(team, opp);
+		double d = calculateDesperation(team, opp);
+		double prob = od + i + s + w + hs + r + d;
+		
+		/*double prob = calculateOffenseDefense(team, opp) + calculateInjuries(team, opp) + calculateStrength(team, opp)
+				+ calculateWins(team, opp) + calculateHomeStrength(team, opp, "away") + calculateRank(team, opp)
+				+ calculateDesperation(team, opp);*/
+		System.out.println("offense defense : " + od);
+		System.out.println("Injuries : " + i);
+		System.out.println("Strength : " + s);
+		System.out.println("Wins : " + hs);
+		System.out.println("Rank : " + r);
+		System.out.println("Desperation : " + d);
 		return prob;
 	}
 
@@ -91,6 +106,7 @@ public class Probability {
 	public double calculateHomeStrength(String team, String opp, String location) {
 		addHomeStrength(team, location);
 		compareLocationStrengths(team, opp, location);
+		isHome(location);
 		return (homeSum * .06);
 	}
 	
@@ -444,7 +460,7 @@ public class Probability {
 		ArrayList<Double> oppStat = pq.getDefStats(opponent);
 		int index = 0;
 		int temp = 0;
-
+		
 		for (Double t : teamStat) {
 			if (t < 5 && t > oppStat.get(index)) {
 				temp = temp + 2;
@@ -479,16 +495,19 @@ public class Probability {
 	public void addIntStats(String team, String opponent) {
 		ArrayList<Double> teamStat = pq.getIntStats(team);
 		ArrayList<Double> oppStat = pq.getIntStats(opponent);
-		int index = 0;
 		int temp = 0;
-
-		for (Double t : teamStat) {
-			if (((index - 1) % 5 == 0) || ((index - 2) % 5 == 0) || ((index - 4) % 5 == 0)) {
-				if (t > oppStat.get(index)) {
+		int stop = 0;
+		if (teamStat.size() < oppStat.size()) {
+			stop = teamStat.size();
+		} else {
+			stop = oppStat.size();
+		}
+		for (int i = 0; i < stop; i++) {
+			if (((i - 1) % 5 == 0) || ((i - 2) % 5 == 0) || ((i - 4) % 5 == 0)) {
+				if (teamStat.get(i) > oppStat.get(i)) {
 					temp++;
 				}
 			}
-			index++;
 		}
 
 		defenseSum = defenseSum + temp;
@@ -655,7 +674,7 @@ public class Probability {
 				} else if (record > .5) {
 					sum++;
 				}
-			}
+			} 
 			index++;
 		}
 		strengthSum = strengthSum + sum;
@@ -857,6 +876,12 @@ public class Probability {
 			}
 		}
 	}
+	
+	public void isHome(String location) {
+		if (location.equals("home")) {
+			homeSum = homeSum + 10;
+		}
+	}
 
 	/**
 	 * Converts the ranks
@@ -998,16 +1023,16 @@ public class Probability {
 				int score2 = Integer.parseInt(chunks[4]);
 				String[] items = e.split("@");
 				if (items[0].contains(ss.getTeamAbb(opp))) {
-					if ((score1 > score2) && ((score1 - score2) < 5)) {
-						sum = sum + 20;
+					if ((score1 > score2) && ((score1 - score2) <= 5)) {
+						sum = sum + 25;
 					} else if ((score1 > score2) && ((score1 - score2) > 21)) {
-						sum = sum + 20;
+						sum = sum + 25;
 					}
 				} else {
-					if ((score2 > score1) && ((score2 - score1) < 5)) {
-						sum = sum + 20;
+					if ((score2 > score1) && ((score2 - score1) <= 5)) {
+						sum = sum + 25;
 					} else if ((score2 > score1) && ((score2 - score1) > 21)) {
-						sum = sum + 20;
+						sum = sum + 25;
 					}
 				}
 			}
@@ -1025,7 +1050,7 @@ public class Probability {
 			}
 		}
 		if (wins.size() > 14 && count == 0) {
-			sum = 10;
+			sum = sum + 15;
 		}
 		desperationSum = desperationSum + sum;
 	}
