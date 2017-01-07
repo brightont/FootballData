@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import Model.DefStat;
 import Model.Model;
 import Model.Probability;
 import Model.ProbabilityQueries;
@@ -25,8 +26,15 @@ public class ProbabilityTest {
 	public void test() throws InterruptedException {
 		Probability prob = new Probability();
 		ProbabilityQueries pq = new ProbabilityQueries();
+		DefStat ds = new DefStat();
 		Model model = new Model();
-		prob.addIndDifficulty("Bengals");
+		String dog = "ATL_30_@_BAL_15";
+		if (dog.contains(ds.getTeamAbb("Panthers"))) {
+			System.out.println("FOAM");
+		} else {
+			System.out.println("AAAAAAAAAAAAAAAAAA");
+		}
+		//prob.addIndDifficulty("Bengals");
 		//double d = prob.calculateDefProbability("Ravens", "Bengals");
 		//System.out.println(prob.calculateProbability("Falcons", "Saints"));
 		/*ArrayList<Integer> temp = prob.convertRanks("Falcons");

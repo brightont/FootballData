@@ -8,7 +8,7 @@ public class Probability {
 	private double defenseSum = 0;
 	private int offenseCategory = 25;
 	private int defenseCategory = 30;
-	private double injurySum = 15;
+	private double injurySum = 17;
 	private double strengthSum = 0;
 	private double winSum = 0;
 	private double homeSum = 0;
@@ -18,9 +18,9 @@ public class Probability {
 	 * Formula for calculating the probability of a win 
 	 * OFFENSE/DEFENSE(55 points total): 
 	 * Original allotment = 25 pts per offense and 35 pts per defense (stc)
-	 * INJURIES(15 points total)
+	 * INJURIES(17 points total)
 	 * SCHEDULE STRENGTH (7 points total)
-	 * WINS AND LOSSES (7 points total)
+	 * WINS AND LOSSES (5 points total)
 	 * HOME LOCATION (6 points total)
 	 * RANK (5 points total)
 	 * DESPERATION (5 points total)
@@ -45,7 +45,12 @@ public class Probability {
 		double i = calculateInjuries(team, opp);
 		double s = calculateStrength(team, opp);
 		double w = calculateWins(team, opp);
-		double hs = calculateHomeStrength(team, opp, "away");
+		double hs = 0;
+		if (team.equals("Bengals")) {
+			hs = calculateHomeStrength(team, opp, "home");
+		} else {
+			hs = calculateHomeStrength(team, opp, "away");
+		}
 		double r = calculateRank(team, opp);
 		double d = calculateDesperation(team, opp);
 		double prob = od + i + s + w + hs + r + d;
@@ -56,7 +61,8 @@ public class Probability {
 		System.out.println("offense defense : " + od);
 		System.out.println("Injuries : " + i);
 		System.out.println("Strength : " + s);
-		System.out.println("Wins : " + hs);
+		System.out.println("Wins : " + w);
+		System.out.println("Home strength : " + hs);
 		System.out.println("Rank : " + r);
 		System.out.println("Desperation : " + d);
 		return prob;
@@ -91,16 +97,16 @@ public class Probability {
 	}
 	
 	public double calculateStrength(String team, String opp) {
-		addDifficulty(team, opp);
+		//addDifficulty(team, opp);
 		addIndDifficulty(team);
 		addBetterStrength(team, opp);
-		return (strengthSum * .07);
+		return (strengthSum * .05);
 	}
 	
 	public double calculateWins(String team, String opp) {
 		compareWins(team, opp);
 		getWinsOverTime(team);
-		return (winSum * .07);
+		return (winSum * .05);
 	}
 	
 	public double calculateHomeStrength(String team, String opp, String location) {
@@ -121,6 +127,7 @@ public class Probability {
 	public double calculateDesperation(String team, String opp) {
 		previousEncounter(team, opp);
 		noWins(team);
+		lastGame(team, opp, "not playoffs");
 		return (desperationSum * .05);
 	}
 
@@ -669,9 +676,9 @@ public class Probability {
 		for (String o : outcomes) {
 			if (o.equals("W")) {
 				double record = pq.getRecord(oppList.get(index));
-				if (record > .6) {
+				if (record > .666) {
 					sum = sum + 2;
-				} else if (record > .5) {
+				} else if (record > .550) {
 					sum++;
 				}
 			} 
@@ -1037,7 +1044,6 @@ public class Probability {
 				}
 			}
 		}
-		desperationSum = desperationSum + sum;
 	}
 	
 	public void noWins(String team) {
@@ -1053,5 +1059,16 @@ public class Probability {
 			sum = sum + 15;
 		}
 		desperationSum = desperationSum + sum;
+	}
+	
+	public void lastGame(String team, String opp, String status) {
+		double record = pq.getRecord(team);
+		double otherRecord = pq.getRecord(opp);
+		int weeks = pq.getCount(team, "scores");
+		if (weeks == 17 & status.equals("not playoffs")) {
+			if (record > otherRecord) {
+				desperationSum = desperationSum - 20;
+			}
+		}
 	}
 }

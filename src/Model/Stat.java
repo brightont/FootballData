@@ -281,6 +281,12 @@ public abstract class Stat {
 			team = "BAL";
 		} else if (teamName.equals("Panthers")) {
 			team = "CAR";
+		} else if (teamName.equals("Bengals")) {
+			team = "CIN";
+		} else if (teamName.equals("Texans")) {
+			team = "HOU";
+		} else if (teamName.equals("Chiefs")) {
+			team = "KC";
 		} else if (teamName.equals("Dolphins")) {
 			team = "MIA";
 		} else if (teamName.equals("Patriots")) {
@@ -291,7 +297,9 @@ public abstract class Stat {
 			team = "SD";
 		} else if (teamName.equals("Buccaneers")) {
 			team = "TB";
-		} 
+		} else if (teamName.equals("Titans")) {
+			team = "TEN";
+		}
 		return team;
 	}
 	
