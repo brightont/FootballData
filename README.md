@@ -1,6 +1,6 @@
 # FootballData
 #All stat features are implemented.
-#Optimization and code cleanup are in progress.
+Optimization and code cleanup are in progress.
 #Testing of app:
 #Playoff predictions R1
 
