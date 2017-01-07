@@ -4,7 +4,7 @@
 #Testing of app:
 #Playoff predictions R1
 
-#OAK vs. HOU : 
+#OAK vs. HOU : Prediction HOU
 #DET vs. SEA :
 #MIA vs. PIT :
 #NYG vs. GB :
