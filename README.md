@@ -1,10 +1,10 @@
 # FootballData
 #All stat features are implemented.
 Optimization and code cleanup are in progress.
-#Testing of app:
-#Playoff predictions R1
+Testing of app:
 
-#OAK vs. HOU : Prediction HOU
-#DET vs. SEA :
-#MIA vs. PIT :
-#NYG vs. GB :
+#Playoff predictions R1
+OAK vs. HOU : (Prediction HOU)
+DET vs. SEA : (Prediction SEA)
+MIA vs. PIT :
+NYG vs. GB :
