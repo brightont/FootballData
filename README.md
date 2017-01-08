@@ -6,4 +6,4 @@ Optimization and code cleanup are in progress.
 OAK vs. HOU : (Prediction HOU)
 DET vs. SEA : (Prediction SEA)
 MIA vs. PIT : (Prediction PIT)
-NYG vs. GB :
+NYG vs. GB : (Prediction GB)
