@@ -3,8 +3,8 @@
 Optimization and code cleanup are in progress.
 
 #Playoff predictions R1
-#Teams               Prediction          Result
-#OAK vs. HOU         HOU                 HOU
-#DET vs. SEA         SEA           
-#MIA vs. PIT         PIT       
-#NYG vs. GB          GB
+OAK vs. HOU / Prediction: HOU / Result: HOU
+DET vs. SEA / Prediction: SEA / Result:
+MIA vs. PIT / Prediction: PIT / Result:
+NYG vs. GB  / Prediction: GB  / Result
+
