@@ -9,7 +9,7 @@ Optimization and code cleanup are in progress.
 #Game: NYG vs. GB  / Prediction: GB  / Result: GB
 
 #Playoff predictions R2
-#GAME: SEA vs. ATL / Prediction: ATL / Result: 
-#GAME: HOU vs. NE / Prediction: NE   / Result:
+#GAME: SEA vs. ATL / Prediction: ATL / Result: ATL
+#GAME: HOU vs. NE / Prediction: NE   / Result: NE
 #GAME: GB vs. DAL / Prediction: GB   / Result:
 #GAME: PIT vs. KC / Prediction: KC   / Result: 
