@@ -1,4 +1,4 @@
-#Code clean coming soon/in progress
+#Code cleanup coming soon/in progress
 
 # FootballData
 #All stat features are implemented.
