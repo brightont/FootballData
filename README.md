@@ -1,3 +1,5 @@
+#Code clean coming soon/in progress
+
 # FootballData
 #All stat features are implemented.
 Optimization and code cleanup are in progress. So far... 9/10
