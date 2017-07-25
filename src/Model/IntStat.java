@@ -45,7 +45,7 @@ public class IntStat extends Stat {
 		int start = 0;
 		ArrayList<String> intStatistics = new ArrayList<String>();
 		try {
-			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team).get();
+			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team + "&seasonType=REG").get();
 		} catch (IOException e) {
 			logger.info("Failed to get interception statistics.");
 		}

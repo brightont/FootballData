@@ -29,7 +29,7 @@ public enum TeamName {
 	PHX("Cardinals", "Phoenix"),
 	PIT("Steelers", "Pitsburgh"),
 	SD("Chargers", "San Diego"),
-	SEA("Seattle", "Seahawks"),
+	SEA("Seahawks", "Seattle"),
 	SF("49ers", "San Francisco"),
 	TB("Buccaneers", "Tampa Bay"),
 	TEN("Titans", "Tennessee"),

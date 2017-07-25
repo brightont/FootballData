@@ -46,7 +46,7 @@ public class FieldGoalStat extends Stat {
 		int end = 0;
 		HashMap<String, String> fgStatistics = new HashMap<String, String>();
 		try {
-			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team).get();
+			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team + "&seasonType=REG").get();
 		} catch (IOException e) {
 			logger.info("Failed to get field goal statistics.");
 		}

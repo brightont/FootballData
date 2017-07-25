@@ -48,7 +48,7 @@ public class TeamStat extends Stat {
 		HashMap<String, String> homeStatistics = new HashMap<String, String>();
 
 		try {
-			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team).get();
+			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team + "&seasonType=REG").get();
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Failed to get team statistics.");
 		}

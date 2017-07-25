@@ -45,7 +45,7 @@ public class QBStat extends Stat{
 	public HashMap<String, String> getQBStats(String team) {
 		HashMap<String, String> qbStatistics = new HashMap<String, String>();
 		try {
-			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team).get();
+			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team + "&seasonType=REG").get();
 		} catch (IOException e) {
 			logger.info("Failed to get quarter back statistics.");
 		}

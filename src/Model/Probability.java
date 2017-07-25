@@ -46,7 +46,7 @@ public class Probability {
 		double s = calculateStrength(team, opp);
 		double w = calculateWins(team, opp);
 		double hs = 0;
-		if (team.equals("Bengals")) {
+		if (team.equals("Dogs")) {
 			hs = calculateHomeStrength(team, opp, "home");
 		} else {
 			hs = calculateHomeStrength(team, opp, "away");
@@ -100,7 +100,7 @@ public class Probability {
 		//addDifficulty(team, opp);
 		addIndDifficulty(team);
 		addBetterStrength(team, opp);
-		return (strengthSum * .05);
+		return (strengthSum * .07);
 	}
 	
 	public double calculateWins(String team, String opp) {
@@ -127,7 +127,7 @@ public class Probability {
 	public double calculateDesperation(String team, String opp) {
 		previousEncounter(team, opp);
 		noWins(team);
-		lastGame(team, opp, "not playoffs");
+		isSecure("no", team);
 		return (desperationSum * .05);
 	}
 
@@ -536,7 +536,7 @@ public class Probability {
 	 */
 	public void addQBInjury(String team) {
 		if (pq.isQBInjured(team)) {
-			injurySum = injurySum - 10;
+			injurySum = injurySum - 12;
 		}
 	}
 
@@ -886,7 +886,7 @@ public class Probability {
 	
 	public void isHome(String location) {
 		if (location.equals("home")) {
-			homeSum = homeSum + 10;
+			homeSum = homeSum + 5;
 		}
 	}
 
@@ -1044,6 +1044,7 @@ public class Probability {
 				}
 			}
 		}
+		desperationSum = desperationSum + sum;
 	}
 	
 	public void noWins(String team) {
@@ -1061,13 +1062,33 @@ public class Probability {
 		desperationSum = desperationSum + sum;
 	}
 	
-	public void lastGame(String team, String opp, String status) {
-		double record = pq.getRecord(team);
-		double otherRecord = pq.getRecord(opp);
-		int weeks = pq.getCount(team, "scores");
-		if (weeks == 17 & status.equals("not playoffs")) {
-			if (record > otherRecord) {
-				desperationSum = desperationSum - 20;
+	//TODO: Make a less hard coded method for teams that put in 2nd string if they secured a playoff spot
+	public void isSecure(String status, String team) {
+		if (status.equals("yes") && team.equals("Eagles")) {
+			desperationSum = desperationSum - 30;
+		}
+	}
+	
+	public void isBound(String status, String team, String opp) {
+		if (status.equals("both no")) {
+			ArrayList<String> wins = pq.getOutcomes(team);
+			int count = 0;
+			for (String w : wins) {
+				if (w.equals("W")) {
+					count++;
+				}
+			}
+			
+			ArrayList<String> oppwins = pq.getOutcomes(opp);
+			int count1 = 0;
+			for (String w : oppwins) {
+				if (w.equals("W")) {
+					count1++;
+				}
+			}
+			
+			if (count > count1) {
+				desperationSum = desperationSum - 100;
 			}
 		}
 	}

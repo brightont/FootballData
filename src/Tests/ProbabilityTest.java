@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import Controller.ViewTeamStatController;
+import Model.Cat;
 import Model.DefStat;
 import Model.Model;
 import Model.Probability;
@@ -26,14 +28,12 @@ public class ProbabilityTest {
 	public void test() throws InterruptedException {
 		Probability prob = new Probability();
 		ProbabilityQueries pq = new ProbabilityQueries();
-		DefStat ds = new DefStat();
-		Model model = new Model();
-		String dog = "ATL_30_@_BAL_15";
-		if (dog.contains(ds.getTeamAbb("Panthers"))) {
-			System.out.println("FOAM");
-		} else {
-			System.out.println("AAAAAAAAAAAAAAAAAA");
+		Cat c = new Cat();
+		ArrayList<String> cat = c.getList("Steelers");
+		for (int index = 0; index < cat.size(); index++) {
+			System.out.println(cat.get(index));
 		}
+		c.addGame(cat, "PIT", "Redskins");
 		//prob.addIndDifficulty("Bengals");
 		//double d = prob.calculateDefProbability("Ravens", "Bengals");
 		//System.out.println(prob.calculateProbability("Falcons", "Saints"));

@@ -1,29 +1,18 @@
 package Controller;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import MainApplication.MainApplication;
 import Model.TeamName; 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
 
 public class TeamSelectorController {
 
-	private static final Logger logger = Logger.getLogger("TeamSelectorController");
 	private MainApplication mainApplication;
+	
 	private ObservableList<TeamName> teamList = FXCollections.observableArrayList(TeamName.values());
-	private final ObjectProperty<TeamName> teams = new SimpleObjectProperty<>();
 	private static String stringTeam;
 	private static String stringOpponent;
 
@@ -37,14 +26,6 @@ public class TeamSelectorController {
 	private Button submitButton;
 	
 	
-	public TeamName getTeams() {
-		return teams.get();
-	}
-	
-	public void setTeams(TeamName team) {
-		teams.set(team);
-	}
-	
 	public String getStringTeam() {
 		return stringTeam;
 	}
@@ -57,11 +38,9 @@ public class TeamSelectorController {
         mainApplication = main;
     }
 	
-	/**
-	 * Initializes the lists for the selector
-	 */
 	@FXML
     public void initialize() {
+		//set team lists
 		teamOfChoice.setItems(teamList);
 		opponent.setItems(teamList);
 		teamOfChoice.getSelectionModel().selectFirst();
@@ -69,34 +48,21 @@ public class TeamSelectorController {
     }
 	
 	/**
-	 *  Allows the user to pick the team by loading website and getting stats
+	 * Selects team from combo boxes
 	 */
 	@FXML
-	public void pickTeam() {
+	public void PickTeam() {
 		stringTeam = teamOfChoice.getSelectionModel().getSelectedItem().toString();
 		stringOpponent = opponent.getSelectionModel().getSelectedItem().toString();
 	}
 
 	/**
-	 * Sets up the options screen when the submit button is pressed
+	 * Submit teams
 	 */
 	@FXML
-	public void pressSubmit() {
-        try {
-        	Stage stage;
-            Parent root;
-
-            stage = (Stage) submitButton.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("../view/OptionsView.fxml"));
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            
-		} catch (IOException e) {
-			logger.log(Level.FINE, "Could not properly submit.");
-			e.printStackTrace();
-		}
+	public void Submit() {
+		ControllerMethods cm = new ControllerMethods();
+		cm.SetScene(submitButton, "../view/OptionsView.fxml");
 	}
 
 }

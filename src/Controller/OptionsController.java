@@ -39,31 +39,22 @@ public class OptionsController {
 	
 	@FXML
 	private Button teamStats;
-	
 	@FXML
 	private Button qbStats;
-	
 	@FXML
 	private Button rushStats;
-	
 	@FXML
 	private Button passStats;
-	
 	@FXML
 	private Button fieldGoals;
-	
 	@FXML
 	private Button defStats;
-	
 	@FXML 
 	private Button interceptions;
-	
 	@FXML
 	private Button injuries;
-	
 	@FXML
 	private Button scores;
-	
 	@FXML
 	private Button ranking;
 	
@@ -73,7 +64,11 @@ public class OptionsController {
 	@FXML
 	private Button mainScreenButton;
 	
-	public void setMainApp(MainApplication main) {
+	/**
+	 * Sets the main application
+	 * @param main
+	 */
+	public void SetMainApp(MainApplication main) {
         mainApplication = main;
     }
 	
@@ -103,11 +98,12 @@ public class OptionsController {
             HashMap<String, String> hashTeam = team.getTeamStats(stringTeam);
             HashMap<String, String> hashOpponent = team.getTeamStats(stringOpponent); 
             
-            String value = "Sacks";
+            String value = "Touchdowns";
             
             hashTeam.values().remove(stringTeam);
             hashOpponent.values().remove(stringOpponent);
             
+            //TODO: Only updates one side sometimes
             if (team.checkDatabase(hashTeam, value, "team") == false) {
             	team.updateDatabase(hashTeam, team.getTeamName(stringTeam));
             }  
@@ -596,4 +592,5 @@ public class OptionsController {
         stage.show();
         
 	}
+	
 }

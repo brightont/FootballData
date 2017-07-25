@@ -44,7 +44,7 @@ public class RushStat extends Stat{
 	public ArrayList<String> getRushStats(String team) {
 		ArrayList<String> rushStatistics = new ArrayList<String>();
 		try {
-			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team).get();
+			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team + "&seasonType=REG").get();
 		} catch (IOException e) {
 			logger.info("Failed to get rush statistics.");
 		}
