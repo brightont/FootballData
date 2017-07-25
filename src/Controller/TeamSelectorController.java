@@ -18,7 +18,6 @@ public class TeamSelectorController {
 
 	@FXML
 	private ComboBox<TeamName> teamOfChoice;
-	
 	@FXML
 	private ComboBox<TeamName> opponent;
 	

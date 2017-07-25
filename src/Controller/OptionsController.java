@@ -22,7 +22,6 @@ import Model.RecRankStat;
 import Model.RushRankStat;
 import Model.RushStat;
 import Model.SackRankStat;
-import Model.ScoreStat;
 import Model.TeamStat;
 import Model.YardsRankStat;
 import javafx.fxml.FXML;
