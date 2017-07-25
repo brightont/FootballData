@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Model.HomeRushStatTable;
 import Model.Model;
+import Model.Probability;
 import Model.QuickStats;
 import Model.RankStatTable;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,6 +32,9 @@ public class ViewRankController {
 	
 	@FXML
 	private TableColumn oppRank;
+	
+	@FXML
+	private ListView<String> rankView;
 	
 	@FXML
 	private Button rankReturnButton;
@@ -54,6 +59,15 @@ public class ViewRankController {
 	
 		ObservableList<RankStatTable> rankStatList = FXCollections.observableArrayList(populateRankStatList());
 		scoreTable.setItems(rankStatList);
+		
+		ArrayList<String> probability = new ArrayList<String>();
+		Probability prob = new Probability();
+		double result =  prob.calculateRankProbability(stringTeamName, stringOppName) * 100;
+		String p = "Probability: " + result + " %";
+		probability.add(p);
+		for (String pr : probability) {
+			rankView.getItems().add(pr);
+		}
 	} 
 	
 	/**

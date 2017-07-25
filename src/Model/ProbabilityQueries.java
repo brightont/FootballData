@@ -37,6 +37,48 @@ public class ProbabilityQueries {
 	}
 	
 	/**
+	 * Gets the ranking of the interceptions or stats
+	 * @param team
+	 * @return
+	 */
+	public int getRankSpecial(String team, String table, String indicator) {
+		int rank = 0;
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT a." + indicator + ", a.Team, count(*) as rank FROM footballstats." + table
+					+ "rank a JOIN footballstats." + table + "rank b ON a." + indicator + " <= b." + indicator
+					+ " WHERE a.Team = '" + team + "' GROUP BY a.Team;";
+			ResultSet result = statement.executeQuery(query);
+			while (result.next()) {
+				rank = result.getInt("rank");
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get ranking.");
+		}
+		return rank;
+	}
+	
+	/**
+	 * Gets the rank based on quick stat
+	 * @param team
+	 * @param stat
+	 * @return
+	 */
+	public int getQuickStatRank(String team, String stat) {
+		int rank = 0;
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT " + stat + " FROM footballstats.quickstats WHERE Team = '" + team + "';";
+			ResultSet result = statement.executeQuery(query);
+			while (result.next()) {
+				rank = result.getInt(stat);
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get ranking.");
+		}
+		return rank;
+	}
+	/**
 	 * Gets team stats
 	 * @param team
 	 * @return
@@ -413,6 +455,7 @@ public class ProbabilityQueries {
 		}
 		return count;
 	}
+	
 	/**
 	 * Gets the count
 	 * @param team
@@ -433,5 +476,73 @@ public class ProbabilityQueries {
 		}
 		return count;
 	}
+	
+	/**
+	 * Gets the count
+	 * @param team
+	 * @param table
+	 * @return
+	 */
+	public double getRecord(String team) {
+		double record = 0;
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT Record FROM footballstats.records WHERE Team = '" + team + "';";
+			ResultSet result = statement.executeQuery(query);
+			while (result.next()) {
+				record = result.getDouble(1);
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get record.");
+		}
+		return record;
+	}
+	
+	/**
+	 * Gets the outcomes for each week
+	 * @param team
+	 * @return
+	 */
+	public ArrayList<String> getOutcomes(String team) {
+		ArrayList<String> arr = new ArrayList<String>();
+		int count = getCount(team, "scores");
+		try {
+			Statement statement = connection.createStatement();
+			for (int i = 1; i <= count + 1; i++) {
+				String query = "SELECT Outcome FROM footballstats.scores WHERE Team = '" + team + "' AND Week = " + i +";";
+				ResultSet result = statement.executeQuery(query);
+				while (result.next()) {
+					arr.add(result.getString(1));
+				}
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get outcomes.");
+		}
+		return arr;
+	}
+	
+	/**
+	 * Gets the location of the game
+	 * @param team
+	 * @return
+	 */
+	public ArrayList<String> getScoreLocation(String team) {
+		ArrayList<String> arr = new ArrayList<String>();
+		int count = getCount(team, "scores");
+		try {
+			Statement statement = connection.createStatement();
+			for (int i = 1; i <= count + 1; i++) {
+				String query = "SELECT Score FROM footballstats.scores WHERE Team = '" + team + "' AND Week =" + i + ";";
+				ResultSet result = statement.executeQuery(query);
+				while (result.next()) {
+					arr.add(result.getString(1));
+				}
+			}
+		} catch (SQLException e) {
+			logger.log(Level.FINE, "Could not get scores.");
+		}
+		return arr;
+	}
+	
 	
 }

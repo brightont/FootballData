@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 public class ViewInjuriesController {
 	
 	@FXML
-	private TableView<InjuryStatTable> injuryTable;
+	private TableView<InjuryStatTable> injuries;
 
 	@FXML
 	private TableColumn ihome;
@@ -61,7 +61,7 @@ public class ViewInjuriesController {
 		iopp.setCellValueFactory(new PropertyValueFactory<InjuryStatTable, String>("iopp"));
 		oppStatus.setCellValueFactory(new PropertyValueFactory<InjuryStatTable, String>("oppStatus"));
 		ObservableList<InjuryStatTable> injuryStatList = FXCollections.observableArrayList(populateTable());
-		injuryTable.setItems(injuryStatList);
+		injuries.setItems(injuryStatList);
 		
 		ArrayList<String> probability = new ArrayList<String>();
 		Probability prob = new Probability();

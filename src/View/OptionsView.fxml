@@ -81,5 +81,10 @@
          </image>
       </ImageView>
       <Button fx:id="probability" layoutX="465.0" layoutY="257.0" mnemonicParsing="false" onAction="#selectProb" text="Probability" />
+      <ImageView fitHeight="47.0" fitWidth="71.0" layoutX="471.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Pictures/probIcon.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

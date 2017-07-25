@@ -42,7 +42,7 @@ public class QuickStats extends Stat {
 		try {
 			document = Jsoup
 					.connect(
-							"http://www.nfl.com/teams/atlantafalcons/statistics?team=" + team)
+							"http://www.nfl.com/teams/atlantafalcons/statistics?team=" + team + "&seasonType=REG")
 					.get();
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Couldn't get quick stats.");

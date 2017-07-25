@@ -15,7 +15,7 @@
 			<items>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: red;">
 					<children>
-						<TableView fx:id="injuryTable" layoutX="21.0" layoutY="15.0" prefHeight="348.0" prefWidth="331.0">
+						<TableView fx:id="injuries" layoutX="21.0" layoutY="15.0" prefHeight="348.0" prefWidth="331.0">
 							<columns>
 								<TableColumn fx:id="ihome" minWidth="0.0" prefWidth="84.66665649414062" text="Home" />
                         <TableColumn fx:id="homeStatus" prefWidth="75.0" text="Status" />
@@ -32,13 +32,13 @@
 				</AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: red;">
                <children>
-                  <Label layoutX="20.0" layoutY="41.0" prefHeight="84.0" prefWidth="181.0" text="Probability Based On Injuries" textAlignment="CENTER" wrapText="true">
+                  <Label layoutX="36.0" layoutY="27.0" prefHeight="56.0" prefWidth="162.0" text="Probability Based on Injuries" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font name="Cooper Black" size="18.0" />
                      </font>
                   </Label>
                   <Button fx:id="injuriesReturnButton" layoutX="85.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleBack" text="return" />
-                  <ListView fx:id="injuryView" layoutX="11.0" layoutY="131.0" prefHeight="75.0" prefWidth="200.0" />
+                  <ListView fx:id="injuryView" layoutX="10.0" layoutY="111.0" prefHeight="94.0" prefWidth="200.0" />
                </children>
             </AnchorPane>
         </items>

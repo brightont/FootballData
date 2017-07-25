@@ -22,7 +22,6 @@ import Model.RecRankStat;
 import Model.RushRankStat;
 import Model.RushStat;
 import Model.SackRankStat;
-import Model.ScoreStat;
 import Model.TeamStat;
 import Model.YardsRankStat;
 import javafx.fxml.FXML;
@@ -39,31 +38,22 @@ public class OptionsController {
 	
 	@FXML
 	private Button teamStats;
-	
 	@FXML
 	private Button qbStats;
-	
 	@FXML
 	private Button rushStats;
-	
 	@FXML
 	private Button passStats;
-	
 	@FXML
 	private Button fieldGoals;
-	
 	@FXML
 	private Button defStats;
-	
 	@FXML 
 	private Button interceptions;
-	
 	@FXML
 	private Button injuries;
-	
 	@FXML
 	private Button scores;
-	
 	@FXML
 	private Button ranking;
 	
@@ -73,7 +63,11 @@ public class OptionsController {
 	@FXML
 	private Button mainScreenButton;
 	
-	public void setMainApp(MainApplication main) {
+	/**
+	 * Sets the main application
+	 * @param main
+	 */
+	public void SetMainApp(MainApplication main) {
         mainApplication = main;
     }
 	
@@ -103,11 +97,12 @@ public class OptionsController {
             HashMap<String, String> hashTeam = team.getTeamStats(stringTeam);
             HashMap<String, String> hashOpponent = team.getTeamStats(stringOpponent); 
             
-            String value = "Sacks";
+            String value = "Touchdowns";
             
             hashTeam.values().remove(stringTeam);
             hashOpponent.values().remove(stringOpponent);
             
+            //TODO: Only updates one side sometimes
             if (team.checkDatabase(hashTeam, value, "team") == false) {
             	team.updateDatabase(hashTeam, team.getTeamName(stringTeam));
             }  
@@ -191,7 +186,7 @@ public class OptionsController {
         	
         	ArrayList<Integer> intListOpponent = rush.checkForNewPlayer(listOpponent, "rushstats");
         	if (intListOpponent.size() != 0) {
-        		rush.scrapeNewPlayer(listOpponent, intListOpponent, rush.getTeamName(stringTeam));
+        		rush.scrapeNewPlayer(listOpponent, intListOpponent, rush.getTeamName(stringOpponent));
         	}
         	
         	//update database if needed
@@ -333,12 +328,11 @@ public class OptionsController {
             if (intListTeam.size() != 0) {
         		def.scrapeNewPlayer(listTeam, intListTeam, def.getTeamName(stringTeam));
         	}
-        	
         	ArrayList<Integer> intListOpponent = def.checkForNewPlayer(listOpponent, "defstats");
         	if (intListOpponent.size() != 0) {
         		def.scrapeNewPlayer(listOpponent, intListOpponent, def.getTeamName(stringOpponent));
         	}
-        	
+     
         	//update database if needed
 			if (def.checkDatabaseList(listTeam, 7, "def", "Comb") == false
 					|| def.checkDatabaseList(listTeam, 13, "def", "Comb") == false) {
@@ -471,12 +465,13 @@ public class OptionsController {
             TeamSelectorController tcc = new TeamSelectorController();
             String stringTeam = tcc.getStringTeam();
             
-            ScoreStat scoreStat = new ScoreStat();
-            ArrayList<String> listTeam = scoreStat.getScoreStats(stringTeam);
+            //ScoreStat scoreStat = new ScoreStat();
+           //ArrayList<String> listTeam = scoreStat.getScoreStats(stringTeam);
             
-            if (scoreStat.checkNewGame(listTeam, scoreStat.getTeamName(stringTeam)) == false) {
+            //TODO: WIll Fix this function later
+            /*if (scoreStat.checkNewGame(listTeam, scoreStat.getTeamName(stringTeam)) == false) {
             	scoreStat.addGame(listTeam, stringTeam, scoreStat.getTeamName(stringTeam));
-            }
+            }*/
             
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Scores couldn't be loaded.");
@@ -596,4 +591,5 @@ public class OptionsController {
         stage.show();
         
 	}
+	
 }

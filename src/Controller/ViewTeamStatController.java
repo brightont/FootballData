@@ -63,6 +63,7 @@ public class ViewTeamStatController {
 		statName.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("statName"));
 		homeStat.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("homeStat"));
 		oppStat.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("oppStat"));
+		populateTeamStatList();
 		ObservableList<TeamStatTable> teamStatList = FXCollections.observableArrayList(populateTeamStatList());
 		statTable.setItems(teamStatList);
 		
@@ -81,7 +82,7 @@ public class ViewTeamStatController {
 	 * Populates an arrayList for the table view
 	 * @return
 	 */
-	private ArrayList<TeamStatTable> populateTeamStatList() {
+	public ArrayList<TeamStatTable> populateTeamStatList() {
 		ArrayList<TeamStatTable> returnList = new ArrayList<TeamStatTable>();
 		
 		Model model = new Model();
@@ -95,7 +96,6 @@ public class ViewTeamStatController {
 			returnList.add(new TeamStatTable(name, homeStats.get(index), oppStats.get(index)));
 			index++;	
 		}
-		
 		return returnList;
 	}
 	

@@ -45,7 +45,7 @@ public class PassStat extends Stat{
 		int start = 0;
 		ArrayList<String> passStatistics = new ArrayList<String>();
 		try {
-			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team).get();
+			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team + "&seasonType=REG").get();
 		} catch (IOException e) {
 			logger.info("Failed to get pass statistics.");
 		}
@@ -122,6 +122,13 @@ public class PassStat extends Stat{
 		for (int i = 6; i < list.size(); i++) {
 			if ((i % 6) == 0) {
 				player = list.get(i);
+				if (player.contains("'")) {
+		    		player = player.replace("'", "");
+		    	} else if (player.contains(".")) {
+		    		player = player.replace(".", "");
+		    	} else if (player.contains("-")) {
+		    		player = player.split("-")[0];
+		    	}
 			} else if ((i % 6) != 0) {
 				String update = "";
 				String result = list.get(i);

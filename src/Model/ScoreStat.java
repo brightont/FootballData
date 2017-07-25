@@ -97,11 +97,6 @@ public class ScoreStat extends Stat{
 	}
 	
 	
-	/**
-	 * Update the database
-	 * @param list
-	 * @param team
-	 */
 	public void addGame(ArrayList<String> list, String team, String fullName) {
 		int lastItem = list.size() - 2;
 		String week = list.get(lastItem);
