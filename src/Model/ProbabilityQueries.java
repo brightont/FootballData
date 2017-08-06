@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class ProbabilityQueries {
 	private Model database = new Model();
-	private final Connection connection = database.establishConnection();
+	private final Connection connection = database.EstablishConnection();
 	private static final Logger logger = Logger.getLogger("ProbabilityQueries.class");
 
 	/**
@@ -83,7 +83,7 @@ public class ProbabilityQueries {
 	 * @param team
 	 * @return
 	 */
-	public ArrayList<Double> getTeamStats(String team) {
+	public ArrayList<Double> GetTeamStats(String team) {
 		ArrayList<Double> returnList = new ArrayList<Double>();
 		try {
 			Statement statement = connection.createStatement();

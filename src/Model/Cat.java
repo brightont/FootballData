@@ -14,7 +14,7 @@ import org.jsoup.select.Elements;
 public class Cat {
 	private Model database = new Model();
 	private static final Logger logger = Logger.getLogger("DefStat.class");
-	private final Connection connection = database.establishConnection();
+	private final Connection connection = database.EstablishConnection();
 	public Document document;
 	
 	/**

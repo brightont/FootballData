@@ -49,7 +49,7 @@ public class RecRankTest {
 	}
 	
 	@Test(timeout = TIMEOUT)
-    public void updateDatabase() throws InterruptedException {
+    public void UpdateDatabase() throws InterruptedException {
 		RecRankStat rrs = new RecRankStat();
 		
     	//set for integer
@@ -58,7 +58,7 @@ public class RecRankTest {
     	//set for double
     	list.set(2, "2");
     	
-    	rrs.updateDatabase(list);
+    	rrs.UpdateDatabase(list);
     	
     	assertEquals("2.3", getValueDouble("Pts_G"));
     	assertEquals("2", getValueInt("TotPts"));
@@ -72,7 +72,7 @@ public class RecRankTest {
 	 */
 	public String getValueInt(String name) {
 		String newResult = "";
-		Connection connection = database.establishConnection();
+		Connection connection = database.EstablishConnection();
 		String queryUser = "SELECT " + name + " FROM footballstats.recrank WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();
@@ -95,7 +95,7 @@ public class RecRankTest {
 	 */
 	public String getValueDouble(String name) {
 		String newResult = "";
-		Connection connection = database.establishConnection();
+		Connection connection = database.EstablishConnection();
 		String queryUser = "SELECT " + name + " FROM footballstats.recrank WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();

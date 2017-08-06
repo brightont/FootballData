@@ -14,7 +14,7 @@ import org.jsoup.select.Elements;
 public class FieldGoalStat extends Stat {
 	private Model database = new Model();
 	private static final Logger logger = Logger.getLogger("FieldGoalStat.class");
-	private final Connection connection = database.establishConnection();
+	private final Connection connection = database.EstablishConnection();
 	public Document document;
 	
 	//empty constructor
@@ -77,7 +77,7 @@ public class FieldGoalStat extends Stat {
 	 * Update the database if the website info has changed
 	 * @param hash
 	 */
-	public void updateDatabase(HashMap<String, String> hash, String team) {
+	public void UpdateDatabase(HashMap<String, String> hash, String team) {
 		String databaseKey = "";
 		String databaseValue = "";
 		for (HashMap.Entry<String, String> entry : hash.entrySet()) {
@@ -86,13 +86,13 @@ public class FieldGoalStat extends Stat {
 				databaseKey = databaseKey.replace(" ", "_");
 				databaseValue = entry.getValue();
 				int ivi = Integer.parseInt(databaseValue);
-				updateQueryInt(databaseKey, ivi, team, "fgstats");
+				UpdateQueryInt(databaseKey, ivi, team, "fgstats");
 			} else if (entry.getKey().contains("+")){
 				databaseKey = entry.getKey().replace("+", "plus");
 				databaseKey = databaseKey.replace(" ", "_");
 				databaseValue = entry.getValue();
 				int ivi = Integer.parseInt(databaseValue);
-				updateQueryInt(databaseKey, ivi, team, "fgstats");
+				UpdateQueryInt(databaseKey, ivi, team, "fgstats");
 			} else {
 				databaseKey = entry.getKey();
 				databaseValue = entry.getValue();

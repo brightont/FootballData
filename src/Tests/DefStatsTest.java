@@ -83,7 +83,7 @@ public class DefStatsTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void updateDatabase() throws InterruptedException {
+    public void UpdateDatabase() throws InterruptedException {
     	DefStat def = new DefStat();
     	
     	//set for integer
@@ -92,7 +92,7 @@ public class DefStatsTest {
     	//set for double
     	list.set(10, "2.3");
     	
-    	def.updateDatabase(list, "Testing");
+    	def.UpdateDatabase(list, "Testing");
     	
     	assertEquals("2", getValueInt("Comb"));
     	assertEquals("2.3", getValueDouble("Sck"));
@@ -106,7 +106,7 @@ public class DefStatsTest {
     public String getPlayer(String player) {
         String queryUser = "SELECT * FROM footballstats.defstats WHERE Player = '" + player + "';";
         String answer = "";
-        Connection connection = database.establishConnection();
+        Connection connection = database.EstablishConnection();
         try {
             Statement userStatement = connection.createStatement();
             ResultSet result = userStatement.executeQuery(queryUser);
@@ -127,7 +127,7 @@ public class DefStatsTest {
 	 */
 	public String getValueInt(String name) {
 		String newResult = "";
-		Connection connection = database.establishConnection();
+		Connection connection = database.EstablishConnection();
 		String queryUser = "SELECT " + name + " FROM footballstats.defstats WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();
@@ -150,7 +150,7 @@ public class DefStatsTest {
 	 */
 	public String getValueDouble(String name) {
 		String newResult = "";
-		Connection connection = database.establishConnection();
+		Connection connection = database.EstablishConnection();
 		String queryUser = "SELECT " + name + " FROM footballstats.defstats WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();

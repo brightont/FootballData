@@ -47,7 +47,7 @@ public class RushRankTest {
 	}
 	
 	@Test(timeout = TIMEOUT)
-    public void updateDatabase() throws InterruptedException {
+    public void UpdateDatabase() throws InterruptedException {
 		RushRankStat rrs = new RushRankStat();
 		
     	//set for integer
@@ -56,7 +56,7 @@ public class RushRankTest {
     	//set for double
     	list.set(2, "2");
     	
-    	rrs.updateDatabase(list);
+    	rrs.UpdateDatabase(list);
     	
     	assertEquals("2.3", getValueDouble("Pts_G"));
     	assertEquals("2", getValueInt("TotPts"));
@@ -70,7 +70,7 @@ public class RushRankTest {
 	 */
 	public String getValueInt(String name) {
 		String newResult = "";
-		Connection connection = database.establishConnection();
+		Connection connection = database.EstablishConnection();
 		String queryUser = "SELECT " + name + " FROM footballstats.rushrank WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();
@@ -93,7 +93,7 @@ public class RushRankTest {
 	 */
 	public String getValueDouble(String name) {
 		String newResult = "";
-		Connection connection = database.establishConnection();
+		Connection connection = database.EstablishConnection();
 		String queryUser = "SELECT " + name + " FROM footballstats.rushrank WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();

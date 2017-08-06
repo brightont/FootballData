@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public abstract class Stat {
 	private Model database = new Model();
 	private static final Logger logger = Logger.getLogger("Stat.class");
-	private final Connection connection = database.establishConnection();
+	private final Connection connection = database.EstablishConnection();
 	private String team;
 
 	public Stat() {
@@ -24,19 +24,25 @@ public abstract class Stat {
 		this.team = team;
 	}
 
+	
 	/**
-	 * Check database and make sure the facts are correct
+	 * Check database to see if it was updated recently
+	 * @param hash
+	 * @param value
+	 * @param table
+	 * @param team
+	 * @return
 	 */
-	//TODO: integrate team so it's more specific
-	public boolean checkDatabase(HashMap<String, String> hash, String value, String table) {
+	public boolean CheckDatabase(HashMap<String, String> hash, String value, String table, String team) {
 		String hashValue = hash.get(value);
 		int intVal = Integer.parseInt(hashValue);
 		if (value.contains("-")) {
 			value = value.replace("-", "to");
 			value = value.replace(" ", "_");
-		} 
-		
-		String query = "SELECT * FROM footballstats." + table + "stats WHERE " + value + " = " + intVal + ";";
+		}
+
+		String query = "SELECT * FROM footballstats." + table + "stats WHERE " + value + " = " + intVal
+				+ " AND team = '" + team + "';";
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(query);
@@ -113,12 +119,13 @@ public abstract class Stat {
 	}
 	
 	/**
-	 * Updates the database with a double
+	 * Updates a double column in the database
 	 * @param key
 	 * @param value
 	 * @param team
+	 * @param table
 	 */
-	public void updateQueryDouble(String key, double value, String team, String table) {
+	public void UpdateQueryDouble(String key, double value, String team, String table) {
 		String update = "UPDATE footballstats." + table + " SET " + key + " = " + value + " WHERE Team = '" + team + "';";
 		try {
 			PreparedStatement prepStatement = connection.prepareStatement(update);
@@ -129,12 +136,13 @@ public abstract class Stat {
 	}
 
 	/**
-	 * Updates the database with an int
+	 * Updates an int column in the database
 	 * @param key
 	 * @param value
 	 * @param team
+	 * @param table
 	 */
-	public void updateQueryInt(String key, int value, String team, String table) {
+	public void UpdateQueryInt(String key, int value, String team, String table) {
 		String update = "UPDATE footballstats." + table + " SET " + key + " = " + value + " WHERE Team = '" + team + "';";
 		try {
 			PreparedStatement prepStatement = connection.prepareStatement(update);

@@ -43,7 +43,7 @@ public class DefYardsRankTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void updateDatabase() throws InterruptedException {
+    public void UpdateDatabase() throws InterruptedException {
     	DefYardsRankStat dyrs = new DefYardsRankStat();
     	
     	//set for integer
@@ -52,7 +52,7 @@ public class DefYardsRankTest {
     	//set for double
     	list.set(2, "2");
     	
-    	dyrs.updateDatabase(list);
+    	dyrs.UpdateDatabase(list);
     	
     	assertEquals("2.3", getValueDouble("Pts_G"));
     	assertEquals("2", getValueInt("TotPts"));
@@ -66,7 +66,7 @@ public class DefYardsRankTest {
    	 */
    	public String getValueInt(String name) {
    		String newResult = "";
-   		Connection connection = database.establishConnection();
+   		Connection connection = database.EstablishConnection();
    		String queryUser = "SELECT " + name + " FROM footballstats.defyardsrank WHERE Team = 'Testing';";
    		try {
    			Statement userStatement = connection.createStatement();
@@ -89,7 +89,7 @@ public class DefYardsRankTest {
    	 */
    	public String getValueDouble(String name) {
    		String newResult = "";
-   		Connection connection = database.establishConnection();
+   		Connection connection = database.EstablishConnection();
    		String queryUser = "SELECT " + name + " FROM footballstats.defyardsrank WHERE Team = 'Testing';";
    		try {
    			Statement userStatement = connection.createStatement();

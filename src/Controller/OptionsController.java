@@ -22,6 +22,7 @@ import Model.RecRankStat;
 import Model.RushRankStat;
 import Model.RushStat;
 import Model.SackRankStat;
+import Model.TeamName;
 import Model.TeamStat;
 import Model.YardsRankStat;
 import javafx.fxml.FXML;
@@ -63,6 +64,8 @@ public class OptionsController {
 	@FXML
 	private Button mainScreenButton;
 	
+	ControllerMethods cm = new ControllerMethods();
+	
 	/**
 	 * Sets the main application
 	 * @param main
@@ -72,47 +75,42 @@ public class OptionsController {
     }
 	
 	/**
-	 * View the team stats
+	 * Select team statistics
 	 */
 	@FXML
-	public void selectTeamStats() {
-        try {
-        	Stage stage;
-            Parent root;
-
-            stage = (Stage) teamStats.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("../view/StatView.fxml"));
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-  
-            //Gets the team names 
-            TeamSelectorController tsc = new TeamSelectorController();
-            String stringTeam = tsc.getStringTeam();
-            String stringOpponent = tsc.getStringOpponent();
+	public void SelectTeamStats() {
+		
+        //Gets the team names 
+		String stringTeam = TeamSelectorController.stringTeam;
+		String stringOpp = TeamSelectorController.stringOpponent;
+		
+		//Populate the two hash maps
+        TeamStat team = new TeamStat();
+        HashMap<String, String> hashTeam = team.GetTeamStats(stringTeam);
+        HashMap<String, String> hashOpp = team.GetTeamStats(stringOpp); 
+        
+        String value1 = "Touchdowns";
+        String value2 = "Total First Downs";
+        
+        hashTeam.values().remove(stringTeam);
+        hashOpp.values().remove(stringOpp);   
+        
+        String teamName = TeamName.valueOf(stringTeam).getTeam();
+        String teamOpp = TeamName.valueOf(stringOpp).getTeam();
+        
+        if (!team.CheckDatabase(hashTeam, value1, "team", teamName) && 
+    		   !team.CheckDatabase(hashTeam, value2, "team", teamName)) {
+        	team.UpdateDatabase(hashTeam, team.getTeamName(stringTeam));
+        }  
             
-            //gets the two hash maps
-            TeamStat team = new TeamStat();
-            HashMap<String, String> hashTeam = team.getTeamStats(stringTeam);
-            HashMap<String, String> hashOpponent = team.getTeamStats(stringOpponent); 
+        if (!team.CheckDatabase(hashOpp, value1, "team", teamOpp) && 
+    		   !team.CheckDatabase(hashOpp, value2, "team", teamOpp)) {
+        	team.UpdateDatabase(hashTeam, team.getTeamName(stringTeam));
+        }     
+        
+        //set scene
+        cm.SetScene(teamStats, "../view/StatView.fxml");
             
-            String value = "Touchdowns";
-            
-            hashTeam.values().remove(stringTeam);
-            hashOpponent.values().remove(stringOpponent);
-            
-            //TODO: Only updates one side sometimes
-            if (team.checkDatabase(hashTeam, value, "team") == false) {
-            	team.updateDatabase(hashTeam, team.getTeamName(stringTeam));
-            }  
-            if (team.checkDatabase(hashOpponent, value, "team") == false) {
-            	team.updateDatabase(hashOpponent, team.getTeamName(stringOpponent));
-            }
-            
-		} catch (IOException e) {
-			logger.log(Level.FINE, "Team Stats could not be loaded.");
-		}
 	}
 	
 	/**
@@ -141,12 +139,12 @@ public class OptionsController {
             
             String value = "Att";
             
-            if (qb.checkDatabase(hashQB, value, "qb") == false) {
-            	qb.updateDatabase(hashQB, qb.getTeamName(stringTeam));
-            }
-            if (qb.checkDatabase(hashOppQB, value, "qb") == false) {
-            	qb.updateDatabase(hashOppQB, qb.getTeamName(stringOpponent));
-            }
+            //if (qb.CheckDatabase(hashQB, value, "qb") == false) {
+            	qb.UpdateDatabase(hashQB, qb.getTeamName(stringTeam));
+            //}
+            //if (qb.CheckDatabase(hashOppQB, value, "qb") == false) {
+            	qb.UpdateDatabase(hashOppQB, qb.getTeamName(stringOpponent));
+            //}
             
 		} catch (IOException e) {
 			logger.log(Level.FINE, "QB Stats could not be loaded.");
@@ -192,12 +190,12 @@ public class OptionsController {
         	//update database if needed
 			if (rush.checkDatabaseList(listTeam, 7, "rush", "Att") == false
 					|| rush.checkDatabaseList(listTeam, 13, "rush", "Att") == false) {
-				rush.updateDatabase(listTeam, rush.getTeamName(stringTeam));
+				rush.UpdateDatabase(listTeam, rush.getTeamName(stringTeam));
 			}
 			
 			if (rush.checkDatabaseList(listOpponent, 7, "rush", "Att") == false
 					|| rush.checkDatabaseList(listOpponent, 13, "rush", "Att") == false) {
-				rush.updateDatabase(listOpponent, rush.getTeamName(stringOpponent));
+				rush.UpdateDatabase(listOpponent, rush.getTeamName(stringOpponent));
 			}
             
 		} catch (IOException e) {
@@ -244,12 +242,12 @@ public class OptionsController {
         	//update database if needed
 			if (pass.checkDatabaseList(listTeam, 7, "pass_", "Rec") == false
 					|| pass.checkDatabaseList(listTeam, 13, "pass_", "Rec") == false) {
-				pass.updateDatabase(listTeam, pass.getTeamName(stringTeam));
+				pass.UpdateDatabase(listTeam, pass.getTeamName(stringTeam));
 			}
 			
 			if (pass.checkDatabaseList(listOpponent, 7, "pass_", "Rec") == false
 					|| pass.checkDatabaseList(listOpponent, 13, "pass_", "Rec") == false) {
-				pass.updateDatabase(listOpponent, pass.getTeamName(stringOpponent));
+				pass.UpdateDatabase(listOpponent, pass.getTeamName(stringOpponent));
 			}
             
 		} catch (IOException e) {
@@ -284,12 +282,12 @@ public class OptionsController {
             
             String value = "30-39 M";
             String value1 = "20-29 A";
-			if (fg.checkDatabase(hashFG, value, "fg") == false || fg.checkDatabase(hashFG, value1, "fg")) {
-				fg.updateDatabase(hashFG, fg.getTeamName(stringTeam));
-			}
-			if (fg.checkDatabase(hashOppFG, value, "fg") == false || fg.checkDatabase(hashFG, value1, "fg")) {
-				fg.updateDatabase(hashOppFG, fg.getTeamName(stringOpponent));
-			}
+			//if (fg.CheckDatabase(hashFG, value, "fg") == false || fg.CheckDatabase(hashFG, value1, "fg")) {
+				fg.UpdateDatabase(hashFG, fg.getTeamName(stringTeam));
+			//}
+			//if (fg.CheckDatabase(hashOppFG, value, "fg") == false || fg.CheckDatabase(hashFG, value1, "fg")) {
+				fg.UpdateDatabase(hashOppFG, fg.getTeamName(stringOpponent));
+			//}
             
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Field Goal Stats couldn't be loaded.");
@@ -336,12 +334,12 @@ public class OptionsController {
         	//update database if needed
 			if (def.checkDatabaseList(listTeam, 7, "def", "Comb") == false
 					|| def.checkDatabaseList(listTeam, 13, "def", "Comb") == false) {
-				def.updateDatabase(listTeam, def.getTeamName(stringTeam));
+				def.UpdateDatabase(listTeam, def.getTeamName(stringTeam));
 			}
 			
 			if (def.checkDatabaseList(listOpponent, 7, "def", "Comb") == false
 					|| def.checkDatabaseList(listOpponent, 13, "def", "Comb") == false) {
-				def.updateDatabase(listOpponent, def.getTeamName(stringOpponent));
+				def.UpdateDatabase(listOpponent, def.getTeamName(stringOpponent));
 			}
             
 		} catch (IOException e) {
@@ -386,12 +384,12 @@ public class OptionsController {
         	//update database if needed
 			if (intStat.checkDatabaseList(listTeam, 7, "int", "It") == false
 					|| intStat.checkDatabaseList(listTeam, 13, "int", "It") == false) {
-				intStat.updateDatabase(listTeam, intStat.getTeamName(stringTeam));
+				intStat.UpdateDatabase(listTeam, intStat.getTeamName(stringTeam));
 			}
 			
 			if (intStat.checkDatabaseList(listOpponent, 7, "int", "It") == false
 					|| intStat.checkDatabaseList(listOpponent, 13, "int", "It") == false) {
-				intStat.updateDatabase(listOpponent, intStat.getTeamName(stringOpponent));
+				intStat.UpdateDatabase(listOpponent, intStat.getTeamName(stringOpponent));
 			}
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Interception Stats couldn't be loaded.");
@@ -435,10 +433,10 @@ public class OptionsController {
         	}
         	
         	if (injuryStat.removeNewPlayer(listTeam, stringTeam) == false) {
-        		injuryStat.updateDatabase(listTeam, injuryStat.getTeamName(stringTeam));
+        		injuryStat.UpdateDatabase(listTeam, injuryStat.getTeamName(stringTeam));
         	}
         	if (injuryStat.removeNewPlayer(listOpponent, stringOpponent) == false) {
-        		injuryStat.updateDatabase(listOpponent, injuryStat.getTeamName(stringOpponent));
+        		injuryStat.UpdateDatabase(listOpponent, injuryStat.getTeamName(stringOpponent));
         	}
             
 		} catch (IOException e) {
@@ -500,46 +498,46 @@ public class OptionsController {
             ArrayList<String> listTeam = yrStat.getYardsStats();
             
             if (yrStat.checkDatabaseRank(listTeam, 1, "yards", "Pts_G") == false) {
-            	yrStat.updateDatabase(listTeam);
+            	yrStat.UpdateDatabase(listTeam);
             	
             	RushRankStat rrStat = new RushRankStat();
                 ArrayList<String> listTeam1 = rrStat.getRushRankStat();
                 
-                rrStat.updateDatabase(listTeam1);
+                rrStat.UpdateDatabase(listTeam1);
                 
             	RecRankStat rcStat = new RecRankStat();
                 ArrayList<String> listTeam2 = rcStat.getRecRankStat();
                 
-            	rcStat.updateDatabase(listTeam2);
+            	rcStat.UpdateDatabase(listTeam2);
             } 
             
             DefYardsRankStat dyrStat = new DefYardsRankStat();
             ArrayList<String> listTeam3 = dyrStat.getDefYardsStats();
             
             if (dyrStat.checkDatabaseRank(listTeam3, 1, "defyards", "Pts_G") == false) {
-            	dyrStat.updateDatabase(listTeam3);
+            	dyrStat.UpdateDatabase(listTeam3);
             	
             	DefRushRankStat drrStat = new DefRushRankStat();
                 ArrayList<String> listTeam4 = drrStat.getDefRushStats();
                 
-                drrStat.updateDatabase(listTeam4);
+                drrStat.UpdateDatabase(listTeam4);
                 
                 DefRecRankStat drcStat = new DefRecRankStat();
                 ArrayList<String> listTeam5 = drcStat.getDefRecStats();
                 
-                drcStat.updateDatabase(listTeam5);
+                drcStat.UpdateDatabase(listTeam5);
             }
            
 			SackRankStat srStat = new SackRankStat();
 			ArrayList<String> listTeam6 = srStat.getSackStats();
 
 			if (srStat.checkDatabaseRank(listTeam6, 1, "sack", "Sacks") == false) {
-				srStat.updateDatabase(listTeam6);
+				srStat.UpdateDatabase(listTeam6);
 				
 				IntRankStat irStat = new IntRankStat();
 	            ArrayList<String> listTeam7 = irStat.getIntRankStats();
 	            
-	            irStat.updateDatabase(listTeam7);
+	            irStat.UpdateDatabase(listTeam7);
 			}
            
             QuickStats qStat = new QuickStats();
@@ -547,11 +545,11 @@ public class OptionsController {
             ArrayList<String> listOpponent = qStat.getQuickStats(stringOpponent);
          
             if (qStat.checkDatabaseList(listTeam8, 1, "quick", "Pts") == false) {
-            	qStat.updateDatabase(listTeam8, qStat.getTeamName(stringTeam));
+            	qStat.UpdateDatabase(listTeam8, qStat.getTeamName(stringTeam));
             } 
             
             if (qStat.checkDatabaseList(listOpponent, 1, "quick", "Pts") == false) {
-            	qStat.updateDatabase(listOpponent, qStat.getTeamName(stringOpponent));
+            	qStat.UpdateDatabase(listOpponent, qStat.getTeamName(stringOpponent));
             } 
             
 		} catch (IOException e) {

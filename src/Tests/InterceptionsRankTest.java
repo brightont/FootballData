@@ -41,13 +41,13 @@ public class InterceptionsRankTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void updateDatabase() throws InterruptedException {
+    public void UpdateDatabase() throws InterruptedException {
     	IntRankStat irs = new IntRankStat();
     	
     	//set for integer
     	list.set(1, "2");
     	
-    	irs.updateDatabase(list);
+    	irs.UpdateDatabase(list);
     	
     	assertEquals("2", getValueInt("Interceptions"));
     }
@@ -60,7 +60,7 @@ public class InterceptionsRankTest {
    	 */
    	public String getValueInt(String name) {
    		String newResult = "";
-   		Connection connection = database.establishConnection();
+   		Connection connection = database.EstablishConnection();
    		String queryUser = "SELECT " + name + " FROM footballstats.intrank WHERE Team = 'Testing';";
    		try {
    			Statement userStatement = connection.createStatement();

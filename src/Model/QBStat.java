@@ -14,7 +14,7 @@ import org.jsoup.select.Elements;
 public class QBStat extends Stat{
 	private Model database = new Model();
 	private static final Logger logger = Logger.getLogger("QBStat.class");
-	private final Connection connection = database.establishConnection();
+	private final Connection connection = database.EstablishConnection();
 	public Document document;
 	
 	//empty constructor
@@ -67,7 +67,7 @@ public class QBStat extends Stat{
 	 * Update the database if the website info has changed
 	 * @param hash
 	 */
-	public void updateDatabase(HashMap<String, String> hash, String team) {
+	public void UpdateDatabase(HashMap<String, String> hash, String team) {
 		String databaseKey = "";
 		String databaseValue = "";
 		for (HashMap.Entry<String, String> entry : hash.entrySet()) {
@@ -75,16 +75,16 @@ public class QBStat extends Stat{
 				databaseKey = entry.getKey().replace(" %", "_P");
 				databaseValue = entry.getValue();
 				double dvi = Double.parseDouble(databaseValue);
-				updateQueryDouble(databaseKey, dvi, team, "qbstats");
+				UpdateQueryDouble(databaseKey, dvi, team, "qbstats");
 			} else if (entry.getKey().contains("/")) {
 				databaseKey = entry.getKey().replace("/", "_");
 				databaseValue = entry.getValue();
 				double dvi = Double.parseDouble(databaseValue);
 				if ((dvi % 1) != 0) { 
-					updateQueryDouble(databaseKey, dvi, team, "qbstats");
+					UpdateQueryDouble(databaseKey, dvi, team, "qbstats");
 				} else {
 					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team, "qbstats");
+					UpdateQueryInt(databaseKey, ivi, team, "qbstats");
 				}
 			}else {
 				databaseKey = entry.getKey();
@@ -94,11 +94,11 @@ public class QBStat extends Stat{
 				} else if (databaseKey.equals("Rating")) {
 					databaseValue = entry.getValue();
 					double dvi = Double.parseDouble(databaseValue);
-					updateQueryDouble(databaseKey, dvi, team, "qbstats");
+					UpdateQueryDouble(databaseKey, dvi, team, "qbstats");
 				} else {
 					databaseValue = entry.getValue();
 					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team, "qbstats");
+					UpdateQueryInt(databaseKey, ivi, team, "qbstats");
 				}
 			}
 		}

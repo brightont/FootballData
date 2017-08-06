@@ -15,23 +15,26 @@
             <Image url="@nfl.jpg" />
          </image>
       </ImageView>
-		<Label layoutX="51.0" layoutY="107.0" text="Team of Choice" textFill="#fc0c0c">
+		<Label layoutX="63.0" layoutY="107.0" text="Team of Choice" textFill="#fc0c0c">
 			<font>
-				<Font name="Cooper Black" size="18.0" />
+				<Font name="Century Schoolbook" size="18.0" />
 			</font>
 		</Label>
-		<Label layoutX="63.0" layoutY="171.0" text="Opponent" textFill="#fc0c0c">
+		<Label layoutX="69.0" layoutY="171.0" text="Opponent" textFill="#fc0c0c">
 			<font>
-				<Font name="Cooper Black" size="18.0" />
+				<Font name="Century Schoolbook" size="18.0" />
 			</font>
 		</Label>
-		<ComboBox id="opponent" fx:id="opponent" layoutX="387.0" layoutY="169.0" onAction="#PickTeam" prefWidth="150.0" />
-		<ComboBox id="  teamOfChoice " fx:id="teamOfChoice" layoutX="387.0" layoutY="105.0" onAction="#PickTeam" prefWidth="150.0" />
-		<Label layoutX="45.0" layoutY="23.0" text="Football Statistics Analyzer" textFill="#fc0c0c">
+		<ComboBox id="opponent" fx:id="opponent" layoutX="421.0" layoutY="170.0" onAction="#PickTeam" prefHeight="25.0" prefWidth="128.0" />
+		<ComboBox id="  teamOfChoice " fx:id="teamOfChoice" layoutX="421.0" layoutY="106.0" onAction="#PickTeam" prefHeight="25.0" prefWidth="128.0" />
+		<Label layoutX="77.0" layoutY="28.0" text="Football Statistics Analyzer" textFill="#fc0c0c">
 			<font>
-				<Font name="Cooper Black" size="36.0" />
+				<Font name="Century Schoolbook" size="36.0" />
 			</font>
 		</Label>
-		<Button fx:id="submitButton" alignment="CENTER" layoutX="282.0" layoutY="313.0" mnemonicParsing="false" onAction="#Submit" text="Submit" textAlignment="CENTER" />
+		<Button fx:id="submitButton" alignment="CENTER" layoutX="256.0" layoutY="313.0" mnemonicParsing="false" onAction="#Submit" prefHeight="25.0" prefWidth="108.0" text="Submit" textAlignment="CENTER">
+         <font>
+            <Font name="Century Schoolbook" size="12.0" />
+         </font></Button>
 	</children>
 </AnchorPane>

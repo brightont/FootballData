@@ -15,7 +15,7 @@ import org.jsoup.select.Elements;
 public class DefStat extends Stat {
 	private Model database = new Model();
 	private static final Logger logger = Logger.getLogger("DefStat.class");
-	private final Connection connection = database.establishConnection();
+	private final Connection connection = database.EstablishConnection();
 	public Document document;
 
 	// empty constructor
@@ -128,7 +128,7 @@ public class DefStat extends Stat {
 	 * @param list
 	 * @param team
 	 */
-	public void updateDatabase(ArrayList<String> list, String team) {
+	public void UpdateDatabase(ArrayList<String> list, String team) {
 		String player = "";
 		for (int i = 6; i < list.size(); i++) {
 			if ((i % 6) == 0) {

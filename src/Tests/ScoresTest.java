@@ -63,7 +63,7 @@ public class ScoresTest {
     }
     
     public int getTotalGames(ArrayList<String> list, String team) {
-    	Connection connection = database.establishConnection();
+    	Connection connection = database.EstablishConnection();
     	
 		String query = "SELECT COUNT(Week) FROM footballstats.scores WHERE Team = '" + team + "';";
 		int answer = 0;

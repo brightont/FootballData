@@ -40,13 +40,13 @@ public class SackRankTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void updateDatabase() throws InterruptedException {
+    public void UpdateDatabase() throws InterruptedException {
     	SackRankStat srs = new SackRankStat();
     	
     	//set for integer
     	list.set(1, "2.3");
     	
-    	srs.updateDatabase(list);
+    	srs.UpdateDatabase(list);
     	
     	assertEquals("2.3", getValueDouble("Sacks"));
     }
@@ -59,7 +59,7 @@ public class SackRankTest {
    	 */
    	public String getValueDouble(String name) {
    		String newResult = "";
-   		Connection connection = database.establishConnection();
+   		Connection connection = database.EstablishConnection();
    		String queryUser = "SELECT " + name + " FROM footballstats.sackrank WHERE Team = 'Testing';";
    		try {
    			Statement userStatement = connection.createStatement();

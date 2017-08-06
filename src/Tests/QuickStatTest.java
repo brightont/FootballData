@@ -49,7 +49,7 @@ public class QuickStatTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void updateDatabase() throws InterruptedException {
+    public void UpdateDatabase() throws InterruptedException {
     	QuickStats qs = new QuickStats();
     	
     	//set for integer
@@ -58,7 +58,7 @@ public class QuickStatTest {
     	//set for decimal
     	list.set(2, "2");
     	
-    	qs.updateDatabase(list, "Testing");
+    	qs.UpdateDatabase(list, "Testing");
     	
     	assertEquals("2.3", getValueDouble("Pts"));
     	assertEquals("2", getValueInt("Pts_Place"));
@@ -72,7 +72,7 @@ public class QuickStatTest {
 	 */
 	public String getValueInt(String name) {
 		String newResult = "";
-		Connection connection = database.establishConnection();
+		Connection connection = database.EstablishConnection();
 		String queryUser = "SELECT " + name + " FROM footballstats.quickstats WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();
@@ -95,7 +95,7 @@ public class QuickStatTest {
 	 */
 	public String getValueDouble(String name) {
 		String newResult = "";
-		Connection connection = database.establishConnection();
+		Connection connection = database.EstablishConnection();
 		String queryUser = "SELECT " + name + " FROM footballstats.quickstats WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();

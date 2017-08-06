@@ -41,13 +41,13 @@ public class DefRecRankTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void updateDatabase() throws InterruptedException {
+    public void UpdateDatabase() throws InterruptedException {
     	DefRecRankStat drrs = new DefRecRankStat();
     	
     	//set for integer
     	list.set(1, "2.3");
     	
-    	drrs.updateDatabase(list);
+    	drrs.UpdateDatabase(list);
     	
     	assertEquals("2.3", getValueDouble("Yds_G"));
     }
@@ -60,7 +60,7 @@ public class DefRecRankTest {
    	 */
    	public String getValueDouble(String name) {
    		String newResult = "";
-   		Connection connection = database.establishConnection();
+   		Connection connection = database.EstablishConnection();
    		String queryUser = "SELECT " + name + " FROM footballstats.defrecrank WHERE Team = 'Testing';";
    		try {
    			Statement userStatement = connection.createStatement();

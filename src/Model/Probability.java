@@ -195,8 +195,8 @@ public class Probability {
 	 * @param opponent
 	 */
 	public void addTeamStats(String team, String opponent) {
-		ArrayList<Double> teamStat = pq.getTeamStats(team);
-		ArrayList<Double> oppStat = pq.getTeamStats(opponent);
+		ArrayList<Double> teamStat = pq.GetTeamStats(team);
+		ArrayList<Double> oppStat = pq.GetTeamStats(opponent);
 		int index = 0;
 		for (double t : teamStat) {
 			if (t > oppStat.get(index)) {

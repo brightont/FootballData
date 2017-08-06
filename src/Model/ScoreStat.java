@@ -17,7 +17,7 @@ import org.jsoup.select.Elements;
 public class ScoreStat extends Stat{
 	private Model database = new Model();
 	private static final Logger logger = Logger.getLogger("ScoreStat.class");
-	private final Connection connection = database.establishConnection();
+	private final Connection connection = database.EstablishConnection();
 	public Document document;
 	
 	//empty constructor

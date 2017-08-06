@@ -15,15 +15,36 @@ import org.jsoup.select.Elements;
 public class TeamStat extends Stat {
 	private Model database = new Model();
 	private static final Logger logger = Logger.getLogger("TeamStat.class");
-	private final Connection connection = database.establishConnection();
+	private final Connection connection = database.EstablishConnection();
 	public Document document;
 
-	//empty constructor
+	/**
+	 * Empty constructor
+	 */
 	public TeamStat() {
 		
 	}
 	
-	//constructor used for testing purposes
+	/**
+	 * Constructor for a team stat
+	 * @param team
+	 * @param tfd
+	 * @param firstDowns
+	 * @param tdc
+	 * @param fdc
+	 * @param toy
+	 * @param offense
+	 * @param tryd
+	 * @param rushing
+	 * @param tpyd
+	 * @param passing
+	 * @param sacks
+	 * @param fg
+	 * @param td
+	 * @param rprd
+	 * @param time
+	 * @param turnover
+	 */
 	public TeamStat(String team, int tfd, int firstDowns, double tdc, double fdc, int toy, int offense, int tryd, int rushing,
 			int tpyd, int passing, int sacks, double fg, int td, int rprd, double time, int turnover) {
 		super(team);
@@ -41,10 +62,11 @@ public class TeamStat extends Stat {
 	}
 
 	/**
-	 * Gets the statistics off NFL website
+	 * Gets the stats off the NFL website
 	 * @param team
+	 * @return
 	 */
-	public HashMap<String, String> getTeamStats(String team) {
+	public HashMap<String, String> GetTeamStats(String team) {
 		HashMap<String, String> homeStatistics = new HashMap<String, String>();
 
 		try {
@@ -71,67 +93,72 @@ public class TeamStat extends Stat {
 	 * Update the database if the website info has changed
 	 * @param hash
 	 */
-	public void updateDatabase(HashMap<String, String> hash, String team) {
+	public void UpdateDatabase(HashMap<String, String> hash, String team) {
 		String databaseKey = "";
 		String databaseValue = "";
+		
+		//iterate through hashmap values
 		for (HashMap.Entry<String, String> entry : hash.entrySet()) {
+			
+			//get the value name removing special characters
 			if (entry.getKey().contains(" (")) {
+
+				//gets the word before the parentheses 
 				databaseKey = entry.getKey().split(" \\(")[0];
 				databaseValue = entry.getValue();
+				
+				//replace spaces with underscores in the hash map key
 				if (databaseKey.contains(" ")) {
 					databaseKey = databaseKey.replace(" ", "_");
 				}
+				
+				//check the value of the hash map getting the first value if separated by dashes 
 				if (databaseValue.contains(" -")) {
 					databaseValue = databaseValue.split(" -")[0];
-					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team, "teamstats");
-				} else {
-					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team, "teamstats");
 				}
+				int intValue = Integer.parseInt(databaseValue);
+				UpdateQueryInt(databaseKey, intValue, team, "teamstats");
 				
 			} else if (entry.getKey().contains("(")) {
-				databaseKey = entry.getKey().replace("-", "_");
-				databaseKey = databaseKey.substring(1, databaseKey.length()-1);
+				//the only stat with '(' is (Rush-Pass-Ret-Def)
+				databaseKey = (entry.getKey().replace("-", "_")).substring(1, databaseKey.length()-1);
 				databaseValue = entry.getValue().split(" -")[0];
-				int ivi = Integer.parseInt(databaseValue);
-				updateQueryInt(databaseKey, ivi, team, "teamstats");
+				
+				int intValue = Integer.parseInt(databaseValue);
+				UpdateQueryInt(databaseKey, intValue, team, "teamstats");
 				
 			} else if (entry.getKey().contains(" ")) {
 				databaseKey = entry.getKey().replace(" ", "_");
 				databaseValue = entry.getValue();
 				if (databaseValue.contains(" -")) {
 					databaseValue = databaseValue.split(" -")[0];
-					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team, "teamstats");
+					int intValue = Integer.parseInt(databaseValue);
+					UpdateQueryInt(databaseKey, intValue, team, "teamstats");
 				} else if (databaseValue.contains("/")) {
 					String[] arr = databaseValue.split("/");
-					double dvi = Double.parseDouble(arr[0]) / Double.parseDouble(arr[1]);
-					updateQueryDouble(databaseKey, dvi, team, "teamstats");
+					double doubleValue = Double.parseDouble(arr[0]) / Double.parseDouble(arr[1]);
+					UpdateQueryDouble(databaseKey, doubleValue, team, "teamstats");
 				} else if (databaseValue.contains(":")) {
 					databaseValue = databaseValue.replace(":", ".");
-					double dvi = Double.parseDouble(databaseValue);
-					updateQueryDouble(databaseKey, dvi, team, "teamstats");
+					double doubleValue = Double.parseDouble(databaseValue);
+					UpdateQueryDouble(databaseKey, doubleValue, team, "teamstats");
 				} else if (databaseValue.contains("+")){
 					databaseValue = databaseValue.substring(1);
-					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team, "teamstats");
-				}else {
-					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team, "teamstats");
+					int intValue = Integer.parseInt(databaseValue);
+					UpdateQueryInt(databaseKey, intValue, team, "teamstats");
+				} else {
+					int intValue = Integer.parseInt(databaseValue);
+					UpdateQueryInt(databaseKey, intValue, team, "teamstats");
 				}
-				
+			//If the value doesn't have a special character	
 			} else {
 				databaseKey = entry.getKey();
 				databaseValue = entry.getValue();
 				if (databaseValue.contains(" -")) {
 					databaseValue = databaseValue.split(" -")[0];
-					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team, "teamstats");
-				} else {
-					int ivi = Integer.parseInt(databaseValue);
-					updateQueryInt(databaseKey, ivi, team, "teamstats");
-				}
+				} 
+				int intValue = Integer.parseInt(databaseValue);
+				UpdateQueryInt(databaseKey, intValue, team, "teamstats");
 			}
 		}
 	}

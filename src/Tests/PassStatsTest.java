@@ -83,7 +83,7 @@ public class PassStatsTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void updateDatabase() throws InterruptedException {
+    public void UpdateDatabase() throws InterruptedException {
     	PassStat pass = new PassStat();
     	
     	//set for integer
@@ -92,7 +92,7 @@ public class PassStatsTest {
     	//set for double
     	list.set(9, "2.3");
     	
-    	pass.updateDatabase(list, "Testing");
+    	pass.UpdateDatabase(list, "Testing");
     	
     	assertEquals("2", getValueInt("Rec"));
     	assertEquals("2.3", getValueDouble("Yds_Rec"));
@@ -106,7 +106,7 @@ public class PassStatsTest {
     public String getPlayer(String player) {
         String queryUser = "SELECT * FROM footballstats.pass_stats WHERE Player = '" + player + "';";
         String answer = "";
-        Connection connection = database.establishConnection();
+        Connection connection = database.EstablishConnection();
         try {
             Statement userStatement = connection.createStatement();
             ResultSet result = userStatement.executeQuery(queryUser);
@@ -127,7 +127,7 @@ public class PassStatsTest {
 	 */
 	public String getValueInt(String name) {
 		String newResult = "";
-		Connection connection = database.establishConnection();
+		Connection connection = database.EstablishConnection();
 		String queryUser = "SELECT " + name + " FROM footballstats.pass_stats WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();
@@ -150,7 +150,7 @@ public class PassStatsTest {
 	 */
 	public String getValueDouble(String name) {
 		String newResult = "";
-		Connection connection = database.establishConnection();
+		Connection connection = database.EstablishConnection();
 		String queryUser = "SELECT " + name + " FROM footballstats.pass_stats WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();

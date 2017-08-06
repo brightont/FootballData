@@ -72,13 +72,13 @@ public class InjuriesTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void updateDatabase() throws InterruptedException {
+    public void UpdateDatabase() throws InterruptedException {
     	InjuryStat injury = new InjuryStat();
     	
     	//set for integer
     	list.set(1, "b");
     	
-    	injury.updateDatabase(list, "Testing");
+    	injury.UpdateDatabase(list, "Testing");
     	
     	assertEquals("b", getValueString("Position"));
     }
@@ -90,7 +90,7 @@ public class InjuriesTest {
     public String getPlayer(String player) {
         String queryUser = "SELECT * FROM footballstats.injuries WHERE Player = '" + player + "';";
         String answer = "";
-        Connection connection = database.establishConnection();
+        Connection connection = database.EstablishConnection();
         try {
             Statement userStatement = connection.createStatement();
             ResultSet result = userStatement.executeQuery(queryUser);
@@ -111,7 +111,7 @@ public class InjuriesTest {
 	public int getCount(String team) {
 		String query = "SELECT COUNT(Player) FROM footballstats.injuries WHERE Team = '" + team + "';";
 		int answer = 0;
-		Connection connection = database.establishConnection();
+		Connection connection = database.EstablishConnection();
 		try {
             Statement userStatement = connection.createStatement();
             ResultSet result = userStatement.executeQuery(query);
@@ -132,7 +132,7 @@ public class InjuriesTest {
 	 */
 	public String getValueString(String name) {
 		String newResult = "";
-		Connection connection = database.establishConnection();
+		Connection connection = database.EstablishConnection();
 		String queryUser = "SELECT " + name + " FROM footballstats.injuries WHERE Team = 'Testing';";
 		try {
 			Statement userStatement = connection.createStatement();

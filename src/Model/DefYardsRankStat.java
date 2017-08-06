@@ -15,7 +15,7 @@ public class DefYardsRankStat extends Stat {
 	
 	private Model database = new Model();
 	private static final Logger logger = Logger.getLogger("DefYardsRankStat.class");
-	private final Connection connection = database.establishConnection();
+	private final Connection connection = database.EstablishConnection();
 	public Document document;
 
 	// empty constructor
@@ -69,7 +69,7 @@ public class DefYardsRankStat extends Stat {
 	 * @param list
 	 * @param team
 	 */
-	public void updateDatabase(ArrayList<String> list) {
+	public void UpdateDatabase(ArrayList<String> list) {
 		String team = "";
 		int j = 0;
 		for (int i = 0; i < list.size(); i++) {

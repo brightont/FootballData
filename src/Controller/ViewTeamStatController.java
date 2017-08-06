@@ -1,6 +1,7 @@
 package Controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import MainApplication.MainApplication;
 import Model.Model;
@@ -14,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,6 +25,14 @@ import javafx.stage.Stage;
 public class ViewTeamStatController {
 	
 	private MainApplication mainApplication;
+	
+	private ObservableList<String> statList;
+	
+	@FXML
+	private ComboBox<String> statisticMenu;
+	
+	@FXML
+	private Button goButton;
 	
 	@FXML
 	private TableView<TeamStatTable> statTable;
@@ -52,19 +62,42 @@ public class ViewTeamStatController {
 	
 	@FXML
 	private void initialize() {
-		TeamSelectorController tcc = new TeamSelectorController();
-        String stringTeam = tcc.getStringTeam();
-        String stringOpponent = tcc.getStringOpponent();
-        
-        TeamStat team = new TeamStat();
-        stringTeamName = team.getTeamName(stringTeam);
-        stringOppName = team.getTeamName(stringOpponent);
+		statTable.setVisible(false);
+		
+		List<String> stats = new ArrayList<String>();
+		stats.add("General");
+		statList = FXCollections.observableArrayList(stats);
+		
+		statisticMenu.setItems(statList);
+		statisticMenu.getSelectionModel().selectFirst();		
+		
+	}
+	
+	/**
+	 * Populates the table view based on chosen statistic
+	 */
+	public void ChooseStat() {
+		statTable.setVisible(true);
+		String stat = statisticMenu.getSelectionModel().getSelectedItem();
+		if (stat.equals("General")) {
+			DisplayGeneral();
+		}
+	}
+	
+	/**
+	 * Displays general stats
+	 */
+	private void DisplayGeneral() {
+		TeamStat team = new TeamStat();
+        stringTeamName = team.getTeamName(TeamSelectorController.stringTeam);
+        stringOppName = team.getTeamName(TeamSelectorController.stringOpponent);
 		
 		statName.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("statName"));
 		homeStat.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("homeStat"));
 		oppStat.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("oppStat"));
-		populateTeamStatList();
-		ObservableList<TeamStatTable> teamStatList = FXCollections.observableArrayList(populateTeamStatList());
+		
+		//PopulateTeamStatList();
+		ObservableList<TeamStatTable> teamStatList = FXCollections.observableArrayList(PopulateTeamStatList());
 		statTable.setItems(teamStatList);
 		
 		ArrayList<String> probability = new ArrayList<String>();
@@ -75,20 +108,19 @@ public class ViewTeamStatController {
 		for (String pr : probability) {
 			teamView.getItems().add(pr);
 		}
-		
 	}
 
 	/**
 	 * Populates an arrayList for the table view
 	 * @return
 	 */
-	public ArrayList<TeamStatTable> populateTeamStatList() {
+	public ArrayList<TeamStatTable> PopulateTeamStatList() {
 		ArrayList<TeamStatTable> returnList = new ArrayList<TeamStatTable>();
 		
 		Model model = new Model();
-		ArrayList<String> statNames = model.getStatsName();
-		ArrayList<String> homeStats = model.getTeamStats(stringTeamName);
-		ArrayList<String> oppStats = model.getTeamStats(stringOppName);
+		ArrayList<String> statNames = model.GetStatsName();
+		ArrayList<String> homeStats = model.GetTeamStats(stringTeamName);
+		ArrayList<String> oppStats = model.GetTeamStats(stringOppName);
 		
 		int index = 0;
 		

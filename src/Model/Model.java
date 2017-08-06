@@ -36,9 +36,12 @@ public class Model {
 	 * Database methods to establish connection and read database
 	 * @return the connection
 	 */
-	public Connection establishConnection() {
+	public Connection EstablishConnection() {
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/footballstats", "root", "root");
+			//TODO: Fix this connection
+			//if (connection.isClosed() || connection == null) {
+				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/footballstats", "root", "root");
+			//}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +56,7 @@ public class Model {
     public void readDatabase() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            establishConnection();
+            EstablishConnection();
             if (connection != null) {
                 System.out.println("Database accessed.");
             } else {
@@ -67,13 +70,13 @@ public class Model {
     /**
      * Gets the name of the stats
      * @param team
-     * @return
+     * @return list of stats
      */
-    public ArrayList<String> getStatsName() {
+    public ArrayList<String> GetStatsName() {
     	ArrayList<String> statsName = new ArrayList<>();
     	String newName = "";
     	try {
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.teamstats;");
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -98,22 +101,22 @@ public class Model {
      * @param team
      * @return 
      */
-    public ArrayList<String> getTeamStats(String team) {
+    public ArrayList<String> GetTeamStats(String team) {
     	ArrayList<String> stats = new ArrayList<>();
     	try {
     		stats.add(team);
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.teamstats;");
-			ResultSetMetaData rsmd = rs.getMetaData();
-			int columnCount = rsmd.getColumnCount();
-			for (int i = 2; i <= columnCount; i++) {
-				String name = rsmd.getColumnName(i);
+			//ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.teamstats;");
+			//ResultSetMetaData rsmd = rs.getMetaData();
+			//int columnCount = rsmd.getColumnCount();
+			for (int i = 2; i <= 17; i++) {
+				//String name = rsmd.getColumnName(i);
 				String query2 = "SELECT * FROM footballstats.teamstats WHERE Team = '" + team + "';";
 				ResultSet result = statement.executeQuery(query2);
 				while (result.next()) {
-					double data = result.getDouble(name);
-					String dataString = Double.toString(data);
+					//double data = result.getDouble(name);
+					String dataString = Double.toString(result.getDouble(i));
 					stats.add(dataString);
 				}
 			}
@@ -132,7 +135,7 @@ public class Model {
     	ArrayList<String> qbStatsName = new ArrayList<String>();
     	String newName = "";
     	try {
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.qbstats;");
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -161,7 +164,7 @@ public class Model {
     	ArrayList<String> qbStats = new ArrayList<>();
     	try {
     		qbStats.add(team);
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.qbstats;");
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -208,7 +211,7 @@ public class Model {
     public ArrayList<String> getRushStat(String team, int columnIndex) {
     	ArrayList<String> rushStats =  new ArrayList<String>();
     	try {
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.rushstats;");
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -242,7 +245,7 @@ public class Model {
     public ArrayList<String> getPassStat(String team, int columnIndex) {
     	ArrayList<String> passStats =  new ArrayList<String>();
     	try {
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.pass_stats;");
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -276,7 +279,7 @@ public class Model {
     	ArrayList<String> fgStatsName = new ArrayList<String>();
     	String newName = "";
     	try {
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.fgstats;");
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -310,7 +313,7 @@ public class Model {
     	ArrayList<String> fgStats = new ArrayList<>();
     	try {
     		fgStats.add(team);
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.fgstats;");
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -347,7 +350,7 @@ public class Model {
     public ArrayList<String> getDefStat(String team, int columnIndex) {
     	ArrayList<String> defStats =  new ArrayList<String>();
     	try {
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.defstats;");
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -381,7 +384,7 @@ public class Model {
     public ArrayList<String> getIntStat(String team, int columnIndex) {
     	ArrayList<String> intStats =  new ArrayList<String>();
     	try {
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.intstats;");
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -415,7 +418,7 @@ public class Model {
     public ArrayList<String> getInjury(String team, int columnIndex) {
     	ArrayList<String> injuries =  new ArrayList<String>();
     	try {
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.injuries;");
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -444,7 +447,7 @@ public class Model {
     public ArrayList<String> getScores(String team, int columnIndex) {
     	ArrayList<String> scores =  new ArrayList<String>();
     	try {
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.scores;");
 			ResultSetMetaData rsmd = rs.getMetaData();
@@ -480,7 +483,7 @@ public class Model {
     	ScoreStat ss = new ScoreStat();
     	String newOpp = "";
     	try {
-    		establishConnection();
+    		EstablishConnection();
 			Statement statement = connection.createStatement();
 			String query = "SELECT Score FROM footballstats.scores WHERE team = '" + team + "' ORDER BY Week;";
 			ResultSet result = statement.executeQuery(query);
@@ -536,7 +539,7 @@ public class Model {
 		ArrayList<Integer> ranking = new ArrayList<>();
 		String query = "";
 		String name = "";
-		establishConnection();
+		EstablishConnection();
 		Statement statement;
 		try {
 			statement = connection.createStatement();
