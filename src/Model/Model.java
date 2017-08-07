@@ -91,13 +91,13 @@ public class Model {
 				}
 			}
 		} catch (SQLException e) {
-			logger.log(Level.FINE, "Could not get the stats name.");
+			logger.log(Level.FINE, "Could not get the team stats name.");
 		}
     	return statsName;
     }
     
     /**
-     * Gets the team stats and displays them
+     * Gets the team stats from database
      * @param team
      * @return 
      */
@@ -107,15 +107,10 @@ public class Model {
     		stats.add(team);
     		EstablishConnection();
 			Statement statement = connection.createStatement();
-			//ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.teamstats;");
-			//ResultSetMetaData rsmd = rs.getMetaData();
-			//int columnCount = rsmd.getColumnCount();
 			for (int i = 2; i <= 17; i++) {
-				//String name = rsmd.getColumnName(i);
 				String query2 = "SELECT * FROM footballstats.teamstats WHERE Team = '" + team + "';";
 				ResultSet result = statement.executeQuery(query2);
 				while (result.next()) {
-					//double data = result.getDouble(name);
 					String dataString = Double.toString(result.getDouble(i));
 					stats.add(dataString);
 				}
@@ -127,11 +122,11 @@ public class Model {
     }
 
     /**
-     * Gets the name of the stats
+     * Gets the name of the quarterback stats
      * @param team
      * @return
      */
-    public ArrayList<String> getQBStatsName(String team) {
+    public ArrayList<String> GetQBStatsName() {
     	ArrayList<String> qbStatsName = new ArrayList<String>();
     	String newName = "";
     	try {
@@ -160,27 +155,23 @@ public class Model {
      * @param team
      * @return 
      */
-    public ArrayList<String> getQBStats(String team) {
+    public ArrayList<String> GetQBStats(String team) {
     	ArrayList<String> qbStats = new ArrayList<>();
     	try {
     		qbStats.add(team);
     		EstablishConnection();
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.qbstats;");
-			ResultSetMetaData rsmd = rs.getMetaData();
-			int columnCount = rsmd.getColumnCount();
-			for (int i = 2; i <= columnCount; i++) {
-				String name = rsmd.getColumnName(i);
+			for (int i = 2; i <= 15; i++) {
 				String query2 = "SELECT * FROM footballstats.qbstats WHERE team = '" + team + "';";
 				ResultSet result = statement.executeQuery(query2);
 				if (i == 2) {
 					while (result.next()) {
-						String player = result.getString(name);
+						String player = result.getString(i);
 						qbStats.add(player);
 					}
 				} else {
 					while (result.next()) {
-						double data = result.getDouble(name);
+						double data = result.getDouble(i);
 						String dataString = Double.toString(data);
 						qbStats.add(dataString);
 					}

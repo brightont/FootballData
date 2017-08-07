@@ -1,11 +1,13 @@
 package Controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import MainApplication.MainApplication;
 import Model.Model;
 import Model.Probability;
+import Model.TeamName;
 import Model.TeamStat;
 import Model.TeamStatTable;
 import javafx.collections.FXCollections;
@@ -64,13 +66,12 @@ public class ViewTeamStatController {
 	private void initialize() {
 		statTable.setVisible(false);
 		
-		List<String> stats = new ArrayList<String>();
-		stats.add("General");
+		List<String> stats = new ArrayList<String>(Arrays.asList("General", "Quarterback"));
+		
 		statList = FXCollections.observableArrayList(stats);
 		
 		statisticMenu.setItems(statList);
 		statisticMenu.getSelectionModel().selectFirst();		
-		
 	}
 	
 	/**
@@ -79,34 +80,38 @@ public class ViewTeamStatController {
 	public void ChooseStat() {
 		statTable.setVisible(true);
 		String stat = statisticMenu.getSelectionModel().getSelectedItem();
+		
+		stringTeamName = TeamName.valueOf(TeamSelectorController.stringTeam).getTeam();
+        stringOppName = TeamName.valueOf(TeamSelectorController.stringOpponent).getTeam();
+        
+        statTable.getItems().clear();
+		teamView.getItems().clear();
+		
+		statName.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("statName"));
+		homeStat.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("homeStat"));
+		oppStat.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("oppStat"));
+        
 		if (stat.equals("General")) {
-			DisplayGeneral();
+			DisplayGeneral("General");
+		} else if (stat.equals("Quarterback")) {
+			DisplayGeneral("Quarterback");
 		}
 	}
 	
 	/**
 	 * Displays general stats
 	 */
-	private void DisplayGeneral() {
-		TeamStat team = new TeamStat();
-        stringTeamName = team.getTeamName(TeamSelectorController.stringTeam);
-        stringOppName = team.getTeamName(TeamSelectorController.stringOpponent);
-		
-		statName.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("statName"));
-		homeStat.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("homeStat"));
-		oppStat.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("oppStat"));
-		
-		//PopulateTeamStatList();
-		ObservableList<TeamStatTable> teamStatList = FXCollections.observableArrayList(PopulateTeamStatList());
+	private void DisplayGeneral(String type) {
+		ObservableList<TeamStatTable> teamStatList = FXCollections.observableArrayList(PopulateTeamStatList(type));
 		statTable.setItems(teamStatList);
 		
 		ArrayList<String> probability = new ArrayList<String>();
 		Probability prob = new Probability();
-		double result =  prob.calculateTeamProbability(stringTeamName, stringOppName) * 100;
-		String p = "Probability: " + result + " %";
-		probability.add(p);
-		for (String pr : probability) {
-			teamView.getItems().add(pr);
+		if (type.equals("General")) {
+			double result =  prob.CalculateTeamProb(stringTeamName, stringOppName) * 100;
+			String p = "Probability: " + result + " %";
+			probability.add(p);
+			teamView.getItems().add(probability.get(0));
 		}
 	}
 
@@ -114,13 +119,23 @@ public class ViewTeamStatController {
 	 * Populates an arrayList for the table view
 	 * @return
 	 */
-	public ArrayList<TeamStatTable> PopulateTeamStatList() {
+	public ArrayList<TeamStatTable> PopulateTeamStatList(String type) {
 		ArrayList<TeamStatTable> returnList = new ArrayList<TeamStatTable>();
 		
 		Model model = new Model();
-		ArrayList<String> statNames = model.GetStatsName();
-		ArrayList<String> homeStats = model.GetTeamStats(stringTeamName);
-		ArrayList<String> oppStats = model.GetTeamStats(stringOppName);
+		
+		ArrayList<String> statNames;
+		ArrayList<String> homeStats;
+		ArrayList<String> oppStats;
+		if (type.equals("General")) {
+			statNames = model.GetStatsName();
+			homeStats = model.GetTeamStats(stringTeamName);
+			oppStats = model.GetTeamStats(stringOppName);
+		} else {
+			statNames = model.GetQBStatsName();
+			homeStats = model.GetQBStats(stringTeamName);
+			oppStats = model.GetQBStats(stringOppName);
+		}
 		
 		int index = 0;
 		
@@ -131,8 +146,30 @@ public class ViewTeamStatController {
 		return returnList;
 	}
 	
+	/**
+	 * Populates an arrayList for the table view
+	 * @return
+	 */
+	private ArrayList<TeamStatTable> PopulateQBStatList() {
+		ArrayList<TeamStatTable> returnList = new ArrayList<TeamStatTable>();
+		
+		Model model = new Model();
+		//ArrayList<String> statNames = model.GetQBStatsName(stringTeamName);
+		//ArrayList<String> homeStats = model.GetQBStats(stringTeamName);
+		//ArrayList<String> oppStats = model.GetQBStats(stringOppName);
+		
+		int index = 0;
+		//for (String name: statNames) {
+			//returnList.add(new QBStatTable(name, homeStats.get(index), oppStats.get(index)));
+			//index++;	
+		//}
+		
+		return returnList;
+	}
+	
+	
 	@FXML
-	private void handleBack() throws Exception {
+	private void HandleBack() throws Exception {
 		Stage stage;
 		Parent root;
 		

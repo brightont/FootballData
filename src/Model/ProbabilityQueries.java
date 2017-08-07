@@ -118,7 +118,7 @@ public class ProbabilityQueries {
 	 * @param team
 	 * @return
 	 */
-	public ArrayList<Double> getQBStats(String team) {
+	public ArrayList<Double> GetQBStats(String team) {
 		ArrayList<Double> returnList = new ArrayList<Double>();
 		try {
 			Statement statement = connection.createStatement();

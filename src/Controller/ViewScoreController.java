@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import Model.Model;
 import Model.Probability;
-import Model.QBStatTable;
 import Model.ScoreStat;
 import Model.ScoreStatTable;
 import Model.TeamName;

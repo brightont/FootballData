@@ -38,6 +38,8 @@ public abstract class Stat {
 		int intVal = Integer.parseInt(hashValue);
 		if (value.contains("-")) {
 			value = value.replace("-", "to");
+		} 
+		if (value.contains(" ")) {
 			value = value.replace(" ", "_");
 		}
 
@@ -47,7 +49,7 @@ public abstract class Stat {
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(query);
 			boolean bool = result.next();
-			if (bool == false) {
+			if (!bool) {
 				return false;
 			}
 		} catch (SQLException e) {
@@ -209,6 +211,7 @@ public abstract class Stat {
 	 * Gets the team name from enum
 	 * @param teamName
 	 */
+	//TODO: Delete this
 	public String getTeamName(String teamName) {
 		String team = "";
 		if (teamName.equals("ARI")) {

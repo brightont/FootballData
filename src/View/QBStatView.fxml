@@ -18,7 +18,7 @@
 					<children>
 						<TableView fx:id="qbStatTable" layoutX="14.0" layoutY="20.0" prefHeight="345.0" prefWidth="331.0">
 							<columns>
-								<TableColumn fx:id="qbStatName" prefWidth="106.0" text="QB Stat" />
+								<TableColumn fx:id="statName" prefWidth="106.0" text="QB Stat" />
 								<TableColumn fx:id="qbHomeStat" prefWidth="108.33331298828125" text="Home" />
 								<TableColumn fx:id="qbOppStat" prefWidth="115.66668701171875" text="Opponent" />
 							</columns>

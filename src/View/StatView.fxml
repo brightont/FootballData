@@ -45,12 +45,15 @@
                         <ListView fx:id="teamView" prefHeight="91.0" prefWidth="108.0" />
                      </children>
                   </VBox>
-                  <Label layoutX="44.0" layoutY="23.0" prefHeight="101.0" prefWidth="134.0" text="Probability Based on Team Stats" textAlignment="CENTER" wrapText="true">
+                  <Label layoutX="46.0" layoutY="26.0" prefHeight="101.0" prefWidth="134.0" text="Probability Based on Team Stats" textAlignment="CENTER" wrapText="true">
                      <font>
-                        <Font name="Cooper Black" size="20.0" />
+                        <Font name="Century Schoolbook" size="20.0" />
                      </font>
                   </Label>
-                  <Button fx:id="returnButton" layoutX="85.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleBack" text="return" />
+                  <Button fx:id="returnButton" layoutX="85.0" layoutY="304.0" mnemonicParsing="false" onAction="#HandleBack" text="Return">
+                     <font>
+                        <Font name="Century Schoolbook" size="12.0" />
+                     </font></Button>
                </children>
             </AnchorPane>
         </items>

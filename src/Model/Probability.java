@@ -58,19 +58,12 @@ public class Probability {
 		/*double prob = calculateOffenseDefense(team, opp) + calculateInjuries(team, opp) + calculateStrength(team, opp)
 				+ calculateWins(team, opp) + calculateHomeStrength(team, opp, "away") + calculateRank(team, opp)
 				+ calculateDesperation(team, opp);*/
-		System.out.println("offense defense : " + od);
-		System.out.println("Injuries : " + i);
-		System.out.println("Strength : " + s);
-		System.out.println("Wins : " + w);
-		System.out.println("Home strength : " + hs);
-		System.out.println("Rank : " + r);
-		System.out.println("Desperation : " + d);
 		return prob;
 	}
 
 	public double calculateOffenseDefense(String team, String opp) {
 		checkRanking(team, opp);
-		addTeamStats(team, opp);
+		AddTeamStats(team, opp);
 		addQBStats(team, opp);
 		addRushStats(team, opp);
 		addRecStats(team, opp);
@@ -189,31 +182,33 @@ public class Probability {
 	}
 
 	/**
-	 * Add team stats, 1 pt per better stat
-	 * 
+	 * Calculate the probability of winning based on team stats
+	 * @param team
+	 * @param opponent
+	 * @return
+	 */
+	public double CalculateTeamProb(String team, String opponent) {
+		AddTeamStats(team, opponent);
+		double returnValue = (offenseSum / 16);
+		return returnValue;
+	}
+	
+	/**
+	 * Add the team stats together
 	 * @param team
 	 * @param opponent
 	 */
-	public void addTeamStats(String team, String opponent) {
+	private void AddTeamStats(String team, String opponent) {
 		ArrayList<Double> teamStat = pq.GetTeamStats(team);
 		ArrayList<Double> oppStat = pq.GetTeamStats(opponent);
 		int index = 0;
-		for (double t : teamStat) {
-			if (t > oppStat.get(index)) {
+		for (double ts : teamStat) {
+			if (ts > oppStat.get(index)) {
 				offenseSum++;
 				defenseSum++;
 			}
 			index++;
 		}
-	}
-
-	/**
-	 * Allows you to get probability team stats
-	 */
-	public double calculateTeamProbability(String team, String opponent) {
-		addTeamStats(team, opponent);
-		double returnValue = (offenseSum / 16);
-		return returnValue;
 	}
 
 	/**
@@ -254,8 +249,8 @@ public class Probability {
 	 * @param opponent
 	 */
 	public void addQBStats(String team, String opponent) {
-		ArrayList<Double> teamStat = pq.getQBStats(team);
-		ArrayList<Double> oppStat = pq.getQBStats(opponent);
+		ArrayList<Double> teamStat = pq.GetQBStats(team);
+		ArrayList<Double> oppStat = pq.GetQBStats(opponent);
 		int index = 0;
 		int temp = 0;
 		for (Double t : teamStat) {

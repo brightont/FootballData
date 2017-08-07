@@ -105,8 +105,8 @@ public class OptionsController {
             
         if (!team.CheckDatabase(hashOpp, value1, "team", teamOpp) && 
     		   !team.CheckDatabase(hashOpp, value2, "team", teamOpp)) {
-        	team.UpdateDatabase(hashTeam, team.getTeamName(stringTeam));
-        }     
+        	team.UpdateDatabase(hashOpp, team.getTeamName(stringOpp));
+        } 
         
         //set scene
         cm.SetScene(teamStats, "../view/StatView.fxml");
@@ -134,8 +134,8 @@ public class OptionsController {
             String stringOpponent = tcc.getStringOpponent();
                         
             QBStat qb = new QBStat();
-            HashMap<String, String> hashQB = qb.getQBStats(stringTeam);
-            HashMap<String, String> hashOppQB = qb.getQBStats(stringOpponent);
+            HashMap<String, String> hashQB = qb.GetQBStats(stringTeam);
+            HashMap<String, String> hashOppQB = qb.GetQBStats(stringOpponent);
             
             String value = "Att";
             
