@@ -379,54 +379,54 @@ public class OptionsController {
             
             //get the first team
             YardsRankStat yrStat = new YardsRankStat();
-            ArrayList<String> listTeam = yrStat.getYardsStats();
+            ArrayList<String> listTeam = yrStat.GetYardsStats();
             
-            if (yrStat.checkDatabaseRank(listTeam, 1, "yards", "Pts_G") == false) {
+            if (yrStat.CheckDatabaseRank(listTeam, 1, "yards", "Pts_G") == false) {
             	yrStat.UpdateDatabase(listTeam);
             	
             	RushRankStat rrStat = new RushRankStat();
-                ArrayList<String> listTeam1 = rrStat.getRushRankStat();
+                ArrayList<String> listTeam1 = rrStat.GetRushRankStat();
                 
                 rrStat.UpdateDatabase(listTeam1);
                 
             	RecRankStat rcStat = new RecRankStat();
-                ArrayList<String> listTeam2 = rcStat.getRecRankStat();
+                ArrayList<String> listTeam2 = rcStat.GetRecRankStat();
                 
             	rcStat.UpdateDatabase(listTeam2);
             } 
             
             DefYardsRankStat dyrStat = new DefYardsRankStat();
-            ArrayList<String> listTeam3 = dyrStat.getDefYardsStats();
+            ArrayList<String> listTeam3 = dyrStat.GetDefYardsStats();
             
-            if (dyrStat.checkDatabaseRank(listTeam3, 1, "defyards", "Pts_G") == false) {
+            if (dyrStat.CheckDatabaseRank(listTeam3, 1, "defyards", "Pts_G") == false) {
             	dyrStat.UpdateDatabase(listTeam3);
             	
             	DefRushRankStat drrStat = new DefRushRankStat();
-                ArrayList<String> listTeam4 = drrStat.getDefRushStats();
+                ArrayList<String> listTeam4 = drrStat.GetDefRushStats();
                 
                 drrStat.UpdateDatabase(listTeam4);
                 
                 DefRecRankStat drcStat = new DefRecRankStat();
-                ArrayList<String> listTeam5 = drcStat.getDefRecStats();
+                ArrayList<String> listTeam5 = drcStat.GetDefRecStats();
                 
                 drcStat.UpdateDatabase(listTeam5);
             }
            
 			SackRankStat srStat = new SackRankStat();
-			ArrayList<String> listTeam6 = srStat.getSackStats();
+			ArrayList<String> listTeam6 = srStat.GetSackStats();
 
-			if (srStat.checkDatabaseRank(listTeam6, 1, "sack", "Sacks") == false) {
+			if (srStat.CheckDatabaseRank(listTeam6, 1, "sack", "Sacks") == false) {
 				srStat.UpdateDatabase(listTeam6);
 				
 				IntRankStat irStat = new IntRankStat();
-	            ArrayList<String> listTeam7 = irStat.getIntRankStats();
+	            ArrayList<String> listTeam7 = irStat.GetIntRankStats();
 	            
 	            irStat.UpdateDatabase(listTeam7);
 			}
            
             QuickStats qStat = new QuickStats();
-            ArrayList<String> listTeam8 = qStat.getQuickStats(stringTeam);
-            ArrayList<String> listOpponent = qStat.getQuickStats(stringOpponent);
+            ArrayList<String> listTeam8 = qStat.GetQuickStats(stringTeam);
+            ArrayList<String> listOpponent = qStat.GetQuickStats(stringOpponent);
          
             if (qStat.checkDatabaseList(listTeam8, 1, "quick", "Pts") == false) {
             	qStat.UpdateDatabase(listTeam8, qStat.getTeamName(stringTeam));

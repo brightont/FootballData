@@ -18,11 +18,18 @@ public class SackRankStat extends Stat {
 	private final Connection connection = database.EstablishConnection();
 	public Document document;
 
-	// empty constructor
+	/**
+	 * Empty constructor
+	 */
 	public SackRankStat() {
 
 	}
 	
+	/**
+	 * Enter sack ranking into database
+	 * @param team
+	 * @param sacks
+	 */
 	public SackRankStat(String team, double sacks) {
 		super(team);
 
@@ -35,7 +42,11 @@ public class SackRankStat extends Stat {
 		}
 	}
 	
-	public ArrayList<String> getSackStats() {
+	/**
+	 * Get sack stats from NFL Website
+	 * @return
+	 */
+	public ArrayList<String> GetSackStats() {
 		ArrayList<String> arr = new ArrayList<String>();
 		try {
 			document = Jsoup

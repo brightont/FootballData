@@ -80,18 +80,21 @@ public abstract class Stat {
 	}
 	
 	/**
-	 * Check database and make sure the facts are correct
+	 * Get the rank from the database
 	 * @param list
+	 * @param i
+	 * @param table
+	 * @param val
 	 * @return
 	 */
-	public boolean checkDatabaseRank(ArrayList<String> list, int i, String table, String val) {
+	public boolean CheckDatabaseRank(ArrayList<String> list, int i, String table, String val) {
 		String temp = list.get(i);
 		String query = "SELECT * FROM footballstats." + table + "rank WHERE " + val + " = " + temp + ";";
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(query);
 			boolean bool = result.next();
-			if (bool == false) {
+			if (!bool) {
 				return false;
 			}
 		} catch (SQLException e) {

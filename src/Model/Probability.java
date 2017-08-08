@@ -51,7 +51,7 @@ public class Probability {
 		} else {
 			hs = calculateHomeStrength(team, opp, "away");
 		}
-		double r = calculateRank(team, opp);
+		double r = CalculateRank(team, opp);
 		double d = calculateDesperation(team, opp);
 		double prob = od + i + s + w + hs + r + d;
 		
@@ -108,14 +108,7 @@ public class Probability {
 		isHome(location);
 		return (homeSum * .06);
 	}
-	
-	public double calculateRank(String team, String opp) {
-		compareRanks(team, opp);
-		checkRanks(team);
-		compareDifferences(team, opp);
-		compareExtremes(team, opp);
-		return (rankSum * .05);
-	}
+
 	
 	public double calculateDesperation(String team, String opp) {
 		previousEncounter(team, opp);
@@ -885,41 +878,41 @@ public class Probability {
 			homeSum = homeSum + 5;
 		}
 	}
-
+	
 	/**
-	 * Converts the ranks
+	 * Calculates the rank probability
+	 * @param team
+	 * @param opponent
+	 * @return rank probability
+	 */
+	public double CalculateRankProb(String team, String opponent) {
+		double answer = CalculateRank(team, opponent)/.05;
+		return answer/150;
+	}
+	
+	/**
+	 * Calculates the rank
 	 * @param team
 	 * @param opp
 	 * @return
 	 */
-	public ArrayList<Integer> convertRanks(String team) {
-		ArrayList<Integer> returnList = new ArrayList<Integer>();
-		ArrayList<String> ranks = new ArrayList<String>();
-		ranks.add("yards");
-		ranks.add("rush");
-		ranks.add("rec");
-		ranks.add("defyards");
-		ranks.add("defrush");
-		ranks.add("defrec");
-		for (String r : ranks) {
-			returnList.add(pq.GetRank(team, r));
-		}
-		returnList.add(pq.getRankSpecial(team, "int", "Interceptions"));
-		returnList.add(pq.getRankSpecial(team, "sack", "Sacks"));
-		returnList.add(pq.getQuickStatRank(team, "Pass_Yards_Place"));
-		returnList.add(pq.getQuickStatRank(team, "Pts_Place"));
-		return returnList;
+	private double CalculateRank(String team, String opp) {
+		CompareRanks(team, opp);
+		CheckRanks(team);
+		CompareDifferences(team, opp);
+		CompareExtremes(team, opp);
+		return (rankSum * .05);
 	}
 	
 	/**
-	 * Compare racks, sacks and interceptions are worth more
+	 * Compare ranks, sacks and interceptions are worth more
 	 * @param team
 	 * @param opp
 	 */
-	public void compareRanks(String team, String opp) {
+	public void CompareRanks(String team, String opp) {
 		int sum = 0;
-		ArrayList<Integer> teamStat = convertRanks(team);
-		ArrayList<Integer> oppStat = convertRanks(opp);
+		ArrayList<Integer> teamStat = ConvertRanks(team);
+		ArrayList<Integer> oppStat = ConvertRanks(opp);
 		for (int i = 0; i < 10; i++) {
 			if (i != 6 && i != 7) {
 				if (teamStat.get(i) < oppStat.get(i)) {
@@ -935,12 +928,12 @@ public class Probability {
 	}
 
 	/**
-	 * Add points for standing
+	 * Add points for rank
 	 * @param team
 	 */
-	public void checkRanks(String team) {
+	public void CheckRanks(String team) {
 		int sum = 0;
-		ArrayList<Integer> teamStat = convertRanks(team);
+		ArrayList<Integer> teamStat = ConvertRanks(team);
 		for (int i = 0; i < 10; i++) {
 			if (i != 6 && i != 7) {
 				if (teamStat.get(i) <= 5) {
@@ -964,10 +957,10 @@ public class Probability {
 	 * @param team
 	 * @param opp
 	 */
-	public void compareDifferences(String team, String opp) {
+	public void CompareDifferences(String team, String opp) {
 		int sum = 0;
-		ArrayList<Integer> teamStat = convertRanks(team);
-		ArrayList<Integer> oppStat = convertRanks(opp);
+		ArrayList<Integer> teamStat = ConvertRanks(team);
+		ArrayList<Integer> oppStat = ConvertRanks(opp);
 		for (int i = 0; i < 10; i++) {
 			if (i != 6 && i != 7) {
 				if ((teamStat.get(i) <= 5) && (oppStat.get(i) > 10)) {
@@ -987,10 +980,10 @@ public class Probability {
 	 * @param team
 	 * @param opp
 	 */
-	public void compareExtremes(String team, String opp) {
+	public void CompareExtremes(String team, String opp) {
 		int sum = 0;
-		ArrayList<Integer> teamStat = convertRanks(team);
-		ArrayList<Integer> oppStat = convertRanks(opp);
+		ArrayList<Integer> teamStat = ConvertRanks(team);
+		ArrayList<Integer> oppStat = ConvertRanks(opp);
 		for (int i = 0; i < 10; i++) {
 			if (teamStat.get(i) <= 5 && oppStat.get(i) > 27) {
 				sum = sum + 15;
@@ -1000,14 +993,28 @@ public class Probability {
 	}
 	
 	/**
-	 * Calculates the rank probability
+	 * Converts the ranks
 	 * @param team
-	 * @param opponent
+	 * @param opp
 	 * @return
 	 */
-	public double calculateRankProbability(String team, String opponent) {
-		double answer = calculateRank(team, opponent)/.05;
-		return answer/150;
+	public ArrayList<Integer> ConvertRanks(String team) {
+		ArrayList<Integer> returnList = new ArrayList<Integer>();
+		ArrayList<String> ranks = new ArrayList<String>();
+		ranks.add("yards");
+		ranks.add("rush");
+		ranks.add("rec");
+		ranks.add("defyards");
+		ranks.add("defrush");
+		ranks.add("defrec");
+		for (String r : ranks) {
+			returnList.add(pq.GetRank(team, r));
+		}
+		returnList.add(pq.getRankSpecial(team, "int", "Interceptions"));
+		returnList.add(pq.getRankSpecial(team, "sack", "Sacks"));
+		returnList.add(pq.getQuickStatRank(team, "Pass_Yards_Place"));
+		returnList.add(pq.getQuickStatRank(team, "Pts_Place"));
+		return returnList;
 	}
 	
 	/**

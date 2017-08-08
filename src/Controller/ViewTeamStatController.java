@@ -9,13 +9,22 @@ import java.util.List;
 import java.util.logging.Level;
 
 import MainApplication.MainApplication;
+import Model.DefRecRankStat;
+import Model.DefRushRankStat;
+import Model.DefYardsRankStat;
 import Model.FieldGoalStat;
+import Model.IntRankStat;
 import Model.Model;
 import Model.Probability;
 import Model.QBStat;
+import Model.QuickStats;
+import Model.RecRankStat;
+import Model.RushRankStat;
+import Model.SackRankStat;
 import Model.TeamName;
 import Model.TeamStat;
 import Model.TeamStatTable;
+import Model.YardsRankStat;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -78,7 +87,7 @@ public class ViewTeamStatController {
 	private void initialize() {
 		statTable.setVisible(false);
 		
-		List<String> stats = new ArrayList<String>(Arrays.asList("General", "Quarterback", "Field Goals"));
+		List<String> stats = new ArrayList<String>(Arrays.asList("General", "Quarterback", "Field Goals", "Ranking"));
 		
 		statList = FXCollections.observableArrayList(stats);
 		
@@ -118,6 +127,9 @@ public class ViewTeamStatController {
 		} else if (stat.equals("Field Goals")) {
 			UpdateDatabaseFG();
 			DisplayStat("Field Goals");
+		} else if (stat.equals("Ranking")) {
+			UpdateDatabaseRank();
+			DisplayStat("Ranking");
 		}
 	}
 	
@@ -192,6 +204,78 @@ public class ViewTeamStatController {
 			fg.UpdateDatabase(hashOppFG, fg.getTeamName(oppAbbr));
 		}
 	}
+	
+	/**
+	 * Update database rank
+	 */
+	private void UpdateDatabaseRank() {
+		//get offensive ranking
+		YardsRankStat yrStat = new YardsRankStat();
+		ArrayList<String> listTeam = yrStat.GetYardsStats();
+
+		if (!yrStat.CheckDatabaseRank(listTeam, 1, "yards", "Pts_G")) {
+			yrStat.UpdateDatabase(listTeam);
+
+			//get rushing ranking
+			RushRankStat rrStat = new RushRankStat();
+			ArrayList<String> listTeam1 = rrStat.GetRushRankStat();
+
+			rrStat.UpdateDatabase(listTeam1);
+			
+			//get receiving ranking
+			RecRankStat rcStat = new RecRankStat();
+			ArrayList<String> listTeam2 = rcStat.GetRecRankStat();
+
+			rcStat.UpdateDatabase(listTeam2);
+		}
+
+		//get defensive ranking
+		DefYardsRankStat dyrStat = new DefYardsRankStat();
+		ArrayList<String> listTeam3 = dyrStat.GetDefYardsStats();
+
+		if (!dyrStat.CheckDatabaseRank(listTeam3, 1, "defyards", "Pts_G")) {
+			dyrStat.UpdateDatabase(listTeam3);
+
+			DefRushRankStat drrStat = new DefRushRankStat();
+			ArrayList<String> listTeam4 = drrStat.GetDefRushStats();
+
+			drrStat.UpdateDatabase(listTeam4);
+
+			DefRecRankStat drcStat = new DefRecRankStat();
+			ArrayList<String> listTeam5 = drcStat.GetDefRecStats();
+
+			drcStat.UpdateDatabase(listTeam5);
+		}
+        
+		//get sack ranking
+		SackRankStat srStat = new SackRankStat();
+		ArrayList<String> listTeam6 = srStat.GetSackStats();
+
+		if (!srStat.CheckDatabaseRank(listTeam6, 1, "sack", "Sacks")) {
+			srStat.UpdateDatabase(listTeam6);
+
+			//get interception ranking
+			IntRankStat irStat = new IntRankStat();
+			ArrayList<String> listTeam7 = irStat.GetIntRankStats();
+
+			irStat.UpdateDatabase(listTeam7);
+		}
+
+		//get quick rankings
+		QuickStats qStat = new QuickStats();
+		ArrayList<String> listTeam8 = qStat.GetQuickStats(teamAbbr);
+		ArrayList<String> listOpponent = qStat.GetQuickStats(oppAbbr);
+
+		if (!qStat.checkDatabaseList(listTeam8, 1, "quick", "Pts")) {
+			qStat.UpdateDatabase(listTeam8, qStat.getTeamName(teamAbbr));
+		}
+
+		if (!qStat.checkDatabaseList(listOpponent, 1, "quick", "Pts")) {
+			qStat.UpdateDatabase(listOpponent, qStat.getTeamName(oppAbbr));
+        } 
+            
+	}
+	
 	/**
 	 * Displays general stats
 	 */
@@ -206,8 +290,10 @@ public class ViewTeamStatController {
 			result =  prob.CalculateTeamProb(teamName, oppName) * 100;
 		} else if (type.equals("Quarterback")){
 			result = prob.CalculateQBProb(teamName, oppName) * 100;
-		} else {
+		} else if (type.equals("Field Goals")){
 			result = prob.CalculateFGProb(teamName, oppName) * 100;
+		} else {
+			result = prob.CalculateRankProb(teamName, oppName) * 100;
 		}
 		
 		DecimalFormat df = new DecimalFormat("#.##");
@@ -236,10 +322,14 @@ public class ViewTeamStatController {
 			statNames = model.GetQBStatsName();
 			homeStats = model.GetQBStats(teamName);
 			oppStats = model.GetQBStats(oppName);
-		} else {
+		} else if (type.equals("Field Goals")){
 			statNames = model.GetFGStatsName();
 			homeStats = model.GetFGStats(teamName);
 			oppStats = model.GetFGStats(oppName);
+		} else {
+			statNames = model.GetRankStatsName();
+			homeStats = model.GetRanking(teamName);
+			oppStats = model.GetRanking(oppName);
 		}
 		
 		int index = 0;

@@ -19,11 +19,18 @@ public class IntRankStat extends Stat {
 	private final Connection connection = database.EstablishConnection();
 	public Document document;
 
-	// empty constructor
+	/**
+	 * Empty constructor
+	 */
 	public IntRankStat() {
 
 	}
 	
+	/**
+	 * Insert interception stat into the database
+	 * @param team
+	 * @param ints
+	 */
 	public IntRankStat(String team, int ints) {
 		super(team);
 
@@ -36,7 +43,11 @@ public class IntRankStat extends Stat {
 		}
 	}
 	
-	public ArrayList<String> getIntRankStats() {
+	/**
+	 * Get interception ranking from NFL website
+	 * @return
+	 */
+	public ArrayList<String> GetIntRankStats() {
 		ArrayList<String> arr = new ArrayList<String>();
 		try {
 			document = Jsoup

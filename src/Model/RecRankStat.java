@@ -18,11 +18,24 @@ public class RecRankStat extends Stat {
 	private final Connection connection = database.EstablishConnection();
 	public Document document;
 
-	// empty constructor
+	/**
+	 * Empty constructor
+	 */
 	public RecRankStat() {
 
 	}
 
+	/**
+	 * Insert receiving ranking into database
+	 * @param team
+	 * @param pg
+	 * @param tp
+	 * @param rec
+	 * @param yds
+	 * @param avg
+	 * @param yg
+	 * @param td
+	 */
 	public RecRankStat(String team, double pg, int tp, int rec, int yds, double avg, double yg, int td) {
 		super(team);
 		String insert = "INSERT INTO footballstats.recrank VALUES" + " ('" + team + "','" + pg + "','" + tp + "','"
@@ -36,7 +49,11 @@ public class RecRankStat extends Stat {
 		}
 	}
 
-	public ArrayList<String> getRecRankStat() {
+	/**
+	 * Get receiving ranking from NFL website
+	 * @return
+	 */
+	public ArrayList<String> GetRecRankStat() {
 		ArrayList<String> arr = new ArrayList<String>();
 		try {
 			document = Jsoup

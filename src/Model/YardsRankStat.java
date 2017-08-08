@@ -17,11 +17,22 @@ public class YardsRankStat extends Stat {
 	private final Connection connection = database.EstablishConnection();
 	public Document document;
 
-	// empty constructor
+	/**
+	 * Empty constructor
+	 */
 	public YardsRankStat() {
 
 	}
 	
+	/**
+	 * Add yard rank stat to the database
+	 * @param team
+	 * @param pg
+	 * @param totpts
+	 * @param sp
+	 * @param yg
+	 * @param yp
+	 */
 	public YardsRankStat(String team, double pg, int totpts, int sp, double yg, double yp) {
 		super(team);
 
@@ -35,7 +46,11 @@ public class YardsRankStat extends Stat {
 		}
 	}
 	
-	public ArrayList<String> getYardsStats() {
+	/**
+	 * Get yard stats from the NFL website
+	 * @return
+	 */
+	public ArrayList<String> GetYardsStats() {
 		ArrayList<String> arr = new ArrayList<String>();
 		try {
 			document = Jsoup

@@ -17,11 +17,18 @@ public class DefRecRankStat extends Stat {
 	private final Connection connection = database.EstablishConnection();
 	public Document document;
 
-	// empty constructor
+	/**
+	 * Empty constructor
+	 */
 	public DefRecRankStat() {
 
 	}
 	
+	/**
+	 * Insert defensive receiving rank stat into database
+	 * @param team
+	 * @param avg
+	 */
 	public DefRecRankStat(String team, double avg) {
 		super(team);
 
@@ -34,7 +41,11 @@ public class DefRecRankStat extends Stat {
 		}
 	}
 	
-	public ArrayList<String> getDefRecStats() {
+	/**
+	 * Get defensive receiving stat from NFL Website
+	 * @return
+	 */
+	public ArrayList<String> GetDefRecStats() {
 		ArrayList<String> arr = new ArrayList<String>();
 		try {
 			document = Jsoup

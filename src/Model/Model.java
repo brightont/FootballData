@@ -497,10 +497,9 @@ public class Model {
     
     /**
      * Gets the name of the stats
-     * @param team
      * @return
      */
-    public ArrayList<String> getRankStatsName() {
+    public ArrayList<String> GetRankStatsName() {
     	ArrayList<String> statsName = new ArrayList<>();
     	statsName.add("Offensive Yards");
     	statsName.add("Offensive Rushing");
@@ -518,11 +517,10 @@ public class Model {
     /**
      * Gets the ranking
      * @param team
-     * @param columnIndex
      * @return
      */
-    public ArrayList<Integer> getRanking(String team) {
-		ArrayList<Integer> ranking = new ArrayList<>();
+    public ArrayList<String> GetRanking(String team) {
+		ArrayList<String> ranking = new ArrayList<>();
 		String query = "";
 		String name = "";
 		EstablishConnection();
@@ -565,14 +563,14 @@ public class Model {
 				if (i < 8) {
 					ResultSet result = statement.executeQuery(query);
 					while (result.next()) {
-						int item = result.getInt("rank");
-						ranking.add(item);
+						Integer item = result.getInt("rank");
+						ranking.add(item.toString());
 					}
 				} else {
 					ResultSet result = statement.executeQuery(query);
 					while (result.next()) {
-						int item = result.getInt(name);
-						ranking.add(item);
+						Integer item = result.getInt(name);
+						ranking.add(item.toString());
 					}
 				}
 			}

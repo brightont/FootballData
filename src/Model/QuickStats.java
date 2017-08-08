@@ -18,11 +18,25 @@ public class QuickStats extends Stat {
 	private final Connection connection = database.EstablishConnection();
 	public Document document;
 	
-	//empty constructor
+	/**
+	 * Empty constructor
+	 */
 	public QuickStats() {
 		
 	}
 	
+	/**
+	 * Insert quick stat into database
+	 * @param team
+	 * @param pts
+	 * @param pp
+	 * @param yds
+	 * @param yp
+	 * @param pass
+	 * @param passp
+	 * @param rush
+	 * @param rp
+	 */
 	public QuickStats(String team, double pts, int pp, double yds, int yp, double pass, int passp, double rush,
 			int rp) {
 		super(team);
@@ -36,7 +50,12 @@ public class QuickStats extends Stat {
 		}
 	}
 	
-	public ArrayList<String> getQuickStats(String team) {
+	/**
+	 * Get quick stats from NFL website
+	 * @param team
+	 * @return
+	 */
+	public ArrayList<String> GetQuickStats(String team) {
 		ArrayList<String> arr = new ArrayList<String>();
 		arr.add(getTeamAbb(team));
 		try {

@@ -18,11 +18,23 @@ public class RushRankStat extends Stat {
 	private final Connection connection = database.EstablishConnection();
 	public Document document;
 
-	// empty constructor
+	/**
+	 * Empty constructor
+	 */
 	public RushRankStat() {
 
 	}
 	
+	/**
+	 * Insert rush rank stat into database
+	 * @param team
+	 * @param pg
+	 * @param tp
+	 * @param yds
+	 * @param avg
+	 * @param yg
+	 * @param td
+	 */
 	public RushRankStat(String team, double pg, int tp, int yds, double avg, double yg, int td) {
 		String insert = "INSERT INTO footballstats.rushrank VALUES" + " ('" + team + "','" + pg + "','" + tp
 				+ "','" + yds + "','" + avg + "','" + yg + "','" + td + "');";
@@ -35,7 +47,11 @@ public class RushRankStat extends Stat {
 		}
 	}
 	
-	public ArrayList<String> getRushRankStat() {
+	/**
+	 * Get the rushing rank
+	 * @return
+	 */
+	public ArrayList<String> GetRushRankStat() {
 		ArrayList<String> arr = new ArrayList<String>();
 		try {
 			document = Jsoup
