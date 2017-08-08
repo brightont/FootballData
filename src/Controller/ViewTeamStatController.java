@@ -1,12 +1,15 @@
 package Controller;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
 import MainApplication.MainApplication;
+import Model.FieldGoalStat;
 import Model.Model;
 import Model.Probability;
 import Model.QBStat;
@@ -75,7 +78,7 @@ public class ViewTeamStatController {
 	private void initialize() {
 		statTable.setVisible(false);
 		
-		List<String> stats = new ArrayList<String>(Arrays.asList("General", "Quarterback"));
+		List<String> stats = new ArrayList<String>(Arrays.asList("General", "Quarterback", "Field Goals"));
 		
 		statList = FXCollections.observableArrayList(stats);
 		
@@ -112,9 +115,15 @@ public class ViewTeamStatController {
 		} else if (stat.equals("Quarterback")) {
 			UpdateDatabaseQB();
 			DisplayStat("Quarterback");
+		} else if (stat.equals("Field Goals")) {
+			UpdateDatabaseFG();
+			DisplayStat("Field Goals");
 		}
 	}
 	
+	/**
+	 * Updates the database for team stats
+	 */
 	private void UpdateDatabaseTeam() {
 		// Populate the two hash maps
 		TeamStat team = new TeamStat();
@@ -139,7 +148,7 @@ public class ViewTeamStatController {
 	}
 	
 	/**
-	 * Updates the database quarterback
+	 * Updates the database for quarterback stats
 	 */
 	private void UpdateDatabaseQB() {
 		QBStat qb = new QBStat();
@@ -161,6 +170,28 @@ public class ViewTeamStatController {
 		}
 
 	}
+	
+	/**
+	 * Updates the database for field goal stats
+	 */
+	private void UpdateDatabaseFG(){
+		FieldGoalStat fg = new FieldGoalStat();
+		HashMap<String, String> hashFG = fg.GetFGStats(teamAbbr);
+		HashMap<String, String> hashOppFG = fg.GetFGStats(oppAbbr);
+
+		String value1 = "30-39 M";
+		String value2 = "20-29 A";
+		
+		if (!fg.CheckDatabase(hashFG, value1, "fg", teamName) || 
+				!fg.CheckDatabase(hashFG, value2, "fg", teamName)) {
+			fg.UpdateDatabase(hashFG, fg.getTeamName(teamAbbr));
+		}
+		
+		if (!fg.CheckDatabase(hashOppFG, value1, "fg", oppName) || 
+				!fg.CheckDatabase(hashOppFG, value2, "fg", oppName)) {
+			fg.UpdateDatabase(hashOppFG, fg.getTeamName(oppAbbr));
+		}
+	}
 	/**
 	 * Displays general stats
 	 */
@@ -173,8 +204,10 @@ public class ViewTeamStatController {
 		double result;
 		if (type.equals("General")) {
 			result =  prob.CalculateTeamProb(teamName, oppName) * 100;
-		} else {
+		} else if (type.equals("Quarterback")){
 			result = prob.CalculateQBProb(teamName, oppName) * 100;
+		} else {
+			result = prob.CalculateFGProb(teamName, oppName) * 100;
 		}
 		
 		DecimalFormat df = new DecimalFormat("#.##");
@@ -199,10 +232,14 @@ public class ViewTeamStatController {
 			statNames = model.GetStatsName();
 			homeStats = model.GetTeamStats(teamName);
 			oppStats = model.GetTeamStats(oppName);
-		} else {
+		} else if (type.equals("Quarterback")){
 			statNames = model.GetQBStatsName();
 			homeStats = model.GetQBStats(teamName);
 			oppStats = model.GetQBStats(oppName);
+		} else {
+			statNames = model.GetFGStatsName();
+			homeStats = model.GetFGStats(teamName);
+			oppStats = model.GetFGStats(oppName);
 		}
 		
 		int index = 0;

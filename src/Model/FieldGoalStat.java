@@ -17,11 +17,28 @@ public class FieldGoalStat extends Stat {
 	private final Connection connection = database.EstablishConnection();
 	public Document document;
 	
-	//empty constructor
+	/**
+	 * Empty constructor
+	 */
 	public FieldGoalStat() {
 		
 	}
 	
+	/**
+	 * Inserts a field goal stat into database
+	 * @param team
+	 * @param player
+	 * @param a1
+	 * @param m1
+	 * @param a2
+	 * @param m2
+	 * @param a3
+	 * @param m3
+	 * @param a4
+	 * @param m4
+	 * @param a5
+	 * @param m5
+	 */
 	public FieldGoalStat(String team, String player, int a1, int m1, int a2, int m2, int a3, int m3, int a4, int m4,
 			int a5, int m5) {
 		super(team);
@@ -41,7 +58,7 @@ public class FieldGoalStat extends Stat {
 	 * @param team
 	 * @return
 	 */
-	public HashMap<String, String> getFGStats(String team) {
+	public HashMap<String, String> GetFGStats(String team) {
 		int start = 0;
 		int end = 0;
 		HashMap<String, String> fgStatistics = new HashMap<String, String>();

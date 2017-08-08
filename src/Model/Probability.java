@@ -67,7 +67,7 @@ public class Probability {
 		AddQBStats(team, opp);
 		addRushStats(team, opp);
 		addRecStats(team, opp);
-		addFGStats(team, opp);
+		AddFGStats(team, opp);
 		addDefStats(team, opp);
 		addIntStats(team, opp);
 
@@ -415,17 +415,28 @@ public class Probability {
 		}
 		return returnValue;
 	}
-
+	
 	/**
-	 * Adds pts for fg stats .5 pt each for 39M and less, 1 pt each for above
-	 * 39M
-	 * 
+	 * Calculates the field goal probability
+	 * @param team
+	 * @param opponent
+	 * @return
+	 */
+	public double CalculateFGProb(String team, String opponent) {
+		AddFGStats(team, opponent);
+		double returnValue = offenseSum / 3;
+		return returnValue;
+	}
+
+	
+	/**
+	 * Add the field goal stats, .5 pts for 39M and less, 1 pt for anything above 39M
 	 * @param team
 	 * @param opponent
 	 */
-	public void addFGStats(String team, String opponent) {
-		ArrayList<Double> teamStat = pq.getFGStats(team);
-		ArrayList<Double> oppStat = pq.getFGStats(opponent);
+	public void AddFGStats(String team, String opponent) {
+		ArrayList<Double> teamStat = pq.GetFGStats(team);
+		ArrayList<Double> oppStat = pq.GetFGStats(opponent);
 		int index = 0;
 		double temp = 0;
 
@@ -439,15 +450,6 @@ public class Probability {
 			}
 		}
 		offenseSum = offenseSum + temp;
-	}
-
-	/**
-	 * Calculates probability of fg stats
-	 */
-	public double calculateFGProbability(String team, String opponent) {
-		addFGStats(team, opponent);
-		double returnValue = offenseSum / 3;
-		return returnValue;
 	}
 
 	/**

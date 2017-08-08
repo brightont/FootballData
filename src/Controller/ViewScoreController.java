@@ -69,7 +69,7 @@ public class ViewScoreController {
 		
 		ArrayList<String> probability = new ArrayList<String>();
 		Probability prob = new Probability();
-		double result =  prob.calculateFGProbability(stringTeamName, stringOppName) * 100;
+		double result =  prob.CalculateFGProb(stringTeamName, stringOppName) * 100;
 		String p = "Probability: " + result + " %";
 		probability.add(p);
 		for (String pr : probability) {

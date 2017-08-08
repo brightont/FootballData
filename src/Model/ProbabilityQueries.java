@@ -225,7 +225,7 @@ public class ProbabilityQueries {
 	 * @param team
 	 * @return
 	 */
-	public ArrayList<Double> getFGStats(String team) {
+	public ArrayList<Double> GetFGStats(String team) {
 		ArrayList<Double> returnList = new ArrayList<Double>();
 		try {
 			Statement statement = connection.createStatement();

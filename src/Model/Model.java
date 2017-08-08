@@ -262,11 +262,10 @@ public class Model {
     }
     
     /**
-     * Gets the name of the stats
-     * @param team
-     * @return
+     * Gets the name of the FG stats
+     * @return arraylist of stat names
      */
-    public ArrayList<String> getFGStatsName(String team) {
+    public ArrayList<String> GetFGStatsName() {
     	ArrayList<String> fgStatsName = new ArrayList<String>();
     	String newName = "";
     	try {
@@ -296,31 +295,27 @@ public class Model {
     }
     
     /**
-     * Gets the fg stats and displays them
+     * Gets the fg stats
      * @param team
      * @return 
      */
-    public ArrayList<String> getFGStats(String team) {
+    public ArrayList<String> GetFGStats(String team) {
     	ArrayList<String> fgStats = new ArrayList<>();
     	try {
     		fgStats.add(team);
     		EstablishConnection();
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("SELECT * FROM footballstats.fgstats;");
-			ResultSetMetaData rsmd = rs.getMetaData();
-			int columnCount = rsmd.getColumnCount();
-			for (int i = 2; i <= columnCount; i++) {
-				String name = rsmd.getColumnName(i);
+			for (int i = 2; i <= 12; i++) {
 				String query2 = "SELECT * FROM footballstats.fgstats WHERE team = '" + team + "';";
 				ResultSet result = statement.executeQuery(query2);
 				if (i == 2) {
 					while (result.next()) {
-						String player = result.getString(name);
+						String player = result.getString(i);
 						fgStats.add(player);
 					}
 				} else {
 					while (result.next()) {
-						int data = result.getInt(name);
+						int data = result.getInt(i);
 						String dataString = Integer.toString(data);
 						fgStats.add(dataString);
 					}

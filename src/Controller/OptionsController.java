@@ -41,8 +41,6 @@ public class OptionsController {
 	@FXML
 	private Button passStats;
 	@FXML
-	private Button fieldGoals;
-	@FXML
 	private Button defStats;
 	@FXML 
 	private Button interceptions;
@@ -177,45 +175,6 @@ public class OptionsController {
             
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Pass Stats couldn't be loaded.");
-		}
-		
-	}
-	
-	/**
-	 * View Field Goals
-	 */
-	@FXML
-	private void selectFieldGoals() {
-		try {
-			Stage stage;
-            Parent root;
-
-            stage = (Stage) fieldGoals.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("../view/FieldGoalView.fxml"));
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            
-            TeamSelectorController tcc = new TeamSelectorController();
-            String stringTeam = tcc.getStringTeam();
-            String stringOpponent = tcc.getStringOpponent();
-            
-            FieldGoalStat fg = new FieldGoalStat();
-            HashMap<String, String> hashFG = fg.getFGStats(stringTeam);
-            HashMap<String, String> hashOppFG = fg.getFGStats(stringOpponent);
-            
-            String value = "30-39 M";
-            String value1 = "20-29 A";
-			//if (fg.CheckDatabase(hashFG, value, "fg") == false || fg.CheckDatabase(hashFG, value1, "fg")) {
-				fg.UpdateDatabase(hashFG, fg.getTeamName(stringTeam));
-			//}
-			//if (fg.CheckDatabase(hashOppFG, value, "fg") == false || fg.CheckDatabase(hashFG, value1, "fg")) {
-				fg.UpdateDatabase(hashOppFG, fg.getTeamName(stringOpponent));
-			//}
-            
-		} catch (IOException e) {
-			logger.log(Level.FINE, "Field Goal Stats couldn't be loaded.");
 		}
 		
 	}
