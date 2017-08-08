@@ -96,7 +96,7 @@ public class FieldGoalStat extends Stat {
 			} else {
 				databaseKey = entry.getKey();
 				databaseValue = entry.getValue();
-				updateQueryString(databaseKey, databaseValue, team, "fgstats");
+				UpdateQueryString(databaseKey, databaseValue, team, "fgstats");
 			}
 		}
 	}

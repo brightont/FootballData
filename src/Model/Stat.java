@@ -160,8 +160,9 @@ public abstract class Stat {
 	 * @param value
 	 * @param team
 	 */
-	public void updateQueryString(String key, String value, String team, String table) {
-		String update = "UPDATE footballstats." + table + " SET " + key + " = " + value + " WHERE Team = '" + team + "';";
+	public void UpdateQueryString(String key, String value, String team, String table) {
+		String update = "UPDATE footballstats." + table + " SET " + key + " = '" + value + "' WHERE Team = '" + team + "';";
+		System.out.println(update);
 		try {
 			PreparedStatement prepStatement = connection.prepareStatement(update);
 			prepStatement.executeUpdate();

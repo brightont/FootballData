@@ -40,7 +40,7 @@ public class QBStat extends Stat{
 	/**
 	 * Gets QB statistics off NFL website
 	 * @param team
-	 * @return
+	 * @return hash map of values
 	 */
 	public HashMap<String, String> GetQBStats(String team) {
 		HashMap<String, String> qbStatistics = new HashMap<String, String>();
@@ -86,11 +86,11 @@ public class QBStat extends Stat{
 					int ivi = Integer.parseInt(databaseValue);
 					UpdateQueryInt(databaseKey, ivi, team, "qbstats");
 				}
-			}else {
+			} else {
 				databaseKey = entry.getKey();
 				if (databaseKey.equals("Player")) {
 					databaseValue = entry.getValue();
-					updateQueryString(databaseKey, databaseValue, team, "qbstats");
+					UpdateQueryString(databaseKey, databaseValue, team, "qbstats");
 				} else if (databaseKey.equals("Rating")) {
 					databaseValue = entry.getValue();
 					double dvi = Double.parseDouble(databaseValue);
@@ -103,5 +103,6 @@ public class QBStat extends Stat{
 			}
 		}
 	}
+	
 	
 }

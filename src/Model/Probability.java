@@ -64,7 +64,7 @@ public class Probability {
 	public double calculateOffenseDefense(String team, String opp) {
 		checkRanking(team, opp);
 		AddTeamStats(team, opp);
-		addQBStats(team, opp);
+		AddQBStats(team, opp);
 		addRushStats(team, opp);
 		addRecStats(team, opp);
 		addFGStats(team, opp);
@@ -130,10 +130,10 @@ public class Probability {
 	 * @param opp
 	 */
 	public void checkRanking(String team, String opp) {
-		int teamOff = pq.getRank(team, "yards");
-		int oppOff = pq.getRank(opp, "yards");
-		int teamDef = pq.getRank(team, "defyards");
-		int oppDef = pq.getRank(opp, "defyards");
+		int teamOff = pq.GetRank(team, "yards");
+		int oppOff = pq.GetRank(opp, "yards");
+		int teamDef = pq.GetRank(team, "defyards");
+		int oppDef = pq.GetRank(opp, "defyards");
 
 		// if offense/defense is top 5, add 10 to sum. Add 5 if either is top 10
 		if (teamOff <= 5) {
@@ -210,45 +210,33 @@ public class Probability {
 			index++;
 		}
 	}
-
+	
 	/**
-	 * Checks to see if it's a passing offense
-	 * 
+	 * Calculates the qb probability
 	 * @param team
-	 * @return
+	 * @param opponent
+	 * @return double probability 
 	 */
-	public boolean isPassOffense(String team) {
-		int passing = pq.getRank(team, "rec");
-		int rushing = pq.getRank(team, "rush");
-		if (passing < rushing) {
-			return true;
+	public double CalculateQBProb(String team, String opponent) {
+		double returnValue = 0;
+		AddQBStats(team, opponent);
+		if (IsPassOffense(team) && !IsPassDefense(opponent)) {
+			returnValue = (offenseSum / 24);
+		} else if (IsPassOffense(team)) {
+			returnValue = (offenseSum / 18);
+		} else {
+			returnValue = (offenseSum / 12);
 		}
-		return false;
+		return returnValue;
 	}
-
+	
 	/**
-	 * Checks to see if it's a passing defense
-	 * 
-	 * @param team
-	 * @return
-	 */
-	public boolean isPassDefense(String team) {
-		int passing = pq.getRank(team, "defrec");
-		int rushing = pq.getRank(team, "defrush");
-		if (passing < rushing) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Add qb stats, 1 pt per better stat multiplied by either 2 or 1.5
-	 * depending types
-	 * 
+	 * Add the qb stats together, 1 pt per better stat multiplied by either 2 or 1.5 depending on
+	 * better type
 	 * @param team
 	 * @param opponent
 	 */
-	public void addQBStats(String team, String opponent) {
+	private void AddQBStats(String team, String opponent) {
 		ArrayList<Double> teamStat = pq.GetQBStats(team);
 		ArrayList<Double> oppStat = pq.GetQBStats(opponent);
 		int index = 0;
@@ -266,11 +254,11 @@ public class Probability {
 			index++;
 		}
 
-		// multiply it by correct number based on offensive type and opponent's
-		// defensive type
-		if (isPassOffense(team) && !isPassDefense(opponent)) {
+		//multiply the offensive sum by either 2 or 1.5 depending on its better type
+		//and the opposing team's better type
+		if (IsPassOffense(team) && !IsPassDefense(opponent)) {
 			offenseSum = offenseSum + (temp * 2);
-		} else if (isPassOffense(team)) {
+		} else if (IsPassOffense(team)) {
 			offenseSum = offenseSum + (temp * 1.5);
 		} else {
 			offenseSum = offenseSum + temp;
@@ -278,21 +266,32 @@ public class Probability {
 	}
 
 	/**
-	 * Allows you to get probability team stats
+	 * Determine if it's a passing offense
+	 * @param team
+	 * @return
 	 */
-	public double calculateQBProbability(String team, String opponent) {
-		double returnValue = 0;
-		addQBStats(team, opponent);
-		if (isPassOffense(team) && !isPassDefense(opponent)) {
-			returnValue = (offenseSum / 24);
-		} else if (isPassOffense(team)) {
-			returnValue = (offenseSum / 18);
-		} else {
-			returnValue = (offenseSum / 12);
+	public boolean IsPassOffense(String team) {
+		int passing = pq.GetRank(team, "rec");
+		int rushing = pq.GetRank(team, "rush");
+		if (passing < rushing) {
+			return true;
 		}
-		return returnValue;
+		return false;
 	}
 
+	/**
+	 * Determine if it's a defense that stops passes better
+	 * @param team
+	 * @return
+	 */
+	public boolean IsPassDefense(String team) {
+		int passing = pq.GetRank(team, "defrec");
+		int rushing = pq.GetRank(team, "defrush");
+		if (passing < rushing) {
+			return true;
+		}
+		return false;
+	}
 	/**
 	 * Adds pts for rush stats 1 pt each, 2pt per top 2 RB
 	 * 
@@ -330,9 +329,9 @@ public class Probability {
 		}
 
 		// checks what type of offense it is
-		if (!isPassOffense(team) && isPassDefense(opponent)) {
+		if (!IsPassOffense(team) && IsPassDefense(opponent)) {
 			offenseSum = offenseSum + (temp * 2);
-		} else if (!isPassOffense(team)) {
+		} else if (!IsPassOffense(team)) {
 			offenseSum = offenseSum + (temp * 1.5);
 		} else {
 			offenseSum = offenseSum + temp;
@@ -345,9 +344,9 @@ public class Probability {
 	public double calculateRushProbability(String team, String opponent) {
 		double returnValue = 0;
 		addRushStats(team, opponent);
-		if (!isPassOffense(team) && isPassDefense(opponent)) {
+		if (!IsPassOffense(team) && IsPassDefense(opponent)) {
 			returnValue = offenseSum / 30;
-		} else if (!isPassOffense(team)) {
+		} else if (!IsPassOffense(team)) {
 			returnValue = offenseSum / 22.5;
 		} else {
 			returnValue = offenseSum / 15;
@@ -392,9 +391,9 @@ public class Probability {
 		}
 
 		// checks what type of offense it is
-		if (isPassOffense(team) && !isPassDefense(opponent)) {
+		if (IsPassOffense(team) && !IsPassDefense(opponent)) {
 			offenseSum = offenseSum + (temp * 2);
-		} else if (isPassOffense(team)) {
+		} else if (IsPassOffense(team)) {
 			offenseSum = offenseSum + (temp * 1.5);
 		} else {
 			offenseSum = offenseSum + temp;
@@ -407,9 +406,9 @@ public class Probability {
 	public double calculateRecProbability(String team, String opponent) {
 		double returnValue = 0;
 		addRushStats(team, opponent);
-		if (isPassOffense(team) && !isPassDefense(opponent)) {
+		if (IsPassOffense(team) && !IsPassDefense(opponent)) {
 			returnValue = offenseSum / 60;
-		} else if (isPassOffense(team)) {
+		} else if (IsPassOffense(team)) {
 			returnValue = offenseSum / 45;
 		} else {
 			returnValue = offenseSum / 30;
@@ -472,7 +471,7 @@ public class Probability {
 			index++;
 		}
 
-		if ((isPassDefense(team) && !isPassOffense(opponent)) || (!isPassDefense(team) && isPassOffense(opponent))) {
+		if ((IsPassDefense(team) && !IsPassOffense(opponent)) || (!IsPassDefense(team) && IsPassOffense(opponent))) {
 			defenseSum = defenseSum + (2 * temp);
 		} else {
 			defenseSum = defenseSum + temp;
@@ -573,8 +572,8 @@ public class Probability {
 	}
 
 	public void addWeakSide(String team) {
-		int teamOff = pq.getRank(team, "yards");
-		int teamDef = pq.getRank(team, "defyards");
+		int teamOff = pq.GetRank(team, "yards");
+		int teamDef = pq.GetRank(team, "defyards");
 		String pass = "Position = 'WR' OR Position = 'FB' OR Position = 'TE' OR Position = 'OL' OR Position = 'G' OR Position = 'LG' OR Position = 'RG' OR Position = 'C' OR Position = 'T' OR Position = 'LT' OR Position = 'RT'";
 		String rush = "Position = 'RB' OR Position = 'FB' OR Position = 'TE' OR Position = 'OL' OR Position = 'G' OR Position = 'LG' OR Position = 'RG' OR Position = 'C' OR Position = 'T' OR Position = 'LT' OR Position = 'RT'";
 		String def  = "Position = 'DL' OR Position = 'DE' OR Position = 'DT' OR Position = 'OLB' OR Position = 'ILB' OR Position = 'LB' OR Position = 'MLB' OR Position = 'DB' OR Position = 'CB' OR Position = 'S'";
@@ -583,7 +582,7 @@ public class Probability {
 		int defInjuries = pq.countPositionInjuries(team, def);
 		//determines weak side
 		if (teamOff > teamDef) {
-			if (isPassOffense(team)) {
+			if (IsPassOffense(team)) {
 				if (rushInjuries > passInjuries && rushInjuries > defInjuries) {
 					injurySum = injurySum - 3;
 				}
@@ -901,7 +900,7 @@ public class Probability {
 		ranks.add("defrush");
 		ranks.add("defrec");
 		for (String r : ranks) {
-			returnList.add(pq.getRank(team, r));
+			returnList.add(pq.GetRank(team, r));
 		}
 		returnList.add(pq.getRankSpecial(team, "int", "Interceptions"));
 		returnList.add(pq.getRankSpecial(team, "sack", "Sacks"));

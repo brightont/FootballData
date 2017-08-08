@@ -19,7 +19,7 @@ public class ProbabilityQueries {
 	 * @param team
 	 * @return
 	 */
-	public int getRank(String team, String table) {
+	public int GetRank(String team, String table) {
 		int rank = 0;
 		try {
 			Statement statement = connection.createStatement();

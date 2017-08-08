@@ -16,14 +16,11 @@ import Model.InjuryStat;
 import Model.IntRankStat;
 import Model.IntStat;
 import Model.PassStat;
-import Model.QBStat;
 import Model.QuickStats;
 import Model.RecRankStat;
 import Model.RushRankStat;
 import Model.RushStat;
 import Model.SackRankStat;
-import Model.TeamName;
-import Model.TeamStat;
 import Model.YardsRankStat;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,8 +36,6 @@ public class OptionsController {
 	
 	@FXML
 	private Button teamStats;
-	@FXML
-	private Button qbStats;
 	@FXML
 	private Button rushStats;
 	@FXML
@@ -79,77 +74,7 @@ public class OptionsController {
 	 */
 	@FXML
 	public void SelectTeamStats() {
-		
-        //Gets the team names 
-		String stringTeam = TeamSelectorController.stringTeam;
-		String stringOpp = TeamSelectorController.stringOpponent;
-		
-		//Populate the two hash maps
-        TeamStat team = new TeamStat();
-        HashMap<String, String> hashTeam = team.GetTeamStats(stringTeam);
-        HashMap<String, String> hashOpp = team.GetTeamStats(stringOpp); 
-        
-        String value1 = "Touchdowns";
-        String value2 = "Total First Downs";
-        
-        hashTeam.values().remove(stringTeam);
-        hashOpp.values().remove(stringOpp);   
-        
-        String teamName = TeamName.valueOf(stringTeam).getTeam();
-        String teamOpp = TeamName.valueOf(stringOpp).getTeam();
-        
-        if (!team.CheckDatabase(hashTeam, value1, "team", teamName) && 
-    		   !team.CheckDatabase(hashTeam, value2, "team", teamName)) {
-        	team.UpdateDatabase(hashTeam, team.getTeamName(stringTeam));
-        }  
-            
-        if (!team.CheckDatabase(hashOpp, value1, "team", teamOpp) && 
-    		   !team.CheckDatabase(hashOpp, value2, "team", teamOpp)) {
-        	team.UpdateDatabase(hashOpp, team.getTeamName(stringOpp));
-        } 
-        
-        //set scene
         cm.SetScene(teamStats, "../view/StatView.fxml");
-            
-	}
-	
-	/**
-	 * View the QB stats
-	 */
-	@FXML
-	private void selectQBStats() {
-		try {
-        	Stage stage;
-            Parent root;
-
-            stage = (Stage) qbStats.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("../view/QBStatView.fxml"));
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            
-            TeamSelectorController tcc = new TeamSelectorController();
-            String stringTeam = tcc.getStringTeam();
-            String stringOpponent = tcc.getStringOpponent();
-                        
-            QBStat qb = new QBStat();
-            HashMap<String, String> hashQB = qb.GetQBStats(stringTeam);
-            HashMap<String, String> hashOppQB = qb.GetQBStats(stringOpponent);
-            
-            String value = "Att";
-            
-            //if (qb.CheckDatabase(hashQB, value, "qb") == false) {
-            	qb.UpdateDatabase(hashQB, qb.getTeamName(stringTeam));
-            //}
-            //if (qb.CheckDatabase(hashOppQB, value, "qb") == false) {
-            	qb.UpdateDatabase(hashOppQB, qb.getTeamName(stringOpponent));
-            //}
-            
-		} catch (IOException e) {
-			logger.log(Level.FINE, "QB Stats could not be loaded.");
-		}
-		
 	}
 	
 	/**

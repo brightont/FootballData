@@ -1,12 +1,15 @@
 package Controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import MainApplication.MainApplication;
 import Model.Model;
 import Model.Probability;
+import Model.QBStat;
 import Model.TeamName;
 import Model.TeamStat;
 import Model.TeamStatTable;
@@ -54,9 +57,15 @@ public class ViewTeamStatController {
 	@FXML
 	private Button returnButton;
 	
-	private String stringTeamName = "";
+	//team abbreviations
+	private String teamAbbr = "";
 	
-	private String stringOppName = "";
+	private String oppAbbr = "";
+	
+	//full team names (ie Falcons)
+	private String teamName = "";
+	
+	private String oppName = "";
 	
 	public void setMainApp(MainApplication main) {
         mainApplication = main;
@@ -72,6 +81,12 @@ public class ViewTeamStatController {
 		
 		statisticMenu.setItems(statList);
 		statisticMenu.getSelectionModel().selectFirst();		
+		
+		teamAbbr = TeamSelectorController.stringTeam;
+		oppAbbr = TeamSelectorController.stringOpponent;
+		
+		teamName = TeamName.valueOf(teamAbbr).getTeam();
+		oppName = TeamName.valueOf(oppAbbr).getTeam();
 	}
 	
 	/**
@@ -81,8 +96,8 @@ public class ViewTeamStatController {
 		statTable.setVisible(true);
 		String stat = statisticMenu.getSelectionModel().getSelectedItem();
 		
-		stringTeamName = TeamName.valueOf(TeamSelectorController.stringTeam).getTeam();
-        stringOppName = TeamName.valueOf(TeamSelectorController.stringOpponent).getTeam();
+		teamName = TeamName.valueOf(TeamSelectorController.stringTeam).getTeam();
+        oppName = TeamName.valueOf(TeamSelectorController.stringOpponent).getTeam();
         
         statTable.getItems().clear();
 		teamView.getItems().clear();
@@ -92,27 +107,80 @@ public class ViewTeamStatController {
 		oppStat.setCellValueFactory(new PropertyValueFactory<TeamStatTable, String>("oppStat"));
         
 		if (stat.equals("General")) {
-			DisplayGeneral("General");
+			UpdateDatabaseTeam();
+			DisplayStat("General");
 		} else if (stat.equals("Quarterback")) {
-			DisplayGeneral("Quarterback");
+			UpdateDatabaseQB();
+			DisplayStat("Quarterback");
+		}
+	}
+	
+	private void UpdateDatabaseTeam() {
+		// Populate the two hash maps
+		TeamStat team = new TeamStat();
+		HashMap<String, String> hashTeam = team.GetTeamStats(teamAbbr);
+		HashMap<String, String> hashOpp = team.GetTeamStats(oppAbbr);
+
+		String value1 = "Touchdowns";
+		String value2 = "Total First Downs";
+
+		hashTeam.values().remove(teamAbbr);
+		hashOpp.values().remove(oppAbbr);
+
+		if (!team.CheckDatabase(hashTeam, value1, "team", teamName)
+				|| !team.CheckDatabase(hashTeam, value2, "team", teamName)) {
+			team.UpdateDatabase(hashTeam, team.getTeamName(teamAbbr));
+		} 
+
+		if (!team.CheckDatabase(hashOpp, value1, "team", oppName)
+				|| !team.CheckDatabase(hashOpp, value2, "team", oppName)) {
+			team.UpdateDatabase(hashOpp, team.getTeamName(oppAbbr));
 		}
 	}
 	
 	/**
+	 * Updates the database quarterback
+	 */
+	private void UpdateDatabaseQB() {
+		QBStat qb = new QBStat();
+		HashMap<String, String> hashQB = qb.GetQBStats(teamAbbr);
+		HashMap<String, String> hashOppQB = qb.GetQBStats(oppAbbr);
+
+		String value1 = "Att";
+		String value2 = "Comp";
+
+		
+		if (!qb.CheckDatabase(hashQB, value1, "qb", teamName)
+				|| !qb.CheckDatabase(hashQB, value2, "qb", teamName)) {
+			qb.UpdateDatabase(hashQB, qb.getTeamName(teamAbbr));
+		} 
+		
+		if (!qb.CheckDatabase(hashOppQB, value1, "qb", oppName)
+				|| !qb.CheckDatabase(hashOppQB, value2, "qb", oppName)) {
+			qb.UpdateDatabase(hashOppQB, qb.getTeamName(oppAbbr));
+		}
+
+	}
+	/**
 	 * Displays general stats
 	 */
-	private void DisplayGeneral(String type) {
+	private void DisplayStat(String type) {
 		ObservableList<TeamStatTable> teamStatList = FXCollections.observableArrayList(PopulateTeamStatList(type));
 		statTable.setItems(teamStatList);
 		
 		ArrayList<String> probability = new ArrayList<String>();
 		Probability prob = new Probability();
+		double result;
 		if (type.equals("General")) {
-			double result =  prob.CalculateTeamProb(stringTeamName, stringOppName) * 100;
-			String p = "Probability: " + result + " %";
-			probability.add(p);
-			teamView.getItems().add(probability.get(0));
+			result =  prob.CalculateTeamProb(teamName, oppName) * 100;
+		} else {
+			result = prob.CalculateQBProb(teamName, oppName) * 100;
 		}
+		
+		DecimalFormat df = new DecimalFormat("#.##");
+		String p = "Probability: " + df.format(result) + " %";
+		probability.add(p);
+		teamView.getItems().add(probability.get(0));
 	}
 
 	/**
@@ -129,12 +197,12 @@ public class ViewTeamStatController {
 		ArrayList<String> oppStats;
 		if (type.equals("General")) {
 			statNames = model.GetStatsName();
-			homeStats = model.GetTeamStats(stringTeamName);
-			oppStats = model.GetTeamStats(stringOppName);
+			homeStats = model.GetTeamStats(teamName);
+			oppStats = model.GetTeamStats(oppName);
 		} else {
 			statNames = model.GetQBStatsName();
-			homeStats = model.GetQBStats(stringTeamName);
-			oppStats = model.GetQBStats(stringOppName);
+			homeStats = model.GetQBStats(teamName);
+			oppStats = model.GetQBStats(oppName);
 		}
 		
 		int index = 0;
@@ -143,27 +211,6 @@ public class ViewTeamStatController {
 			returnList.add(new TeamStatTable(name, homeStats.get(index), oppStats.get(index)));
 			index++;	
 		}
-		return returnList;
-	}
-	
-	/**
-	 * Populates an arrayList for the table view
-	 * @return
-	 */
-	private ArrayList<TeamStatTable> PopulateQBStatList() {
-		ArrayList<TeamStatTable> returnList = new ArrayList<TeamStatTable>();
-		
-		Model model = new Model();
-		//ArrayList<String> statNames = model.GetQBStatsName(stringTeamName);
-		//ArrayList<String> homeStats = model.GetQBStats(stringTeamName);
-		//ArrayList<String> oppStats = model.GetQBStats(stringOppName);
-		
-		int index = 0;
-		//for (String name: statNames) {
-			//returnList.add(new QBStatTable(name, homeStats.get(index), oppStats.get(index)));
-			//index++;	
-		//}
-		
 		return returnList;
 	}
 	
