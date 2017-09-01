@@ -146,7 +146,7 @@ public class TeamStatsTest {
     
     @After
     public void delete() {
-    	database.removeStat("Testing", "teamstats");
+    	database.RemoveStat("Testing", "teamstats");
     }
 
 }

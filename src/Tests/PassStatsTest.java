@@ -47,7 +47,7 @@ public class PassStatsTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void checkForNewPlayer() throws InterruptedException {
+    public void CheckForNewPlayer() throws InterruptedException {
 		// player 2
 		list.add("Tester2");
 		list.add("2");
@@ -66,9 +66,9 @@ public class PassStatsTest {
 		
 		PassStat pass = new PassStat();
 		
-    	ArrayList<Integer> intList = pass.checkForNewPlayer(list, "pass_stats");
+    	ArrayList<Integer> intList = pass.CheckForNewPlayer(list, "pass_stats");
     	if (intList.size() != 0) {
-    		pass.scrapeNewPlayer(list, intList, "Testing");
+    		pass.ScrapeNewPlayer(list, intList, "Testing");
     	}
     	assertEquals("Tester2", getPlayer("Tester2"));
     	assertEquals("Tester3", getPlayer("Tester3"));
@@ -77,7 +77,7 @@ public class PassStatsTest {
     @Test(timeout = TIMEOUT)
     public void checkDatabaseTest() throws InterruptedException {		
     	PassStat pass = new PassStat();
-    	boolean bool = pass.checkDatabaseList(list, 7 , "pass_", "Rec");
+    	boolean bool = pass.CheckDatabaseList(list, 7 , "pass_", "Rec");
     	
 		assertTrue(bool);
     }
@@ -167,7 +167,7 @@ public class PassStatsTest {
     
     @After
     public void delete() {
-    	database.removeStat("Testing", "pass_stats");
+    	database.RemoveStat("Testing", "pass_stats");
     }
 
 }

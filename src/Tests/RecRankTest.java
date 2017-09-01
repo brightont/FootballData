@@ -43,7 +43,7 @@ public class RecRankTest {
 	public void checkDatabaseTest() throws InterruptedException {
 		RecRankStat rrs = new RecRankStat();
 		
-		boolean bool = rrs.checkDatabaseList(list, 1 , "recrank", "Pts_G");
+		boolean bool = rrs.CheckDatabaseList(list, 1 , "recrank", "Pts_G");
 		assertTrue(bool);
 	
 	}
@@ -112,7 +112,7 @@ public class RecRankTest {
 	
 	@After
     public void delete() {
-    	database.removeStat("Testing", "recrank");
+    	database.RemoveStat("Testing", "recrank");
     }
 	
 }

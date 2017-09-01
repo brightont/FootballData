@@ -44,7 +44,7 @@ public class QuickStatTest {
     public void checkDatabaseTest() throws InterruptedException {		
     	QuickStats qs = new QuickStats();
     	
-    	boolean bool = qs.checkDatabaseList(list, 1 , "quickstats", "Pts");
+    	boolean bool = qs.CheckDatabaseList(list, 1 , "quickstats", "Pts");
 		assertTrue(bool);
     }
     
@@ -112,6 +112,6 @@ public class QuickStatTest {
 
     @After
     public void delete() {
-    	database.removeStat("Testing", "quickstats");
+    	database.RemoveStat("Testing", "quickstats");
     }
 }

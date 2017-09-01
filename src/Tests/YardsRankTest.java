@@ -41,7 +41,7 @@ public class YardsRankTest {
     public void checkDatabaseTest() throws InterruptedException {		
     	YardsRankStat yrs = new YardsRankStat();
     	
-    	boolean bool = yrs.checkDatabaseList(list, 1 , "yardsrank", "Pts_G");
+    	boolean bool = yrs.CheckDatabaseList(list, 1 , "yardsrank", "Pts_G");
 		assertTrue(bool);
     }
     
@@ -109,6 +109,6 @@ public class YardsRankTest {
 	
     @After
     public void delete() {
-    	database.removeStat("Testing", "yardsrank");
+    	database.RemoveStat("Testing", "yardsrank");
     }
 }

@@ -182,16 +182,7 @@ public class Model {
 		}
     	return qbStats;
     }
-    
-    public void removeStat(String team, String table) {
-    	String query = "DELETE FROM footballstats." + table + " WHERE Team = '" + team + "';";
-    	try {
-            Statement userStatement = connection.createStatement();
-            userStatement.execute(query);
-        } catch (SQLException e) {
-            logger.log(Level.FINE, "Could not delete team stat.");
-        }
-    }
+   
     
     /**
      * Gets the rush stat
@@ -199,7 +190,7 @@ public class Model {
      * @param columnIndex
      * @return
      */
-    public ArrayList<String> getRushStat(String team, int columnIndex) {
+    public ArrayList<String> GetRushStat(String team, int columnIndex) {
     	ArrayList<String> rushStats =  new ArrayList<String>();
     	try {
     		EstablishConnection();
@@ -578,5 +569,20 @@ public class Model {
 			logger.log(Level.FINE, "Connection couldn't be established.");
 		}
 		return ranking;
+    }
+    
+    /**
+     * Removes stat from database table
+     * @param team
+     * @param table
+     */
+    public void RemoveStat(String team, String table) {
+    	String query = "DELETE FROM footballstats." + table + " WHERE Team = '" + team + "';";
+    	try {
+            Statement userStatement = connection.createStatement();
+            userStatement.execute(query);
+        } catch (SQLException e) {
+            logger.log(Level.FINE, "Could not delete team stat.");
+        }
     }
 }

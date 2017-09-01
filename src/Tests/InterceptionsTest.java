@@ -47,7 +47,7 @@ public class InterceptionsTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void checkForNewPlayer() throws InterruptedException {
+    public void CheckForNewPlayer() throws InterruptedException {
 		// player 2
 		list.add("Tester2");
 		list.add("2");
@@ -66,9 +66,9 @@ public class InterceptionsTest {
 
 		IntStat is = new IntStat();
 
-		ArrayList<Integer> intList = is.checkForNewPlayer(list, "intstats");
+		ArrayList<Integer> intList = is.CheckForNewPlayer(list, "intstats");
 		if (intList.size() != 0) {
-			is.scrapeNewPlayer(list, intList, "Testing");
+			is.ScrapeNewPlayer(list, intList, "Testing");
 		}
 		assertEquals("Tester2", getPlayer("Tester2"));
 		assertEquals("Tester3", getPlayer("Tester3"));
@@ -77,7 +77,7 @@ public class InterceptionsTest {
     @Test(timeout = TIMEOUT)
     public void checkDatabaseTest() throws InterruptedException {		
     	IntStat is = new IntStat();
-    	boolean bool = is.checkDatabaseList(list, 7 , "int", "It");
+    	boolean bool = is.CheckDatabaseList(list, 7 , "int", "It");
     	
 		assertTrue(bool);
     }
@@ -166,6 +166,6 @@ public class InterceptionsTest {
     
     @After
     public void delete() {
-    	database.removeStat("Testing", "intstats");
+    	database.RemoveStat("Testing", "intstats");
     }
 }

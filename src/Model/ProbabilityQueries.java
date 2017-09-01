@@ -153,7 +153,7 @@ public class ProbabilityQueries {
 	 * @param team
 	 * @return
 	 */
-	public ArrayList<Double> getRushStats(String team) {
+	public ArrayList<Double> GetRushStats(String team) {
 		ArrayList<Double> returnList = new ArrayList<Double>();
 		try {
 				Statement statement = connection.createStatement();

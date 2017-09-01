@@ -35,7 +35,7 @@ public class SackRankTest {
     public void checkDatabaseTest() throws InterruptedException {		
     	SackRankStat srs = new SackRankStat();
     	
-    	boolean bool = srs.checkDatabaseList(list, 1 , "sackrank", "Sacks");
+    	boolean bool = srs.CheckDatabaseList(list, 1 , "sackrank", "Sacks");
 		assertTrue(bool);
     }
     
@@ -76,6 +76,6 @@ public class SackRankTest {
    	
     @After
     public void delete() {
-    	database.removeStat("Testing", "sackrank");
+    	database.RemoveStat("Testing", "sackrank");
     }
 }

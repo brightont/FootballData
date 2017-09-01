@@ -47,7 +47,7 @@ public class RushStatsTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void checkForNewPlayer() throws InterruptedException {
+    public void CheckForNewPlayer() throws InterruptedException {
     	//adding values
     	
     	//player 2
@@ -68,9 +68,9 @@ public class RushStatsTest {
     	
     	RushStat rush = new RushStat();
 		
-    	ArrayList<Integer> intList = rush.checkForNewPlayer(list, "rushstats");
+    	ArrayList<Integer> intList = rush.CheckForNewPlayer(list, "rushstats");
     	if (intList.size() != 0) {
-    		rush.scrapeNewPlayer(list, intList, "Testing");
+    		rush.ScrapeNewPlayer(list, intList, "Testing");
     	}
     	assertEquals("Tester2", getPlayer("Tester2"));
     	assertEquals("Tester3", getPlayer("Tester3"));
@@ -79,7 +79,7 @@ public class RushStatsTest {
     @Test(timeout = TIMEOUT)
     public void checkDatabaseTest() throws InterruptedException {		
     	RushStat rush = new RushStat();
-    	boolean bool = rush.checkDatabaseList(list, 7 , "rush", "Att");
+    	boolean bool = rush.CheckDatabaseList(list, 7 , "rush", "Att");
     	
 		assertTrue(bool);
     }
@@ -169,7 +169,7 @@ public class RushStatsTest {
     
     @After
     public void delete() {
-    	database.removeStat("Testing", "rushstats");
+    	database.RemoveStat("Testing", "rushstats");
     }
 
 }

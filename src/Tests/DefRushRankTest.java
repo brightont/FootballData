@@ -36,7 +36,7 @@ public class DefRushRankTest {
     public void checkDatabaseTest() throws InterruptedException {		
     	DefRushRankStat drrs = new DefRushRankStat();
     	
-    	boolean bool = drrs.checkDatabaseList(list, 1 , "defrushrank", "Yds_G");
+    	boolean bool = drrs.CheckDatabaseList(list, 1 , "defrushrank", "Yds_G");
 		assertTrue(bool);
     }
     
@@ -77,7 +77,7 @@ public class DefRushRankTest {
    	
     @After
     public void delete() {
-    	database.removeStat("Testing", "defrushrank");
+    	database.RemoveStat("Testing", "defrushrank");
     }
 
 }

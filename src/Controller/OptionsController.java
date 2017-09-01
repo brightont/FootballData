@@ -2,26 +2,14 @@ package Controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import MainApplication.MainApplication;
-import Model.DefRecRankStat;
-import Model.DefRushRankStat;
 import Model.DefStat;
-import Model.DefYardsRankStat;
-import Model.FieldGoalStat;
 import Model.InjuryStat;
-import Model.IntRankStat;
 import Model.IntStat;
 import Model.PassStat;
-import Model.QuickStats;
-import Model.RecRankStat;
-import Model.RushRankStat;
-import Model.RushStat;
-import Model.SackRankStat;
-import Model.YardsRankStat;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,7 +25,7 @@ public class OptionsController {
 	@FXML
 	private Button teamStats;
 	@FXML
-	private Button rushStats;
+	private Button playerStats;
 	@FXML
 	private Button passStats;
 	@FXML
@@ -48,8 +36,6 @@ public class OptionsController {
 	private Button injuries;
 	@FXML
 	private Button scores;
-	@FXML
-	private Button ranking;
 	
 	@FXML
 	private Button probability;
@@ -79,52 +65,8 @@ public class OptionsController {
 	 * View the rush stats
 	 */
 	@FXML
-	private void selectRushStats() {
-		try {
-        	Stage stage;
-            Parent root;
-
-            stage = (Stage) rushStats.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("../view/RushStatView.fxml"));
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            
-            TeamSelectorController tcc = new TeamSelectorController();
-            String stringTeam = tcc.getStringTeam();
-            String stringOpponent = tcc.getStringOpponent();
-            
-            RushStat rush = new RushStat();
-            ArrayList<String> listTeam = rush.getRushStats(stringTeam);
-            ArrayList<String> listOpponent = rush.getRushStats(stringOpponent);
-            
-            //add a new player if a new player is added
-            ArrayList<Integer> intListTeam = rush.checkForNewPlayer(listTeam, "rushstats");
-            if (intListTeam.size() != 0) {
-        		rush.scrapeNewPlayer(listTeam, intListTeam, rush.getTeamName(stringTeam));
-        	}
-        	
-        	ArrayList<Integer> intListOpponent = rush.checkForNewPlayer(listOpponent, "rushstats");
-        	if (intListOpponent.size() != 0) {
-        		rush.scrapeNewPlayer(listOpponent, intListOpponent, rush.getTeamName(stringOpponent));
-        	}
-        	
-        	//update database if needed
-			if (rush.checkDatabaseList(listTeam, 7, "rush", "Att") == false
-					|| rush.checkDatabaseList(listTeam, 13, "rush", "Att") == false) {
-				rush.UpdateDatabase(listTeam, rush.getTeamName(stringTeam));
-			}
-			
-			if (rush.checkDatabaseList(listOpponent, 7, "rush", "Att") == false
-					|| rush.checkDatabaseList(listOpponent, 13, "rush", "Att") == false) {
-				rush.UpdateDatabase(listOpponent, rush.getTeamName(stringOpponent));
-			}
-            
-		} catch (IOException e) {
-			logger.log(Level.FINE, "Rush Stats couldn't be loaded.");
-		}
-		
+	private void SelectPlayerStats() {
+		cm.SetScene(playerStats, "../view/PlayerStatView.fxml");
 	}
 	
 	/**
@@ -152,24 +94,24 @@ public class OptionsController {
             ArrayList<String> listOpponent = pass.getPassStats(stringOpponent);
             
             //add a new player if a new player is added
-            ArrayList<Integer> intListTeam = pass.checkForNewPlayer(listTeam, "pass_stats");
+            ArrayList<Integer> intListTeam = pass.CheckForNewPlayer(listTeam, "pass_stats");
             if (intListTeam.size() != 0) {
-        		pass.scrapeNewPlayer(listTeam, intListTeam, pass.getTeamName(stringTeam));
+        		pass.ScrapeNewPlayer(listTeam, intListTeam, pass.getTeamName(stringTeam));
         	}
         	
-        	ArrayList<Integer> intListOpponent = pass.checkForNewPlayer(listOpponent, "pass_stats");
+        	ArrayList<Integer> intListOpponent = pass.CheckForNewPlayer(listOpponent, "pass_stats");
         	if (intListOpponent.size() != 0) {
-        		pass.scrapeNewPlayer(listOpponent, intListOpponent, pass.getTeamName(stringOpponent));
+        		pass.ScrapeNewPlayer(listOpponent, intListOpponent, pass.getTeamName(stringOpponent));
         	}
         	
         	//update database if needed
-			if (pass.checkDatabaseList(listTeam, 7, "pass_", "Rec") == false
-					|| pass.checkDatabaseList(listTeam, 13, "pass_", "Rec") == false) {
+			if (pass.CheckDatabaseList(listTeam, 7, "pass_", "Rec") == false
+					|| pass.CheckDatabaseList(listTeam, 13, "pass_", "Rec") == false) {
 				pass.UpdateDatabase(listTeam, pass.getTeamName(stringTeam));
 			}
 			
-			if (pass.checkDatabaseList(listOpponent, 7, "pass_", "Rec") == false
-					|| pass.checkDatabaseList(listOpponent, 13, "pass_", "Rec") == false) {
+			if (pass.CheckDatabaseList(listOpponent, 7, "pass_", "Rec") == false
+					|| pass.CheckDatabaseList(listOpponent, 13, "pass_", "Rec") == false) {
 				pass.UpdateDatabase(listOpponent, pass.getTeamName(stringOpponent));
 			}
             
@@ -206,23 +148,23 @@ public class OptionsController {
             listTeam = def.removeLastItem(listTeam);
             listOpponent = def.removeLastItem(listOpponent);
            
-            ArrayList<Integer> intListTeam = def.checkForNewPlayer(listTeam, "defstats");
+            ArrayList<Integer> intListTeam = def.CheckForNewPlayer(listTeam, "defstats");
             if (intListTeam.size() != 0) {
-        		def.scrapeNewPlayer(listTeam, intListTeam, def.getTeamName(stringTeam));
+        		def.ScrapeNewPlayer(listTeam, intListTeam, def.getTeamName(stringTeam));
         	}
-        	ArrayList<Integer> intListOpponent = def.checkForNewPlayer(listOpponent, "defstats");
+        	ArrayList<Integer> intListOpponent = def.CheckForNewPlayer(listOpponent, "defstats");
         	if (intListOpponent.size() != 0) {
-        		def.scrapeNewPlayer(listOpponent, intListOpponent, def.getTeamName(stringOpponent));
+        		def.ScrapeNewPlayer(listOpponent, intListOpponent, def.getTeamName(stringOpponent));
         	}
      
         	//update database if needed
-			if (def.checkDatabaseList(listTeam, 7, "def", "Comb") == false
-					|| def.checkDatabaseList(listTeam, 13, "def", "Comb") == false) {
+			if (def.CheckDatabaseList(listTeam, 7, "def", "Comb") == false
+					|| def.CheckDatabaseList(listTeam, 13, "def", "Comb") == false) {
 				def.UpdateDatabase(listTeam, def.getTeamName(stringTeam));
 			}
 			
-			if (def.checkDatabaseList(listOpponent, 7, "def", "Comb") == false
-					|| def.checkDatabaseList(listOpponent, 13, "def", "Comb") == false) {
+			if (def.CheckDatabaseList(listOpponent, 7, "def", "Comb") == false
+					|| def.CheckDatabaseList(listOpponent, 13, "def", "Comb") == false) {
 				def.UpdateDatabase(listOpponent, def.getTeamName(stringOpponent));
 			}
             
@@ -255,24 +197,24 @@ public class OptionsController {
             ArrayList<String> listTeam = intStat.getIntStats(stringTeam);
             ArrayList<String> listOpponent = intStat.getIntStats(stringOpponent);
             
-            ArrayList<Integer> intListTeam = intStat.checkForNewPlayer(listTeam, "intstats");
+            ArrayList<Integer> intListTeam = intStat.CheckForNewPlayer(listTeam, "intstats");
             if (intListTeam.size() != 0) {
-        		intStat.scrapeNewPlayer(listTeam, intListTeam, intStat.getTeamName(stringTeam));
+        		intStat.ScrapeNewPlayer(listTeam, intListTeam, intStat.getTeamName(stringTeam));
         	}
         	
-        	ArrayList<Integer> intListOpponent = intStat.checkForNewPlayer(listOpponent, "intstats");
+        	ArrayList<Integer> intListOpponent = intStat.CheckForNewPlayer(listOpponent, "intstats");
         	if (intListOpponent.size() != 0) {
-        		intStat.scrapeNewPlayer(listOpponent, intListOpponent, intStat.getTeamName(stringOpponent));
+        		intStat.ScrapeNewPlayer(listOpponent, intListOpponent, intStat.getTeamName(stringOpponent));
         	}
             
         	//update database if needed
-			if (intStat.checkDatabaseList(listTeam, 7, "int", "It") == false
-					|| intStat.checkDatabaseList(listTeam, 13, "int", "It") == false) {
+			if (intStat.CheckDatabaseList(listTeam, 7, "int", "It") == false
+					|| intStat.CheckDatabaseList(listTeam, 13, "int", "It") == false) {
 				intStat.UpdateDatabase(listTeam, intStat.getTeamName(stringTeam));
 			}
 			
-			if (intStat.checkDatabaseList(listOpponent, 7, "int", "It") == false
-					|| intStat.checkDatabaseList(listOpponent, 13, "int", "It") == false) {
+			if (intStat.CheckDatabaseList(listOpponent, 7, "int", "It") == false
+					|| intStat.CheckDatabaseList(listOpponent, 13, "int", "It") == false) {
 				intStat.UpdateDatabase(listOpponent, intStat.getTeamName(stringOpponent));
 			}
 		} catch (IOException e) {
@@ -308,12 +250,12 @@ public class OptionsController {
             
          
             if (intListTeam.size() != 0) {
-        		injuryStat.scrapeNewPlayer(listTeam, intListTeam, injuryStat.getTeamName(stringTeam));
+        		injuryStat.ScrapeNewPlayer(listTeam, intListTeam, injuryStat.getTeamName(stringTeam));
         	}
         	
         	ArrayList<Integer> intListOpponent = injuryStat.checkForNewInjury(listOpponent, "injuries");
         	if (intListOpponent.size() != 0) {
-        		injuryStat.scrapeNewPlayer(listOpponent, intListOpponent, injuryStat.getTeamName(stringOpponent));
+        		injuryStat.ScrapeNewPlayer(listOpponent, intListOpponent, injuryStat.getTeamName(stringOpponent));
         	}
         	
         	if (injuryStat.removeNewPlayer(listTeam, stringTeam) == false) {
@@ -358,88 +300,6 @@ public class OptionsController {
 		} catch (IOException e) {
 			logger.log(Level.FINE, "Scores couldn't be loaded.");
 		}
-	}
-	
-	@FXML
-	private void selectRanking() throws Exception {
-		try {
-        	Stage stage;
-            Parent root;
-
-            stage = (Stage) ranking.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("../view/RankView.fxml"));
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-            
-            TeamSelectorController tcc = new TeamSelectorController();
-            String stringTeam = tcc.getStringTeam();
-            String stringOpponent = tcc.getStringOpponent();
-            
-            //get the first team
-            YardsRankStat yrStat = new YardsRankStat();
-            ArrayList<String> listTeam = yrStat.GetYardsStats();
-            
-            if (yrStat.CheckDatabaseRank(listTeam, 1, "yards", "Pts_G") == false) {
-            	yrStat.UpdateDatabase(listTeam);
-            	
-            	RushRankStat rrStat = new RushRankStat();
-                ArrayList<String> listTeam1 = rrStat.GetRushRankStat();
-                
-                rrStat.UpdateDatabase(listTeam1);
-                
-            	RecRankStat rcStat = new RecRankStat();
-                ArrayList<String> listTeam2 = rcStat.GetRecRankStat();
-                
-            	rcStat.UpdateDatabase(listTeam2);
-            } 
-            
-            DefYardsRankStat dyrStat = new DefYardsRankStat();
-            ArrayList<String> listTeam3 = dyrStat.GetDefYardsStats();
-            
-            if (dyrStat.CheckDatabaseRank(listTeam3, 1, "defyards", "Pts_G") == false) {
-            	dyrStat.UpdateDatabase(listTeam3);
-            	
-            	DefRushRankStat drrStat = new DefRushRankStat();
-                ArrayList<String> listTeam4 = drrStat.GetDefRushStats();
-                
-                drrStat.UpdateDatabase(listTeam4);
-                
-                DefRecRankStat drcStat = new DefRecRankStat();
-                ArrayList<String> listTeam5 = drcStat.GetDefRecStats();
-                
-                drcStat.UpdateDatabase(listTeam5);
-            }
-           
-			SackRankStat srStat = new SackRankStat();
-			ArrayList<String> listTeam6 = srStat.GetSackStats();
-
-			if (srStat.CheckDatabaseRank(listTeam6, 1, "sack", "Sacks") == false) {
-				srStat.UpdateDatabase(listTeam6);
-				
-				IntRankStat irStat = new IntRankStat();
-	            ArrayList<String> listTeam7 = irStat.GetIntRankStats();
-	            
-	            irStat.UpdateDatabase(listTeam7);
-			}
-           
-            QuickStats qStat = new QuickStats();
-            ArrayList<String> listTeam8 = qStat.GetQuickStats(stringTeam);
-            ArrayList<String> listOpponent = qStat.GetQuickStats(stringOpponent);
-         
-            if (qStat.checkDatabaseList(listTeam8, 1, "quick", "Pts") == false) {
-            	qStat.UpdateDatabase(listTeam8, qStat.getTeamName(stringTeam));
-            } 
-            
-            if (qStat.checkDatabaseList(listOpponent, 1, "quick", "Pts") == false) {
-            	qStat.UpdateDatabase(listOpponent, qStat.getTeamName(stringOpponent));
-            } 
-            
-		} catch (IOException e) {
-			logger.log(Level.FINE, "Ranks couldn't be loaded.");
-		}
-		
 	}
 	
 	@FXML

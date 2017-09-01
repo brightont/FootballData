@@ -36,7 +36,7 @@ public class InterceptionsRankTest {
     public void checkDatabaseTest() throws InterruptedException {		
     	IntRankStat irs = new IntRankStat();
     	
-    	boolean bool = irs.checkDatabaseList(list, 1 , "intrank", "Interceptions");
+    	boolean bool = irs.CheckDatabaseList(list, 1 , "intrank", "Interceptions");
 		assertTrue(bool);
     }
     
@@ -77,6 +77,6 @@ public class InterceptionsRankTest {
 
     @After
     public void delete() {
-    	database.removeStat("Testing", "intrank");
+    	database.RemoveStat("Testing", "intrank");
     }
 }

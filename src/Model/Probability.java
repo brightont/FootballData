@@ -65,7 +65,7 @@ public class Probability {
 		checkRanking(team, opp);
 		AddTeamStats(team, opp);
 		AddQBStats(team, opp);
-		addRushStats(team, opp);
+		AddRushStats(team, opp);
 		addRecStats(team, opp);
 		AddFGStats(team, opp);
 		addDefStats(team, opp);
@@ -285,29 +285,48 @@ public class Probability {
 		}
 		return false;
 	}
+	
+	/**
+	 * Calculates the rush probability
+	 * @param team
+	 * @param opponent
+	 * @return
+	 */
+	public double CalculateRushProb(String team, String opponent) {
+		double returnValue = 0;
+		AddRushStats(team, opponent);
+		if (!IsPassOffense(team) && IsPassDefense(opponent)) {
+			returnValue = offenseSum / 30;
+		} else if (!IsPassOffense(team)) {
+			returnValue = offenseSum / 22.5;
+		} else {
+			returnValue = offenseSum / 15;
+		}
+		return returnValue;
+	}
+	
 	/**
 	 * Adds pts for rush stats 1 pt each, 2pt per top 2 RB
-	 * 
 	 * @param team
 	 * @param opponent
 	 */
-	public void addRushStats(String team, String opponent) {
-		ArrayList<Double> teamStat = pq.getRushStats(team);
-		ArrayList<Double> oppStat = pq.getRushStats(opponent);
+	public void AddRushStats(String team, String opponent) {
+		ArrayList<Double> teamStat = pq.GetRushStats(team);
+		ArrayList<Double> oppStat = pq.GetRushStats(opponent);
 		int teamSize = teamStat.size();
 		int oppSize = oppStat.size();
 		int stop = 0;
 		int temp = 0;
 
-		// stops at the smaller size
+		// stops at the smaller team size
 		if (teamSize >= oppSize) {
 			stop = oppSize;
 		} else {
 			stop = teamSize;
 		}
-
+		//loops through players and adds points accordingly. The top 2 players' stats
+		//are worth more
 		for (int i = 0; i < stop; i++) {
-			// for the top 2 players, their stats are worth 2 points
 			if (((i - 1) % 5 == 0) || ((i - 2) % 5 == 0) || ((i - 4) % 5 == 0)) {
 				if (i < 10) {
 					if (teamStat.get(i) > oppStat.get(i)) {
@@ -329,22 +348,6 @@ public class Probability {
 		} else {
 			offenseSum = offenseSum + temp;
 		}
-	}
-
-	/**
-	 * Allows you to get probability team stats
-	 */
-	public double calculateRushProbability(String team, String opponent) {
-		double returnValue = 0;
-		addRushStats(team, opponent);
-		if (!IsPassOffense(team) && IsPassDefense(opponent)) {
-			returnValue = offenseSum / 30;
-		} else if (!IsPassOffense(team)) {
-			returnValue = offenseSum / 22.5;
-		} else {
-			returnValue = offenseSum / 15;
-		}
-		return returnValue;
 	}
 
 	/**
@@ -398,7 +401,7 @@ public class Probability {
 	 */
 	public double calculateRecProbability(String team, String opponent) {
 		double returnValue = 0;
-		addRushStats(team, opponent);
+		AddRushStats(team, opponent);
 		if (IsPassOffense(team) && !IsPassDefense(opponent)) {
 			returnValue = offenseSum / 60;
 		} else if (IsPassOffense(team)) {

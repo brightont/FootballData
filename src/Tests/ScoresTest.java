@@ -82,6 +82,6 @@ public class ScoresTest {
     
     @After
     public void delete() {
-    	database.removeStat("Testing", "scores");
+    	database.RemoveStat("Testing", "scores");
     }
 }

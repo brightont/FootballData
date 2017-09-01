@@ -93,7 +93,7 @@ public class FieldGoalStatsTest {
     
     @After
     public void delete() {
-    	database.removeStat("Testing", "fgstats");
+    	database.RemoveStat("Testing", "fgstats");
     }
 
 }

@@ -152,7 +152,7 @@ public class InjuryStat extends Stat{
 	 * @param i
 	 * @param team
 	 */	
-	public void scrapeNewPlayer(ArrayList<String> list, ArrayList<Integer> intList, String team) {
+	public void ScrapeNewPlayer(ArrayList<String> list, ArrayList<Integer> intList, String team) {
 		for (Integer i : intList) {
 			if ((i % 4) == 0) {
 				String player = list.get(i);

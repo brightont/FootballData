@@ -42,7 +42,7 @@ public class RushRankTest {
 	public void checkDatabaseTest() throws InterruptedException {
 		RushRankStat rrs = new RushRankStat();
 		
-		boolean bool = rrs.checkDatabaseList(list, 1 , "rushrank", "Pts_G");
+		boolean bool = rrs.CheckDatabaseList(list, 1 , "rushrank", "Pts_G");
 		assertTrue(bool);
 	}
 	
@@ -110,6 +110,6 @@ public class RushRankTest {
 	
 	@After
     public void delete() {
-    	database.removeStat("Testing", "rushrank");
+    	database.RemoveStat("Testing", "rushrank");
     }
 }

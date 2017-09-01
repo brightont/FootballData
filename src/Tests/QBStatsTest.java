@@ -129,6 +129,6 @@ public class QBStatsTest {
 	
     @After
     public void delete() {
-    	database.removeStat("Testing", "qbstats");
+    	database.RemoveStat("Testing", "qbstats");
     }
 }

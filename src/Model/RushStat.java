@@ -41,7 +41,7 @@ public class RushStat extends Stat{
 	 * @param team
 	 * @return
 	 */
-	public ArrayList<String> getRushStats(String team) {
+	public ArrayList<String> GetRushStats(String team) {
 		ArrayList<String> rushStatistics = new ArrayList<String>();
 		try {
 			document = Jsoup.connect("http://www.nfl.com/teams/statistics?team=" + team + "&seasonType=REG").get();
@@ -62,11 +62,12 @@ public class RushStat extends Stat{
 	}
 	
 	/**
-	 * Gets the information for a new player
-	 * @param i
+	 * Gets information to add new player
+	 * @param list
+	 * @param intList
 	 * @param team
-	 */	
-	public void scrapeNewPlayer(ArrayList<String> list, ArrayList<Integer> intList, String team) {
+	 */
+	public void ScrapeNewPlayer(ArrayList<String> list, ArrayList<Integer> intList, String team) {
 		for (Integer i : intList) {
 			String player = list.get(i);
 			String att = list.get(i + 1);
@@ -82,12 +83,12 @@ public class RushStat extends Stat{
 			int lngInt = Integer.parseInt(lng);
 			int tdInt = Integer.parseInt(td);
 	
-			addNewPlayer(team, player, attInt, ydsInt, yaInt, lngInt, tdInt);
+			AddNewPlayer(team, player, attInt, ydsInt, yaInt, lngInt, tdInt);
 		}
 	}
 	
 	/**
-	 * Adds a new player into database
+	 * Adds a new player to database
 	 * @param team
 	 * @param player
 	 * @param att
@@ -96,7 +97,7 @@ public class RushStat extends Stat{
 	 * @param lng
 	 * @param td
 	 */
-	public void addNewPlayer(String team, String player, int att, int yds, double ya, int lng, int td) {
+	public void AddNewPlayer(String team, String player, int att, int yds, double ya, int lng, int td) {
 		String insert = "INSERT INTO footballstats.rushstats VALUES ('" + team + "','" + player + "','" + att + "','"
 				+ yds + "','" + ya + "','" + lng + "','" + td + "');";
 		try {

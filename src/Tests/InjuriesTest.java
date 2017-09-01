@@ -38,7 +38,7 @@ public class InjuriesTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void checkForNewPlayerTest() throws InterruptedException {	
+    public void CheckForNewPlayerTest() throws InterruptedException {	
     	list.add("Tester2");
 		list.add("b");
 		list.add("b");
@@ -52,7 +52,7 @@ public class InjuriesTest {
     	InjuryStat injury = new InjuryStat();
     	ArrayList<Integer> intList = injury.checkForNewInjury(list, "injuries");
     	if (intList.size() != 0) {
-    		injury.scrapeNewPlayer(list, intList, "Testing");
+    		injury.ScrapeNewPlayer(list, intList, "Testing");
     	}
 
     	assertEquals("Tester2", getPlayer("Tester2"));
@@ -148,6 +148,6 @@ public class InjuriesTest {
 	
     @After
     public void delete() {
-    	database.removeStat("Testing", "injuries");
+    	database.RemoveStat("Testing", "injuries");
     }
 }

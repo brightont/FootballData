@@ -1,12 +1,10 @@
 package Controller;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
 
 import MainApplication.MainApplication;
 import Model.DefRecRankStat;
@@ -33,6 +31,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -71,12 +70,10 @@ public class ViewTeamStatController {
 	
 	//team abbreviations
 	private String teamAbbr = "";
-	
 	private String oppAbbr = "";
 	
 	//full team names (ie Falcons)
 	private String teamName = "";
-	
 	private String oppName = "";
 	
 	public void setMainApp(MainApplication main) {
@@ -88,9 +85,7 @@ public class ViewTeamStatController {
 		statTable.setVisible(false);
 		
 		List<String> stats = new ArrayList<String>(Arrays.asList("General", "Quarterback", "Field Goals", "Ranking"));
-		
 		statList = FXCollections.observableArrayList(stats);
-		
 		statisticMenu.setItems(statList);
 		statisticMenu.getSelectionModel().selectFirst();		
 		
@@ -266,11 +261,11 @@ public class ViewTeamStatController {
 		ArrayList<String> listTeam8 = qStat.GetQuickStats(teamAbbr);
 		ArrayList<String> listOpponent = qStat.GetQuickStats(oppAbbr);
 
-		if (!qStat.checkDatabaseList(listTeam8, 1, "quick", "Pts")) {
+		if (!qStat.CheckDatabaseList(listTeam8, 1, "quick", "Pts")) {
 			qStat.UpdateDatabase(listTeam8, qStat.getTeamName(teamAbbr));
 		}
 
-		if (!qStat.checkDatabaseList(listOpponent, 1, "quick", "Pts")) {
+		if (!qStat.CheckDatabaseList(listOpponent, 1, "quick", "Pts")) {
 			qStat.UpdateDatabase(listOpponent, qStat.getTeamName(oppAbbr));
         } 
             

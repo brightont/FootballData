@@ -38,7 +38,7 @@ public class DefYardsRankTest {
     public void checkDatabaseTest() throws InterruptedException {		
     	DefYardsRankStat dyrs = new DefYardsRankStat();
     	
-    	boolean bool = dyrs.checkDatabaseList(list, 1 , "defyardsrank", "Pts_G");
+    	boolean bool = dyrs.CheckDatabaseList(list, 1 , "defyardsrank", "Pts_G");
 		assertTrue(bool);
     }
     
@@ -106,7 +106,7 @@ public class DefYardsRankTest {
     
     @After
     public void delete() {
-    	database.removeStat("Testing", "defyardsrank");
+    	database.RemoveStat("Testing", "defyardsrank");
     }
 
 }

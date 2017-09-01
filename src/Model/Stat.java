@@ -59,18 +59,21 @@ public abstract class Stat {
 	}
 	
 	/**
-	 * Check database and make sure the facts are correct
+	 * Checks the database list to see if there are any updates
 	 * @param list
+	 * @param i
+	 * @param table
+	 * @param val
 	 * @return
 	 */
-	public boolean checkDatabaseList(ArrayList<String> list, int i, String table, String val) {
+	public boolean CheckDatabaseList(ArrayList<String> list, int i, String table, String val) {
 		String temp = list.get(i);
 		String query = "SELECT * FROM footballstats." + table + "stats WHERE " + val + " = " + temp + ";";
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet result = statement.executeQuery(query);
 			boolean bool = result.next();
-			if (bool == false) {
+			if (!bool) {
 				return false;
 			}
 		} catch (SQLException e) {
@@ -104,23 +107,24 @@ public abstract class Stat {
 	}
 	
 	/**
-	 * Checks to see if there's a player and returns the index
-	 * @param list
+	 * Checks to see if a new player has been added
+	 * @param list of values
+	 * @param table (stat)
 	 * @return
 	 */
-	public ArrayList<Integer> checkForNewPlayer(ArrayList<String> list, String table) {
-		ArrayList<Integer> returnArray = new ArrayList<Integer>();
+	public ArrayList<Integer> CheckForNewPlayer(ArrayList<String> list, String table) {
+		ArrayList<Integer> returnArr = new ArrayList<Integer>();
 		int i;
 		for (i = 6; i < list.size(); i++) {
 			if ((i % 6) == 0) {
 				if (list.get(i) != "TEAM TOTAL") {
 					if ((getPlayer(list.get(i), table)) == "") {
-						returnArray.add(i);
+						returnArr.add(i);
 					} 
 				}
 			}
 		}
-		return returnArray;
+		return returnArr;
 	}
 	
 	/**

@@ -71,7 +71,7 @@ public class PassStat extends Stat{
 	 * @param i
 	 * @param team
 	 */	
-	public void scrapeNewPlayer(ArrayList<String> list, ArrayList<Integer> intList, String team) {
+	public void ScrapeNewPlayer(ArrayList<String> list, ArrayList<Integer> intList, String team) {
 		for (Integer i : intList) {
 			String player = list.get(i);
 			String rec = list.get(i + 1);

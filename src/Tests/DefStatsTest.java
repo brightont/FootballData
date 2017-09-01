@@ -46,7 +46,7 @@ public class DefStatsTest {
     }
     
     @Test(timeout = TIMEOUT)
-    public void checkForNewPlayer() throws InterruptedException {
+    public void CheckForNewPlayer() throws InterruptedException {
 		// player 2
 		list.add("Tester2");
 		list.add("2");
@@ -65,9 +65,9 @@ public class DefStatsTest {
     			
     	DefStat defStat = new DefStat();
     	
-    	ArrayList<Integer> intList = defStat.checkForNewPlayer(list, "defstats");
+    	ArrayList<Integer> intList = defStat.CheckForNewPlayer(list, "defstats");
     	if (intList.size() != 0) {
-    		defStat.scrapeNewPlayer(list, intList, "Testing");
+    		defStat.ScrapeNewPlayer(list, intList, "Testing");
     	}
     	
     	assertEquals("Tester2", getPlayer("Tester2"));
@@ -77,7 +77,7 @@ public class DefStatsTest {
     @Test(timeout = TIMEOUT)
     public void checkDatabaseTest() throws InterruptedException {		
     	DefStat def = new DefStat();
-    	boolean bool = def.checkDatabaseList(list, 7 , "def", "Comb");
+    	boolean bool = def.CheckDatabaseList(list, 7 , "def", "Comb");
     	
 		assertTrue(bool);
     }
@@ -166,6 +166,6 @@ public class DefStatsTest {
 	}
     @After
     public void delete() {
-    	database.removeStat("Testing", "defstats");
+    	database.RemoveStat("Testing", "defstats");
     }
 }
